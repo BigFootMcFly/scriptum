@@ -37,6 +37,24 @@ class UserFactory extends Factory
     }
 
     /**
+     * Adds notes to the user
+     *
+     * @param int|null $count if not present, a random number will be chosen between 0 and 10
+     *
+     * @return static
+     *
+     */
+    public function addNotes(?int $count = null): static
+    {
+        return $this->afterCreating(
+            fn (User $user) => Note::factory()
+                ->count($count ?? rand(0, 10))
+                ->for($user)
+                ->create()
+        );
+    }
+
+    /**
      * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static

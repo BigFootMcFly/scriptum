@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\NoteVisibility;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Note>
@@ -16,8 +19,16 @@ class NoteFactory extends Factory
      */
     public function definition(): array
     {
+        file_put_contents('sajt.log',"NoteFactory called!\n",FILE_APPEND);
+        $title = fake()->realText(100);
+        $body = fake()->realText();
         return [
-            //
+            'user_id' => User::factory(),
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'body' => $body,
+            'body_content' => Str::limit($body, 20), //TODO: add filter to this
+            'visibility' => fake()->randomElement(NoteVisibility::class),
         ];
     }
 }
