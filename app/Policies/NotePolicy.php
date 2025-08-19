@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\NoteVisibility;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -19,8 +20,24 @@ class NotePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Note $note): bool
+    public function view(?User $user, Note $note): bool
     {
+        // Public is visible to anyone
+        if ($note->visibility === NoteVisibility::Public) {
+            return true;
+        }
+
+        // Private: only the owner
+        if ($note->visibility === NoteVisibility::Private) {
+            return $user && $user->id === $note->user_id;
+        }
+
+        /* //NOTE: kept here for possible future use
+        // Restricted: only team members
+        if ($note->visibility === 'restricted') {
+            return $user && $user->teams->pluck('id')->contains($note->team_id);
+        }
+        */
         return false;
     }
 
