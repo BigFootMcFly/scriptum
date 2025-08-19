@@ -12,6 +12,7 @@ test('registration screen can be rendered', function () {
 test('new users can register', function () {
     $response = Livewire::test(Register::class)
         ->set('name', 'Test User')
+        ->set('handle', 'test-user')
         ->set('email', 'test@example.com')
         ->set('password', 'password')
         ->set('password_confirmation', 'password')
