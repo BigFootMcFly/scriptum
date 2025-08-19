@@ -68,14 +68,6 @@ class Note extends Model
                     $q->where('visibility', NoteVisibility::Private->value)
                       ->where('user_id', $user->id);
                 });
-/*
-                //NOTE: currently no teams are used, i just keep this here for the possibility of later usage
-                // Restricted to team members
-                $q->orWhere(function ($q) use ($user) {
-                    $q->where('visibility', NoteVisibility::Restricted->value)
-                      ->whereIn('team_id', $user->teams->pluck('id'));
-                });
-*/
             }
         });
     }

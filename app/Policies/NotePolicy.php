@@ -32,12 +32,6 @@ class NotePolicy
             return $user && $user->id === $note->user_id;
         }
 
-        /* //NOTE: kept here for possible future use
-        // Restricted: only team members
-        if ($note->visibility === 'restricted') {
-            return $user && $user->teams->pluck('id')->contains($note->team_id);
-        }
-        */
         return false;
     }
 
