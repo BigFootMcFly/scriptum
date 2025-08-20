@@ -37,7 +37,6 @@ class Note extends Model
         return $this->belongsTo(User::class);
     }
 
-
     protected function slug(): Attribute
     {
         return Attribute::make(
@@ -52,8 +51,6 @@ class Note extends Model
             get: fn (?string $value) => $this->user->handle.'/'.$this->slug,
         );
     }
-
-
 
     public function scopeVisibleTo(Builder $query, ?Model $user = null): Builder
     {
