@@ -2,6 +2,9 @@
 
 use App\Enums\NoteVisibility;
 use App\Models\Note;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+
 //use App\Models\User;
 
 it('allows viewing public posts for guests', function () {
@@ -15,7 +18,7 @@ it('allows viewing public posts for guests', function () {
 
 });
 
-/*
+
 it('denies viewing private posts to other users', function () {
     $owner = User::factory()->create();
     $other = User::factory()->create();
@@ -29,4 +32,3 @@ it('denies viewing private posts to other users', function () {
 
     expect($can)->toBeFalse();
 });
-*/
