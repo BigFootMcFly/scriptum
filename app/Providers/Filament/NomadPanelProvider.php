@@ -2,16 +2,19 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\IsAdmin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
+use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -21,22 +24,37 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class NomadPanelProvider extends PanelProvider
 {
+
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('nomad')
-            ->path('nomad')
+            ->domain('admin.localhost')
+            ->brandName('Nomad - Scriptum')
+            ->spa(hasPrefetching: true)
+            ->unsavedChangesAlerts()
+            ->databaseTransactions()
+            ->strictAuthorization()
             ->login()
+            ->id('nomad')
+            ->path('')
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+
+            // without the nomad panel
+            //->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+            //->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+
+            ->discoverResources(in: app_path('Filament/Nomad/Resources'), for: 'App\Filament\Nomad\Resources')
+            ->discoverPages(in: app_path('Filament/Nomad/Pages'), for: 'App\Filament\Nomad\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+
+            // without the nomad panel
+            //->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+
+            ->discoverWidgets(in: app_path('Filament/Nomad/Widgets'), for: 'App\Filament\Nomad\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
@@ -46,6 +64,7 @@ class NomadPanelProvider extends PanelProvider
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
+                IsAdmin::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
                 SubstituteBindings::class,
