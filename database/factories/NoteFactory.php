@@ -19,7 +19,6 @@ class NoteFactory extends Factory
      */
     public function definition(): array
     {
-        file_put_contents('sajt.log',"NoteFactory called!\n",FILE_APPEND);
         $title = fake()->realText(100);
         $body = fake()->realText();
         return [
