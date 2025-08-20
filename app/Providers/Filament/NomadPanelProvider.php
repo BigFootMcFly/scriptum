@@ -40,6 +40,10 @@ class NomadPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->viteTheme([
+                'resources/css/filament/nomad/theme.css',
+                'resources/css/highlight/dark-plus.css'
+            ])
 
             // without the nomad panel
             //->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
