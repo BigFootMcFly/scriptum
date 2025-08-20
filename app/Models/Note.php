@@ -17,6 +17,11 @@ class Note extends Model
 
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'visibility',
@@ -25,6 +30,34 @@ class Note extends Model
         'body',
     ];
 
+    /**
+     * Setup automations for generating the body_content property.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Note $note) {
+            $note->body_content = static::extractBodyContents($note->body);
+        });
+        static::updating(function (Note $note) {
+            $note->body_content = static::extractBodyContents($note->body);
+        });
+    }
+
+    //TODO: make this extractor!!!
+    public static function extractBodyContents(string|array $body): string
+    {
+        if (is_array($body)) {
+            return json_encode($body);
+        }
+
+        return $body;
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array {
         return [
             'visibility' => NoteVisibility::class,
@@ -32,23 +65,65 @@ class Note extends Model
         ];
     }
 
+    /**
+     * The User the Note belonsg to
+     *
+     * @return BelongsTo
+     *
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Mutator and Accessor for the slug
+     *
+     * @return Attribute
+     *
+     * NOTE: the slug must be uniqe for the User, but multiple Users can have the same slug value,
+     *       so in the database we store it in to "$userhandle/$noteslug" format,
+     *       which will propably also be the public address of the note.
+     *
+     */
     protected function slug(): Attribute
     {
         return Attribute::make(
             get: fn (?string $value) => explode("/", $value)[1] ?? $value,
-            set: fn (string $value) => ($this->user->handle/* ?? 'anonymous'*/) . "/$value",
+            set: fn (string $value) => "{$this->user->handle}/$value",
         );
     }
 
+    /**
+     * Generate the body_content from the body property
+     *
+     * @return Attribute
+     *
+     */
+    protected function bodyContent(): Attribute
+    {
+        return Attribute::make(
+            set: fn (array|string $value): string => static::extractBodyContents($this->body),
+        );
+    }
+
+    /**
+     * get the public adddress of the note
+     *
+     * @return Attribute
+     *
+     * NOTE: full URL which this inslude FQDN
+     *
+     */
     protected function url(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $this->user->handle.'/'.$this->slug,
+            get: fn (?string $value): string =>
+                sprintf('%s%s/%s',
+                    request()->getUri(),
+                    $this->user->handle,
+                    $this->slug
+                ),
         );
     }
 
@@ -60,7 +135,7 @@ class Note extends Model
 
             if ($user) {
                 // Private only to owner
-                //NOTE: 'hidden' and 'restricted' are not handled (not shown) here for now, they require admin intervention
+                //NOTE: 'hidden' and 'restricted' are not handled (not shown) here for now, they reserved to require admin intervention
                 $q->orWhere(function ($q) use ($user) {
                     $q->where('visibility', NoteVisibility::Private->value)
                       ->where('user_id', $user->id);
