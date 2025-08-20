@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Enums\NoteVisibility;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
+use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
+use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,8 +13,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Note extends Model
+class Note extends Model implements HasRichContent
 {
+    use InteractsWithRichContent;
+
     /** @use HasFactory<\Database\Factories\NoteFactory> */
     use HasFactory;
 
@@ -119,11 +124,14 @@ class Note extends Model
     {
         return Attribute::make(
             get: fn (?string $value): string =>
-                sprintf('%s%s/%s',
-                    request()->getUri(),
-                    $this->user->handle,
-                    $this->slug
-                ),
+                match ($this->user) {
+                    null => '',
+                    default => sprintf('%s%s/%s',
+                        request()->getUri(),
+                        $this->user->handle,
+                        $this->slug
+                    )
+                }
         );
     }
 
@@ -143,4 +151,5 @@ class Note extends Model
             }
         });
     }
+
 }
