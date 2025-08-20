@@ -18,7 +18,7 @@ enum NoteVisibility: string
     case Public = 'public';
 
     #[Description('This note was hidden from listing.')]
-    case Deleted = 'hidden';
+    case Hidden = 'hidden';
 
     #[Description('This note is currently restricted from access.')]
     case Restricted = 'restricted';
