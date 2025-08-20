@@ -1,73 +1,73 @@
-pre, code {
+.dark pre, code {
     color: #D4D4D4;
     background-color: #1E1E1E;
 }
 
-.hl-keyword {
+.dark .hl-keyword {
     color: #569cd6;
 }
 
-.hl-property {
+.dark .hl-property {
     color: #DCDCAA;
 }
 
-.hl-attribute {
+.dark .hl-attribute {
     font-style: italic;
 }
 
-.hl-type {
+.dark .hl-type {
     color: #4EC9B0;
 }
 
-.hl-generic {
+.dark .hl-generic {
     color: #569cd6;
 }
 
-.hl-value {
+.dark .hl-value {
     color: #ce9178;
 }
 
-.hl-literal {
+.dark .hl-literal {
     color: #ce9178;
 }
 
-.hl-number {
+.dark .hl-number {
     color: #b5cea8;
 }
 
-.hl-variable {
+.dark .hl-variable {
     color: #9CDCFE;
 }
 
-.hl-comment {
+.dark .hl-comment {
     color: #6A9955;
 }
 
-.hl-blur {
+.dark .hl-blur {
     filter: blur(2px);
 }
 
-.hl-strong {
+.dark .hl-strong {
     font-weight: bold;
 }
 
-.hl-em {
+.dark .hl-em {
     font-style: italic;
 }
 
-.hl-addition {
+.dark .hl-addition {
     display: inline-block;
     min-width: 100%;
     background-color: #00FF0022;
 }
 
-.hl-deletion {
+.dark .hl-deletion {
     display: inline-block;
     min-width: 100%;
     background-color: #FF000011;
 }
 
-.hl-gutter {
+.dark .hl-gutter {
     display: inline-block;
     font-size: 0.9em;
     color: #555;
@@ -76,12 +76,12 @@ pre, code {
     user-select: none;
 }
 
-.hl-gutter-addition {
+.dark .hl-gutter-addition {
     background-color: #34A853;
     color: #fff;
 }
 
-.hl-gutter-deletion {
+.dark .hl-gutter-deletion {
     background-color: #EA4334;
     color: #fff;
 }

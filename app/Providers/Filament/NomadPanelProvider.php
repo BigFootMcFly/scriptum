@@ -42,7 +42,8 @@ class NomadPanelProvider extends PanelProvider
             ])
             ->viteTheme([
                 'resources/css/filament/nomad/theme.css',
-                'resources/css/highlight/dark-plus.css'
+                'resources/css/highlight/light-plus.css',
+                'resources/css/highlight/dark-plus.css',
             ])
 
             // without the nomad panel
