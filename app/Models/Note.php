@@ -152,4 +152,25 @@ class Note extends Model implements HasRichContent
         });
     }
 
+    /**
+     * Setting up RichEditor properties for filament
+     *
+     * @return void
+     *
+     */
+    public function setUpRichContent(): void
+    {
+        $this->registerRichContent('body')
+            ->mergeTags([
+                'note.title' => $this->title,
+                'note.id' => $this->id,
+                'note.slug' => $this->slug,
+                'note.permalink' => $this->url,
+            ])
+            ->customBlocks([
+                CodeBlock::class
+            ])
+            ;
+    }
+
 }
