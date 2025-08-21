@@ -35,6 +35,9 @@ class NomadPanelProvider extends PanelProvider
             ->databaseTransactions()
             ->strictAuthorization()
             ->login()
+            ->revealablePasswords(false)
+            ->profile(isSimple: false)
+            ->emailChangeVerification()
             ->id('nomad')
             ->path('')
             ->colors([
