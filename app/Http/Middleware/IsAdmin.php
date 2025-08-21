@@ -15,8 +15,22 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->is_admin) {
-            abort(403);
+        $requestUri = request()->route()->uri;
+
+        // guests already trying to login
+        if (!auth()->check() && $requestUri === 'login') {
+            return $next($request);
+        }
+
+        // guests not allowed, redirect to login
+        if (!auth()->check() && $requestUri !== 'login') {
+            return redirect()->route('filament.nomad.auth.login');
+        }
+
+        // logged in user is not an admin
+        if (!auth()->user()->is_admin) {
+            return redirect()->back()->with('unauthorised', 'You are unauthorised to access this page');
+            //abort(403);
         }
         return $next($request);
     }
