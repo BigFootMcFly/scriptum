@@ -170,6 +170,8 @@ class Note extends Model implements HasRichContent
             ->customBlocks([
                 CodeBlock::class
             ])
+            ->json()
+            ->fileAttachmentsVisibility('private')
             ;
     }
 
