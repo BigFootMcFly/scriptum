@@ -1,3 +1,10 @@
+☐ @high in "resources/views/livewire/auth/register.blade.php" generate the "handle" field value on the "name" blur event.
+
 ☐ @high Copy the Tempest/Higfhlight theme values to the CodeBlock editor theme!
+
+☐ @high Update tte IsAdmin middleware, currently it is used on ewery request in the nomad panel, but it may not be used this way..
+
+✔ @high For a guest the admin panel is not accessable (403), but that icludes the login page aswell, the IsAdmin middleware must be tweeked! @done(25-08-21 10:42)
+    NOTE: modified it, if the user is not logged in, it redirects to 'login', otherwise if user is not an admin, sends a 403 error.
 
 ✔ @high IN the CodeBlock the dark theme is used even if tghe admin panel is in a white theme, make it dynamic!!! @done(25-08-20 21:29)
