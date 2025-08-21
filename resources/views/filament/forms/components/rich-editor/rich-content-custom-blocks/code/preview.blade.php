@@ -1,7 +1,7 @@
 <div>
     <details open>
-        <summary>{{  $placeholder ?? 'Sample code...' }}</summary>
-        <code>
+        <summary>{{ $title ?? 'Sample code...' }}</summary>
+        <code class="fi-not-prose">
             <pre>{!! $highlightedCode !!}</pre>
         </code>
     </details>
