@@ -14,6 +14,12 @@ class EditNote extends EditRecord
 {
     protected static string $resource = NoteResource::class;
 
+    public function getHeading(): string
+    {
+        return "Edit Note";
+    }
+
+
     protected function getHeaderActions(): array
     {
         return [

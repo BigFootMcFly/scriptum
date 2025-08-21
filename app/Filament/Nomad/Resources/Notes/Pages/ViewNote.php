@@ -10,6 +10,12 @@ class ViewNote extends ViewRecord
 {
     protected static string $resource = NoteResource::class;
 
+    public function getHeading(): string
+    {
+        return "View Note";
+    }
+
+
     protected function getHeaderActions(): array
     {
         return [

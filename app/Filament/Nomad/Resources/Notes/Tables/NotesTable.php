@@ -51,7 +51,9 @@ class NotesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
+                ViewAction::make()
+                    //->modalHeading(fn ($record) => "View Note"),
+                    ->modalHeading("View Note"),
                 EditAction::make(),
             ])
             ->toolbarActions([
