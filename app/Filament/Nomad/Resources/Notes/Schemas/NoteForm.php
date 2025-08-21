@@ -37,6 +37,7 @@ class NoteForm
                     ->unique(Note::class, 'slug'),
                 RichEditor::make('body')
                     ->json()
+                    ->fileAttachmentsVisibility('private')
                     ->columnSpanFull()
                     ->activePanel('customBlocks')
                     ->toolbarButtons([
