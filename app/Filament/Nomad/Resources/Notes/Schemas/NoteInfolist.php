@@ -2,12 +2,12 @@
 
 namespace App\Filament\Nomad\Resources\Notes\Schemas;
 
-use App\Enums\NoteVisibility;
-use Filament\Forms\Components\RichEditor\RichContentRenderer;
+use App\Filament\Helpers\NoteVisibilityColorCallback;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\View\Components\BadgeComponent;
+use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 
 class NoteInfolist
 {
@@ -15,8 +15,11 @@ class NoteInfolist
     {
         return $schema
             ->components([
-                Section::make('Metadata')
-                    //->collapsed(false)
+                Section::make('Properties')
+                    //->icon('heroicon-o-list-bullet')
+                    ->icon(Heroicon::ListBullet)
+                    ->iconColor(Color::Emerald)
+                    ->collapsed(true)
                     ->collapsible(true)
                     ->columnSpanFull()
                     ->columns(2)
@@ -26,12 +29,7 @@ class NoteInfolist
                     ,
                     TextEntry::make('visibility')
                         ->badge()
-                        ->color(fn (NoteVisibility $state): string => match($state) {
-                            NoteVisibility::Private => 'success',
-                            NoteVisibility::Public => 'warning',
-                            NoteVisibility::Restricted => 'danger',
-                            NoteVisibility::Hidden => 'gray',
-                        })
+                        ->color(NoteVisibilityColorCallback::make())
                     ,
                     TextEntry::make('title'),
                     TextEntry::make('slug'),
@@ -45,13 +43,17 @@ class NoteInfolist
 
                     ]),
                     Section::make('Content')
+                        ->icon('heroicon-o-document')
+                        ->iconColor(Color::Emerald)
+                        ->collapsible()
                         ->columnSpanFull()
                         ->columns(1)
                         ->components([
-                        //TODO: make the RichContentRender for the body
                         TextEntry::make('body')
+                            ->extraAttributes(['class'=>'fi-prose'])
                             ->hiddenLabel()
                         ,
+                        //NOTE: maybe for debugging add a collapsed section with the body_content to the form
                         //TextEntry::make('body_content'),
                     ])
 
