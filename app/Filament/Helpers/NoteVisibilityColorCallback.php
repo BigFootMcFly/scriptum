@@ -4,9 +4,8 @@ namespace App\Filament\Helpers;
 
 use App\Enums\NoteVisibility;
 
-final class NoteVisibilityColors
+final class NoteVisibilityColorCallback
 {
-
     public static function make(): callable
     {
         return fn (NoteVisibility $state): string => match($state) {
