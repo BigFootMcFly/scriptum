@@ -3,13 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -66,4 +68,25 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    /**
+     * returns if the user can access the filament panel
+     *
+     * @param Panel $panel
+     *
+     * @return bool
+     *
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // only admins can access the nomad panel
+        if ($panel->getId() === 'nomad') {
+            return $this->is_admin;
+
+        }
+
+        // other panel(s) (which there are none for now) can be accessed by logged in users
+        return true;
+    }
+
 }
