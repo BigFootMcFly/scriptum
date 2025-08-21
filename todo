@@ -1,3 +1,6 @@
+☐ @high When the main controller/livewire full page component gets added and the /notes/{slug} route gets added,
+        update te Note->permalink() function to use the route address instead of the currently temporally hard coded value
+
 ☐ @high in "resources/views/livewire/auth/register.blade.php" generate the "handle" field value on the "name" blur event.
 
 ☐ @high Copy the Tempest/Higfhlight theme values to the CodeBlock editor theme!
