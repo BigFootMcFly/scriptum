@@ -120,14 +120,14 @@ class Note extends Model implements HasRichContent
      * NOTE: full URL which this inslude FQDN
      *
      */
-    protected function url(): Attribute
+    protected function permalink(): Attribute
     {
         return Attribute::make(
             get: fn (?string $value): string =>
                 match ($this->user) {
                     null => '',
-                    default => sprintf('%s%s/%s',
-                        request()->getUri(),
+                    default => sprintf('%s/notes/%s/%s',
+                        request()->getHttpHost(),
                         $this->user->handle,
                         $this->slug
                     )
@@ -165,7 +165,7 @@ class Note extends Model implements HasRichContent
                 'note.title' => $this->title,
                 'note.id' => $this->id,
                 'note.slug' => $this->slug,
-                'note.permalink' => $this->url,
+                'note.permalink' => $this->permalink,
             ])
             ->customBlocks([
                 CodeBlock::class
