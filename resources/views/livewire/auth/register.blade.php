@@ -26,6 +26,16 @@
             placeholder="email@example.com"
         />
 
+        <!-- User Handle -->
+        <flux:input
+            wire:model="handle"
+            :label="__('User handle')"
+            type="text"
+            required
+            autocomplete="handle"
+            placeholder="user-handle"
+        />
+
         <!-- Password -->
         <flux:input
             wire:model="password"
