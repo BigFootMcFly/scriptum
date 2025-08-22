@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Note extends Model implements HasRichContent
 {
@@ -167,6 +168,43 @@ class Note extends Model implements HasRichContent
             }
         });
     }
+
+    /**
+     * Full Text Search in the 'body_content' and 'title' fields
+     *
+     * @param Builder $query The Eloquen Builder instance (auto injected)
+     * @param string $term The search string, can have multiple tokens
+     * @param bool $prefix If true, each search token can be partial (a '*' will be added at the end of each one, so 'lara*' will match 'laravel')
+     *
+     * @return Builder
+     *
+     */
+    public function scopeSearch(Builder $query, string $term, bool $prefix = false): Builder
+    {
+        // Clean up term
+        $term = trim($term);
+
+        // if partial tokens are required
+        if ($prefix) {
+            // Split into tokens and add * to each token
+            $tokens = preg_split('/\s+/', $term);
+            $tokens = array_map(fn($t) => $t . '*', $tokens);
+            $term = implode(' ', $tokens);
+        }
+
+        return $query->from('notes as notes')
+            ->join('notes_fts', 'notes.id', '=', 'notes_fts.rowid')
+            ->whereRaw('notes_fts MATCH ?', [$term])
+            ->select(
+                'notes.*',
+                DB::raw('bm25(notes_fts) as rank'),
+                DB::raw("highlight(notes_fts, 0, '<mark>', '</mark>') as highlight_title"),
+                DB::raw("highlight(notes_fts, 1, '<mark>', '</mark>') as highlight_body_content"),
+            )
+            ->orderBy('rank')
+            ;
+    }
+
 
     /**
      * Setting up RichEditor properties for filament
