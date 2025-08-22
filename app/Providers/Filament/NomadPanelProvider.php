@@ -31,7 +31,7 @@ class NomadPanelProvider extends PanelProvider
             ->domain('admin.localhost')
             ->brandName('Nomad - Scriptum')
             ->spa(hasPrefetching: true)
-            ->unsavedChangesAlerts()
+            //->unsavedChangesAlerts() //NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
             ->databaseTransactions()
             ->strictAuthorization()
             ->login()
