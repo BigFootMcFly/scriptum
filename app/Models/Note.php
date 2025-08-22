@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\NoteVisibility;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
+use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,14 +49,29 @@ class Note extends Model implements HasRichContent
         });
     }
 
-    //TODO: make this extractor!!!
-    public static function extractBodyContents(string|array $body): string
+    /**
+     * Extracts the human readable text from a TipTap rich content (Filament RichEditor)
+     *
+     * @param array $body The content in TipTap json format, converted to array by the model
+     *
+     * @return string
+     *
+     */
+    public static function extractBodyContents(array $body): string
     {
-        if (is_array($body)) {
-            return json_encode($body);
-        }
+        // get the extracted content
+        $content = TipTapJsonContentExtractor::extractContent($body);
+        // remove empty spaces from the beginning and end of a strings
+        $content = array_map('trim', $content); //NOTE: why it the only one what cannot handle an array?
+        // replace multiple white space caracters with on space
+        $content = preg_replace('/\s+/', ' ',$content);
+        // remove left in new line charackters (this is propably unneccessary)
+        $content = str_replace("\n", ' ', $content);
 
-        return $body;
+        return implode(
+            '|',
+            $content
+        );
     }
 
     /**

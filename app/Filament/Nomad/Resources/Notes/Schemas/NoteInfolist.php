@@ -53,9 +53,17 @@ class NoteInfolist
                             ->extraAttributes(['class'=>'fi-prose'])
                             ->hiddenLabel()
                         ,
-                        //NOTE: maybe for debugging add a collapsed section with the body_content to the form
-                        //TextEntry::make('body_content'),
-                    ])
+                        ]),
+                    Section::make('Search index')
+                        ->icon('heroicon-o-magnifying-glass-circle')
+                        ->iconColor(Color::Emerald)
+                        ->collapsible()
+                        ->collapsed()
+                        ->columnSpanFull()
+                        ->components([
+                            TextEntry::make('body_content')
+                                ->hiddenLabel()
+                        ])
 
             ]);
     }
