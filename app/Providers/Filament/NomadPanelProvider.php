@@ -28,6 +28,7 @@ class NomadPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->sidebarCollapsibleOnDesktop()
             ->domain('admin.localhost')
             ->brandName('Nomad - Scriptum')
             ->spa(hasPrefetching: true)
