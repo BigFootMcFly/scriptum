@@ -52,8 +52,9 @@ class NotesTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    //->modalHeading(fn ($record) => "View Note"),
-                    ->modalHeading("View Note"),
+                    ->modalHeading("View Note")
+                    ->modalDescription(fn ($record) => "\"{$record->title}\"")
+                ,
                 EditAction::make(),
             ])
             ->toolbarActions([
