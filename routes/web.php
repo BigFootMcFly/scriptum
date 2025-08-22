@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use App\Livewire\MainPage;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -30,8 +31,11 @@ Route::get('main', MainPage::class);
 #ifdef test
 Route::get('test', function() {
     $note = Note::find(8);
-    return json_encode($note->body);
-    var_dump($note->body);
+    $result = [];
+    $extras = [];
+    $autoTags = [];
+    TipTapJsonContentExtractor::extractContent($note->body, $result, $extras, $autoTags);
+    dd($result, $extras, $autoTags);
 });
 #endif
 
