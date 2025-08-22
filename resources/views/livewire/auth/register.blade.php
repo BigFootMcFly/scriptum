@@ -7,7 +7,7 @@
     <form method="POST" wire:submit="register" class="flex flex-col gap-6">
         <!-- Name -->
         <flux:input
-            wire:model="name"
+            wire:model.blur="name"
             :label="__('Name')"
             type="text"
             required
@@ -28,7 +28,7 @@
 
         <!-- User Handle -->
         <flux:input
-            wire:model="handle"
+            wire:model.blur="handle"
             :label="__('User handle')"
             type="text"
             required

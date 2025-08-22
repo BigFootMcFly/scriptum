@@ -1,11 +1,20 @@
+# ---- Pending
+
 ☐ @high When the main controller/livewire full page component gets added and the /notes/{slug} route gets added,
         update te Note->permalink() function to use the route address instead of the currently temporally hard coded value
 
-☐ @high in "resources/views/livewire/auth/register.blade.php" generate the "handle" field value on the "name" blur event.
-
 ☐ @high Copy the Tempest/Higfhlight theme values to the CodeBlock editor theme!
 
-☐ @high Update tte IsAdmin middleware, currently it is used on ewery request in the nomad panel, but it may not be used this way..
+☐ @high Update the IsAdmin middleware, currently it is used on every request in the nomad panel, but it may/should not be used that way..
+
+☐ @low @maybe in the registration form when the 'handle' field changes, check for the availability of the handle
+            and show an error inmediatelly if it is not available, instead of just when submitted
+            and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
+
+# ---- Completed
+
+✔ @high in "resources/views/livewire/auth/register.blade.php" generate the "handle" field value on the "name" blur event. @done(25-08-22 10:04)
+
 
 ✔ @high For a guest the admin panel is not accessable (403), but that icludes the login page aswell, the IsAdmin middleware must be tweeked! @done(25-08-21 10:42)
     NOTE: modified it, if the user is not logged in, it redirects to 'login', otherwise if user is not an admin, sends a 403 error.

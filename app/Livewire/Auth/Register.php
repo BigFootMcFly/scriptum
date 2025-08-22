@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -22,6 +23,21 @@ class Register extends Component
     public string $password = '';
 
     public string $password_confirmation = '';
+
+    /**
+     * Update the handle if the name is changed
+     */
+    public function updatingName($value)
+    {
+        // only change it if it was not already customized by the user
+        $this->handle = match ($this->handle) {
+            '',
+            Str::slug($this->name)
+                => Str::slug($value)
+            ,
+            default => $this->handle
+        };
+    }
 
     /**
      * Handle an incoming registration request.
