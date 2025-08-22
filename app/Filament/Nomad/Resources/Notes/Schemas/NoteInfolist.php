@@ -16,6 +16,25 @@ class NoteInfolist
         return $schema
             ->components([
                 Section::make('Properties')
+                    //->heading(heading: fn ($record) => $record->title)
+                    //->description('There is no place like 127.0.0.1')
+                    //->description(fn ($record) => $record->title)
+                    //->view('filament.test.test')
+                    ->afterHeader([
+                        TextEntry::make('visibility')
+                            ->hiddenLabel()
+                            ->badge()
+                            ->color(NoteVisibilityColorCallback::make())
+                            ->extraAttributes([
+                                'x-show' => 'isCollapsed', // visible only when section is collapsed
+                                'x-cloak' => true,         // prevent FOUC before Alpine boots
+//                                'x-transition.duration.500ms', // does not work, @see: https://alpinejs.dev/directives/transition
+                            ])
+                        ,
+                        //TODO: add an icon which shows if the Note is deleted or not
+                    ])
+                    //TODO: maybe creat a custom section here, in which it is collapsed, show minimal info with badges,
+                    //      and a traditional full list if not collapsed...
                     //->icon('heroicon-o-list-bullet')
                     ->icon(Heroicon::ListBullet)
                     ->iconColor(Color::Emerald)
@@ -37,7 +56,7 @@ class NoteInfolist
                         ->dateTime(),
                     TextEntry::make('updated_at')
                         ->dateTime(),
-                        TextEntry::make('deleted_at')
+                    TextEntry::make('deleted_at')
                         ->dateTime()
                         ->placeholder('n/a'),
 
