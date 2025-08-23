@@ -7,12 +7,7 @@
             placeholder="Search notes..."
             class="border rounded px-2 py-1"
         />
-
-        <select wire:model="status" class="border rounded px-2 py-1">
-            <option value="">All statuses</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-        </select>
+        <input type="checkbox" wire:model.live="partial" class="border rounded px-2 py-1">Partial</input>
     </div>
 
     <!-- List -->

@@ -10,6 +10,8 @@ class MainPage extends Component
 
     public string $search = '';
 
+    public bool $partial = false;
+
     public function updateSearch(): void
     {
         $this->updateNoteList();
@@ -22,7 +24,11 @@ class MainPage extends Component
 
     protected function queryNodeList()
     {
-        return Note::visibleTo()->paginate(10);
+        $builder = Note::visibleTo(auth()->user());
+        if ($this->search !== '') {
+            $builder->search($this->search, $this->partial);
+        }
+        return $builder->paginate(10);
     }
 
     public function render()
