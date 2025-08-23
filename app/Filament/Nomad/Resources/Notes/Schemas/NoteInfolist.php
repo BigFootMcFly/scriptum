@@ -19,7 +19,6 @@ class NoteInfolist
                     //->heading(heading: fn ($record) => $record->title)
                     //->description('There is no place like 127.0.0.1')
                     //->description(fn ($record) => $record->title)
-                    //->view('filament.test.test')
                     ->afterHeader([
                         TextEntry::make('visibility')
                             ->hiddenLabel()
