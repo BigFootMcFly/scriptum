@@ -24,7 +24,7 @@ class MainPage extends Component
 
     protected function queryNodeList()
     {
-        $builder = Note::visibleTo(auth()->user());
+        $builder = Note::frontPage(auth()->user());
         if ($this->search !== '') {
             $builder->search($this->search, $this->partial);
         }
