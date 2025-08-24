@@ -1,4 +1,30 @@
 # ---- Pending
+☐ @low put a checkbox on the header of the main page for a user, and if in private (one user) mode, add a "green marking and full border to the page,
+        and a "Red" for the admin !!!
+
+
+☐ @low Maybe in the Note model the 'body' should have a mutator, and that should set the 'body_contet' field
+        @see: https://laravel.com/docs/12.x/eloquent-mutators#mutating-multiple-attributes
+        set: fn (string $value) => [
+            'body' => $value,
+            'body_content' => static::extractBodyContents($value),
+        ],
+
+☐ @high In the User/Notes panel, after creating a note and going to the notes table, the new note is not in the list
+            note: spa mode maybe...
+
+☐ @low Add testing for TipTapJsonContentExtractor
+        $note = Note::find(8);
+        $result = [];
+        $extras = [];
+        $autoTags = [];
+        TipTapJsonContentExtractor::extractContent($note->body, $result, $extras, $autoTags);
+        dd($result, $extras, $autoTags);
+
+
+☐ @low Is it a good way to use globalized "unique" slugs? Would it not be better to make a custom "unique"() validation rule and use it?
+        - It would be more complicated sql, propably slower,
+        + This "magic" manipulation is not good either...
 
 ☐ @high When the main controller/livewire full page component gets added and the /notes/{slug} route gets added,
         update te Note->permalink() function to use the route address instead of the currently temporally hard coded value
