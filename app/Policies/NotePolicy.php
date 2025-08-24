@@ -14,8 +14,17 @@ class NotePolicy
      */
     public function viewAny(User $user): bool
     {
+        if ($user?->is_admin) {
+            return true;
+        }
+
+        if (auth()->check()) {
+            return true;
+        }
+
+        return false;
         // allowing to show up on the nomad panel
-        return $user->is_admin;
+        //return $user->is_admin;
     }
 
     /**
@@ -24,7 +33,7 @@ class NotePolicy
     public function view(?User $user, Note $note): bool
     {
         // admins can view any notes
-        if ($user->is_admin) {
+        if ($user?->is_admin) {
             return true;
         }
 
