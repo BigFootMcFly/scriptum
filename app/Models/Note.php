@@ -24,6 +24,9 @@ class Note extends Model implements HasRichContent
 
     use SoftDeletes;
 
+    // Configuration
+
+    // -----------------------------------------------------------------------------------------------------------------
     /**
      * The attributes that are mass assignable.
      *
@@ -37,44 +40,7 @@ class Note extends Model implements HasRichContent
         'body',
     ];
 
-    /**
-     * Setup automations for generating the body_content property.
-     */
-    protected static function booted(): void
-    {
-        static::creating(function (Note $note) {
-            $note->body_content = static::extractBodyContents($note->body);
-        });
-        static::updating(function (Note $note) {
-            $note->body_content = static::extractBodyContents($note->body);
-        });
-    }
-
-    /**
-     * Extracts the human readable text from a TipTap rich content (Filament RichEditor)
-     *
-     * @param array $body The content in TipTap json format, converted to array by the model
-     *
-     * @return string
-     *
-     */
-    public static function extractBodyContents(array $body): string
-    {
-        // get the extracted content
-        $content = TipTapJsonContentExtractor::extractContent($body);
-        // remove empty spaces from the beginning and end of a strings
-        $content = array_map('trim', $content); //NOTE: why it the only one what cannot handle an array?
-        // replace multiple white space caracters with on space
-        $content = preg_replace('/\s+/', ' ',$content);
-        // remove left in new line charackters (this is propably unneccessary)
-        $content = str_replace("\n", ' ', $content);
-
-        return implode(
-            '|',
-            $content
-        );
-    }
-
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * Get the attributes that should be cast.
      *
@@ -87,6 +53,9 @@ class Note extends Model implements HasRichContent
         ];
     }
 
+    // Relations
+
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * The User the Note belonsg to
      *
@@ -98,6 +67,9 @@ class Note extends Model implements HasRichContent
         return $this->belongsTo(User::class);
     }
 
+    // Mutators and Accessors
+
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * Mutator and Accessor for the slug
      *
@@ -110,12 +82,14 @@ class Note extends Model implements HasRichContent
      */
     protected function slug(): Attribute
     {
+        $userScope = $this->user?->handle ?? '#';
         return Attribute::make(
-            get: fn (?string $value) => explode("/", $value)[1] ?? $value,
-            set: fn (string $value) => "{$this->user->handle}/$value",
+            get: fn (?string $value) => static::getScopedSlug($value),
+            set: fn (string $value) => static::globalizeSlug($userScope,$value),
         );
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * Generate the body_content from the body property
      *
@@ -125,10 +99,11 @@ class Note extends Model implements HasRichContent
     protected function bodyContent(): Attribute
     {
         return Attribute::make(
-            set: fn (array|string $value): string => static::extractBodyContents($this->body),
+            set: fn (): string => static::extractBodyContents($this->body),
         );
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * get the public adddress of the note
      *
@@ -152,7 +127,107 @@ class Note extends Model implements HasRichContent
         );
     }
 
-    public function scopeVisibleTo(Builder $query, ?Model $user = null): Builder
+    // Specializations
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Setup automations for generating the body_content property.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Note $note) {
+
+            // creating searchable body content
+            $note->body_content = static::extractBodyContents($note->body);
+
+            // creating "global" slug, if it was not set jet
+            if (str_starts_with($note->slug,'#/')) {
+                $user = $note->find($note->user_id);
+                $note->slug = static::globalizeSlug($user->handle, $note->slug);
+            }
+        });
+
+        static::updating(function (Note $note) {
+            $note->body_content = static::extractBodyContents($note->body);
+            //TODO: check, if the slug needs to be updated or not...
+        });
+    }
+
+    // Slug handling
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Makes a slug "global" trough the database
+     *
+     * @param string $scope The that the slug belongs to
+     * @param string $slug The scoped slug
+     *
+     * @return string The "unique" slug trough the database
+     *
+     * NOTE: this is here for if the format should be changed or extended, that can be in one place
+     *
+     */
+    public static function globalizeSlug(string $scope, string $slug): string
+    {
+        return "{$scope}/{$slug}";
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the "local" part of the slug inside a "global" scope
+     *
+     * @param string $slug The "global" slug
+     *
+     * @return string The unique slug in the "local" scope
+     *
+     */
+    public static function getScopedSlug(?string $slug = null): ?string
+    {
+        return explode("/", $slug)[1] ?? $slug;
+    }
+
+    // Helper functions
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Extracts the human readable text from a TipTap rich content (Filament RichEditor)
+     *
+     * @param array $body The content in TipTap json format, converted to array by the model
+     *
+     * @return string
+     *
+     */
+    public static function extractBodyContents(string|array $body): string
+    {
+        if (is_string($body)) {
+            $body = json_decode(json: $body, associative: true);
+        }
+        // get the extracted content
+        $content = TipTapJsonContentExtractor::extractContent($body);
+        // remove empty spaces from the beginning and end of a strings
+        $content = array_map('trim', $content); //NOTE: why is 'trim' the only function that cannot handle an array?
+        // replace multiple white space caracters with on space
+        $content = preg_replace('/\s+/', ' ',$content);
+        // remove left in new line charackters (this is propably unneccessary)
+        $content = str_replace("\n", ' ', $content);
+
+        return implode(
+            '|',
+            $content
+        );
+    }
+
+    // Scopes
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the combined list of records that are visible to the current user or guest
+     *
+     * guest => all "public" notes
+     * user => all "public" notes ant its own "private" notes
+     *
+     */
+    public function scopeFrontPage(Builder $query, ?Model $user = null): Builder
     {
         return $query->where(function ($q) use ($user) {
             // Public is always visible
@@ -169,6 +244,16 @@ class Note extends Model implements HasRichContent
         });
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the records that belongs to the provided user
+     */
+    public function scopeOwned(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id',$user->id);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * Full Text Search in the 'body_content' and 'title' fields
      *
@@ -205,7 +290,9 @@ class Note extends Model implements HasRichContent
             ;
     }
 
+    // Filament helpers
 
+    // ----------------------------------------------------------------------------------------------------------------
     /**
      * Setting up RichEditor properties for filament
      *
