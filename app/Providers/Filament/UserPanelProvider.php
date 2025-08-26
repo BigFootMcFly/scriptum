@@ -25,6 +25,10 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            //->navigation(false)
+            //->topbar(!auth()->check())
+            //TODO: maybe the note search sould be in the page header section...
+            ->globalSearch(false)
             ->default()
             ->id('user')
             ->path('user')
@@ -40,7 +44,7 @@ class UserPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\Filament\User\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\Filament\User\Pages')
             ->pages([
-                Dashboard::class,
+                //Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\Filament\User\Widgets')
             ->widgets([

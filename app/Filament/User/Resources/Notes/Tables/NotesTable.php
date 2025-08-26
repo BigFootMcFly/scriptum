@@ -15,6 +15,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class NotesTable
 {
+
     public static function configure(Table $table): Table
     {
         return $table
