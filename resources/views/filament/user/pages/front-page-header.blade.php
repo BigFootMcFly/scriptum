@@ -24,7 +24,16 @@
                 class="fi-input fi-input-has-inline-prefix"
                 id="search">
         </div>
+
     </div>
+
     <!--<input type="checkbox" wire:model.live="partial" class="border rounded px-2 py-1">Partial</input>-->
+    <x-filament::button
+        color="primary"
+        class="mt-4"
+        wire:click="openCreateModal()"
+    >
+        New Note
+    </x-filament::button>
 
 </div>

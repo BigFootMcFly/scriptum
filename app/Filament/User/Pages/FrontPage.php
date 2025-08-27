@@ -2,15 +2,21 @@
 
 namespace App\Filament\User\Pages;
 
+use App\Enums\NoteVisibility;
 use App\Models\Note;
-use Filament\Forms\Components\Textarea;
+use Exception;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 
 class FrontPage extends Page implements HasForms
@@ -27,39 +33,149 @@ class FrontPage extends Page implements HasForms
     //protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
     protected static ?string $title = 'My Notes';
 
-
     protected static ?string $slug = 'main-page';
 
     protected string $view = 'filament.user.pages.front-page';
 
     public string $search = '';
 
-/* BEGIN */
-public ?Note $editingNote = null;
+    public bool $partial = false;
 
-public function openEditModal(Note $note): void
-{
-    $this->editingNote = $note;
-    //$this->form->fill($note->toArray());
-    $this->dispatch('open-modal', id: 'edit-note');
-}
-
-public function save(): void
-{
-    $this->validate();
-    $this->editingNote->update($this->form->getState());
-    $this->dispatch('close-modal', id: 'edit-note');
-}
-
-protected function getFormSchema(): array
-{
-    return [
-        TextInput::make('title')->required(),
-        Textarea::make('content')->rows(6),
+    public ?array $data = [
+        'title' => null,
+        'visibility'  => null,
+        'slug' => null,
+        'body' => [],
     ];
-}
+/*
+    public ?array $cdata = [
+        'title' => null,
+        'visibility'  => null,
+        'slug' => null,
+        'body' => [],
+    ];
+*/
+/*
+        'body'  => [
+            'type' => 'doc',
+            'content' => [
+                'type' => 'paragraph',
+                'content' => [],
+            ],
+        ],
+        //'body' => json_decode('{"type":"doc","content":[{"type":"paragraph","content":[]}]}'),
+        //{"type":"doc","content":[{"type":"paragraph","content":[]}]}
+*/
 
-/* END */
+
+/* BEGIN */
+    public ?Note $editingNote = null;
+
+    // ----------------------------------------------------------------------------------------------------------------
+    public function openEditModal(Note $note): void
+    {
+        $this->editingNote = $note;
+        $this->form->statePath('data');
+        $this->form->fill($note->toArray());
+        $this->dispatch('open-modal', id: 'edit-note');
+    }
+
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    public function openCreateModal(): void
+    {
+        $this->form->statePath('data');
+        $this->data = [
+            'body' => [],
+            'visibility' => NoteVisibility::Private,
+            'title' => '',
+            'slug' => '',
+        ];
+        //$this->form->fill();
+        $this->dispatch('open-modal', id: 'edit-note');
+    }
+
+    /*
+    public function create(): void{
+        Note::create(
+            $this->cdata
+            + ['user_id' => auth()->user()->id]
+        );
+        //dd($this->form->getState('body'));
+        //dd($this->data);
+        $this->dispatch('close-modal', id: 'create-note');
+        Notification::make()
+                ->title('New note created')
+                ->success()
+                ->send();
+    }
+*/
+
+    public function save(): void
+    {
+        if ($this->editingNote) {
+            $this->validate();
+            $this->editingNote->update($this->form->getState());
+            $this->dispatch('close-modal', id: 'edit-note');
+            Notification::make()
+                ->title('Note updated')
+                ->success()
+                ->send();
+
+        } else {
+            $this->validate();
+            Note::create(
+                $this->data
+                + ['user_id' => auth()->user()->id]
+            );
+            $this->dispatch('close-modal', id: 'edit-note');
+            Notification::make()
+                ->title('New note created')
+                ->success()
+                ->send();
+        }
+        $this->editingNote = null;
+        //dd($this->form->getState());
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->extraAttributes(['class'=>'fi-width-5xl'])
+            ->schema([
+                Select::make('visibility')
+                ->options(NoteVisibility::class)
+                ->default('private')
+                ->required(),
+            TextInput::make('title')
+                ->required()
+                ->minLength(3)
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+            TextInput::make('slug')
+                ->required()
+                ->unique(Note::class, 'slug'),
+            RichEditor::make('body')
+                ->json()
+                ->fileAttachmentsVisibility('private')
+                ->columnSpanFull()
+                //->activePanel('customBlocks')
+                ->toolbarButtons([
+                    ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript'],
+                    ['clearFormatting'],
+                    ['details'],
+                    ['h1', 'h2', 'h3', 'alignStart', 'alignCenter', 'alignEnd'],
+                    ['blockquote', 'bulletList', 'orderedList', 'horizontalRule'],
+                    ['link'],
+                    ['table', 'attachFiles', 'mergeTags', 'customBlocks'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
+                    ['undo', 'redo'],
+                ])
+        ])
+            ->statePath('data'); // <-- all values stored in $this->data
+    }
+
+    /* END */
 
 
 
@@ -106,6 +222,8 @@ protected function getFormSchema(): array
         $builder = Note::frontPage(auth()->user());
         if ($this->search !== '') {
             $builder->search($this->search, $this->partial);
+        } else {
+            $builder->orderBy('created_at', 'desc');
         }
         return $builder->paginate(10);
     }
