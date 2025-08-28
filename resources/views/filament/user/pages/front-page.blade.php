@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <div class="space-y-6">
         @foreach ($this->notes() as $note)
-            <div class="relative rounded-2xl border bg-white dark:bg-gray-900 shadow-sm p-4">
+            <div class="relative rounded-2xl border bg-white dark:bg-zinc-900 shadow-sm p-4 border-zinc-800">
 
                 {{-- Edit button --}}
                 <div class="absolute top-2 right-2">
@@ -12,6 +12,7 @@
                         size="sm"
                         color="gray"
                         label="Edit"
+                        tooltip="Edit the note"
                     />
                 </div>
 

@@ -43,11 +43,12 @@ class UserPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-/*            ->viteTheme([
+            ->viteTheme([
                 'resources/css/filament/nomad/theme.css',
                 'resources/css/highlight/light-plus.css',
                 'resources/css/highlight/dark-plus.css',
-            ])*/
+                'resources/css/app.css'
+            ])
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\Filament\User\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\Filament\User\Pages')
             ->pages([

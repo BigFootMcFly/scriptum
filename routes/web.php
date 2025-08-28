@@ -41,4 +41,8 @@ Route::get('test', function() {
 });
 #endif
 
+Route::get('sajt', function() {
+    return view('filament.user.pages.sajt');
+});
+
 require __DIR__.'/auth.php';
