@@ -1,4 +1,6 @@
 <div>
+
+{{-- NOTE: moved to the TopBar
     <!-- Search / Filters -->
     <div class="fi-input-wrp">
         <div class="fi-input-wrp-prefix fi-input-wrp-prefix-has-content fi-inline">
@@ -26,12 +28,12 @@
         </div>
 
     </div>
-
+--}}
     @if(auth()->check())
         <x-filament::button
             color="primary"
             class="mt-4"
-            wire:click="openCreateModal()"
+            wire:click="openEditModal"
         >
             New Note
         </x-filament::button>

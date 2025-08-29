@@ -1,4 +1,45 @@
 <x-filament-panels::page>
+
+
+
+<div class="flex items-center w-full">
+    <!-- Left group (3 divs) -->
+    <div class="flex space-x-2">
+        <div class="px-2 py-1 bg-gray-200">Left 1</div>
+        <div class="px-2 py-1 bg-gray-200">Left 2</div>
+        <div class="px-2 py-1 bg-gray-200">Left 3</div>
+        <div class="px-2 py-1 bg-gray-200">Left 4</div>
+    </div>
+
+    <!-- Middle (fills remaining space) -->
+    <div class="flex-1 px-2 text-center bg-gray-800">
+        <x-filament::input.wrapper>
+            <x-filament::input
+                type="text"
+                {{--wire:model="name"--}}
+            />
+        </x-filament::input.wrapper>
+
+    </div>
+
+    <!-- Right -->
+    <div class="px-2 py-1 bg-gray-200">
+        Right
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
         @foreach ($this->notes() as $note)
             <div class="py-4">
@@ -84,10 +125,10 @@
         {{ $this->form }}
 
         <x-slot name="footer">
-            <x-filament::button wire:click="save" color="primary">
+            <x-filament::button wire:click="saveNote" color="primary">
                 Save
             </x-filament::button>
-            <x-filament::button wire:click="cancel" color="gray">
+            <x-filament::button wire:click="cancelEditForm" color="gray">
                 Cancel
             </x-filament::button>
         </x-slot>
