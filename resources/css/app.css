@@ -4,6 +4,10 @@
 /*@import './highlight/dark-plus.css';*/
 @import '../../vendor/tempest/highlight/src/Themes/Css/dark-plus.css';
 
+@import './filament/nomad/theme.css';
+@import './highlight/light-plus.css';
+@import './highlight/dark-plus.css';
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
@@ -71,9 +75,3 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
-
-/*
-.note-body pre {
-    padding: 1em;
-}
-*/
