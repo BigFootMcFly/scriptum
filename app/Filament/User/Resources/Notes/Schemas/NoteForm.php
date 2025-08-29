@@ -3,6 +3,7 @@
 namespace App\Filament\User\Resources\Notes\Schemas;
 
 use App\Enums\NoteVisibility;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Models\Note;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
@@ -24,7 +25,7 @@ class NoteForm
                     ->relationship('user', 'name')
                     ->required(),*/
                 Select::make('visibility')
-                    ->options(NoteVisibility::class)
+                    ->options(NoteVisibility::userEditable())
                     ->default('private')
                     ->required(),
                 TextInput::make('title')
@@ -36,8 +37,11 @@ class NoteForm
                     ->required()
                     ->unique(Note::class, 'slug'),
                 RichEditor::make('body')
-                    //->json()
+                    ->json()
                     ->fileAttachmentsVisibility('private')
+                    ->customBlocks([
+                        CodeBlock::class,
+                    ])
                     ->columnSpanFull()
                     ->activePanel('customBlocks')
                     ->toolbarButtons([
