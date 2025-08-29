@@ -1,4 +1,5 @@
 # ---- Pending
+
 ☐ @low Add a "Copy to clipbord" button on code blacks!
         see: https://github.com/livewire/flux/discussions/835
 
@@ -45,6 +46,9 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @high In the User page, in the edit/insert forms limit the visibility options to only private/public !!! @done(25-08-29 17:50)
+
 
 ✔ @high in "resources/views/livewire/auth/register.blade.php" generate the "handle" field value on the "name" blur event. @done(25-08-22 10:04)
 
