@@ -6,6 +6,7 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Models\Note;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,5 +41,12 @@ Route::get('test', function() {
     dd($result, $extras, $autoTags);
 });
 #endif
+
+#ifdef test
+Route::get('search', function(){
+    dd(Filament::getTopbarLivewireComponent());
+});
+#endif
+
 
 require __DIR__.'/auth.php';

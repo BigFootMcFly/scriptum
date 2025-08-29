@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\User\Resources\Notes\NoteResource;
+use App\Utils\SmartSearch;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -30,7 +31,9 @@ class UserPanelProvider extends PanelProvider
             //->navigation(false)
             //->topbar(!auth()->check())
             //TODO: maybe the note search sould be in the page header section...
+
             ->globalSearch(false)
+
             ->default()
             ->id('user')
             ->path('user')
@@ -68,7 +71,7 @@ class UserPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                //Authenticate::class,
+                Authenticate::class,
             ]);
     }
 }
