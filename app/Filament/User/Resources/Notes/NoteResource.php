@@ -44,7 +44,17 @@ class NoteResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', auth()->user()->id);
+        $query = parent::getEloquentQuery()->where('user_id', auth()->user()->id);
+
+
+        //NOTE: add this if the resource table should be filtered by the top search as well...
+        $forntPageSearch = session('front-page-search','');
+        if ('' !== $forntPageSearch) {
+            $query->search($forntPageSearch, true);
+        }
+
+
+        return $query;
     }
 
 

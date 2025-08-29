@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\User\Resources\Notes\NoteResource;
+use App\Livewire\FrontPage\TopBar;
 use App\Utils\SmartSearch;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,12 +28,14 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->maxContentWidth(Width::FiveExtraLarge)
+            //->maxContentWidth(Width::Full)
             //->navigation(false)
             //->topbar(!auth()->check())
             //TODO: maybe the note search sould be in the page header section...
 
             ->globalSearch(false)
+            ->topbarLivewireComponent(TopBar::class)
+            ->sidebarCollapsibleOnDesktop(false)
 
             ->default()
             ->id('user')
