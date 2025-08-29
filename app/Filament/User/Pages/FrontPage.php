@@ -3,6 +3,7 @@
 namespace App\Filament\User\Pages;
 
 use App\Enums\NoteVisibility;
+use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Models\Note;
 use Exception;
 use Filament\Forms\Components\RichEditor;
@@ -39,7 +40,7 @@ class FrontPage extends Page implements HasForms
 
     public string $search = '';
 
-    public bool $partial = false;
+    public bool $partial = true;
 
     public ?array $data = [
         'title' => null,
@@ -96,47 +97,56 @@ class FrontPage extends Page implements HasForms
         $this->dispatch('open-modal', id: 'edit-note');
     }
 
-    /*
-    public function create(): void{
+
+    protected function updateNote(): void
+    {
+        $this->validate();
+        $this->editingNote->update($this->form->getState());
+        $this->dispatch('close-modal', id: 'edit-note');
+        Notification::make()
+            ->title('Note updated')
+            ->success()
+            ->send();
+    }
+
+    protected function createNote(): void
+    {
+        $this->validate();
         Note::create(
-            $this->cdata
+            $this->data
             + ['user_id' => auth()->user()->id]
         );
-        //dd($this->form->getState('body'));
-        //dd($this->data);
-        $this->dispatch('close-modal', id: 'create-note');
+        $this->dispatch('close-modal', id: 'edit-note');
         Notification::make()
-                ->title('New note created')
-                ->success()
-                ->send();
+            ->title('New note created')
+            ->success()
+            ->send();
     }
-*/
 
     public function save(): void
     {
         if ($this->editingNote) {
-            $this->validate();
-            $this->editingNote->update($this->form->getState());
-            $this->dispatch('close-modal', id: 'edit-note');
-            Notification::make()
-                ->title('Note updated')
-                ->success()
-                ->send();
-
-        } else {
-            $this->validate();
-            Note::create(
-                $this->data
-                + ['user_id' => auth()->user()->id]
-            );
-            $this->dispatch('close-modal', id: 'edit-note');
-            Notification::make()
-                ->title('New note created')
-                ->success()
-                ->send();
+            $this->updateNote();
+            $this->editingNote = null;
+            return;
         }
+
+        $this->createNote();
+    }
+
+    public function cancel(): void
+    {
+        $message = match ($this->editingNote) {
+            null => 'Creating note cancelled',
+            default => 'Editing note cancelled',
+        };
         $this->editingNote = null;
-        //dd($this->form->getState());
+        $this->dispatch('close-modal', id: 'edit-note');
+        Notification::make()
+            ->title($message)
+            ->info()
+            ->send();
+
     }
 
     public function form(Schema $schema): Schema
@@ -160,6 +170,9 @@ class FrontPage extends Page implements HasForms
                 ->json()
                 ->fileAttachmentsVisibility('private')
                 ->columnSpanFull()
+                ->customBlocks([
+                    CodeBlock::class,
+                ])
                 //->activePanel('customBlocks')
                 ->toolbarButtons([
                     ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript'],
@@ -220,8 +233,17 @@ class FrontPage extends Page implements HasForms
     protected function queryNodeList()
     {
         $builder = Note::frontPage(auth()->user());
-        if ($this->search !== '') {
-            $builder->search($this->search, $this->partial);
+
+        //$string = '"' . $this->search . '"';
+        $string = $this->search;
+        //$string = preg_replace('/[^A-Za-z0-9 \-\*\"]/', '', $string);
+
+        if ('' !== $string) {
+            //dump($string);
+            //$string = '"co"* -"whe"*';
+            //$string = '"co"*';
+            //dump($string);
+            $builder->search($string, $this->partial);
         } else {
             $builder->orderBy('created_at', 'desc');
         }

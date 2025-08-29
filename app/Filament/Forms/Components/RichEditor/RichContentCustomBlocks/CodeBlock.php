@@ -30,6 +30,7 @@ class CodeBlock extends RichContentCustomBlock
         $code_editor_default_language = 'php';
 
         return $action
+            ->modalWidth('5xl')
 /*            ->modalDescription('Add your code')*/
             ->schema([
                 TextInput::make('title'),
@@ -62,7 +63,7 @@ class CodeBlock extends RichContentCustomBlock
 
     public static function highlightCode(array $config): string
     {
-        $highlighter = new Highlighter;
+        $highlighter = new Highlighter()->withGutter(startAt: 1);
         $result = $highlighter->parse($config['code'], $config['language']);
         return $result;
 

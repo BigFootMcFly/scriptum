@@ -28,6 +28,8 @@
     </div>
 
     <!--<input type="checkbox" wire:model.live="partial" class="border rounded px-2 py-1">Partial</input>-->
+    @if(auth()->check())
+
     <x-filament::button
         color="primary"
         class="mt-4"
@@ -35,5 +37,6 @@
     >
         New Note
     </x-filament::button>
+    @endif
 
 </div>

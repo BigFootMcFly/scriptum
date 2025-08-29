@@ -26,7 +26,7 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            //->maxContentWidth(Width::Full)
+            ->maxContentWidth(Width::FiveExtraLarge)
             //->navigation(false)
             //->topbar(!auth()->check())
             //TODO: maybe the note search sould be in the page header section...
@@ -71,7 +71,7 @@ class UserPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                //Authenticate::class,
             ]);
     }
 }

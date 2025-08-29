@@ -9,9 +9,6 @@
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
-@source '../views/filament/user/pages/front-page.blade.php';
-@source '../views/filament/user/pages/sajt.blade.php';
-
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
@@ -74,3 +71,9 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+/*
+.note-body pre {
+    padding: 1em;
+}
+*/

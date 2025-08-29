@@ -1,4 +1,9 @@
 # ---- Pending
+☐ @low Add a "Copy to clipbord" button on code blacks!
+        see: https://github.com/livewire/flux/discussions/835
+
+☐ @today Add a users route, without auth can reed the users public notes
+
 ☐ @low User -> top menu rename 'Notes' to 'My Notes'.
 
 ☐ @low put a checkbox on the header of the main page for a user, and if in private (one user) mode, add a "green marking and full border to the page,

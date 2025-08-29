@@ -268,13 +268,16 @@ class Note extends Model implements HasRichContent
     {
         // Clean up term
         $term = trim($term);
+        $term = preg_replace('/[^A-Za-z0-9 \-\*\"]/', '', $term);
 
         // if partial tokens are required
         if ($prefix) {
             // Split into tokens and add * to each token
             $tokens = preg_split('/\s+/', $term);
-            $tokens = array_map(fn($t) => $t . '*', $tokens);
+            $tokens = array_map(fn($t) => '"'.$t.'"' . '*', $tokens);
             $term = implode(' ', $tokens);
+        } else {
+            $term = '"' . $term .'"';
         }
 
         return $query->from('notes as notes')
