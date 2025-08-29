@@ -27,16 +27,14 @@
 
     </div>
 
-    <!--<input type="checkbox" wire:model.live="partial" class="border rounded px-2 py-1">Partial</input>-->
     @if(auth()->check())
-
-    <x-filament::button
-        color="primary"
-        class="mt-4"
-        wire:click="openCreateModal()"
-    >
-        New Note
-    </x-filament::button>
+        <x-filament::button
+            color="primary"
+            class="mt-4"
+            wire:click="openCreateModal()"
+        >
+            New Note
+        </x-filament::button>
     @endif
 
 </div>
