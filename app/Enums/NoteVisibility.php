@@ -23,4 +23,15 @@ enum NoteVisibility: string
     #[Description('This note is currently restricted from access.')]
     case Restricted = 'restricted';
 
+    public static function userEditable(): array
+    {
+        $list = [
+            self::Private,
+            self::Public,
+        ];
+
+        return array_column($list, 'name', 'value');
+
+    }
+
 }
