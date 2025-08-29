@@ -2,12 +2,14 @@
 
 namespace App\Filament\User\Resources\Notes\Tables;
 
+use App\Filament\Helpers\NoteVisibilityColorCallback;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -15,23 +17,21 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class NotesTable
 {
+    //protected ?string $maxContentWidth = 'full';
 
     public static function configure(Table $table): Table
     {
         return $table
+            //->extraAttributes(['class'=>'fi-width-5xl'])
             ->columns([
-                TextColumn::make('user.name')
-                    ->searchable(),
                 TextColumn::make('visibility')
-                    ->searchable(),
+                    ->badge()
+                    ->sortable()
+                    ->color(NoteVisibilityColorCallback::make()),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->sortable(),
                 TextColumn::make('slug')
-                    ->searchable(),
-                /*TextColumn::make('body')
-                    ->searchable(),
-                TextColumn::make('body_content')
-                    ->searchable(),*/
+                    ->sortable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
