@@ -1,4 +1,5 @@
-<div class="w-auto">
+<div class="w-auto" x-on:keydown.window.ctrl.shift.f.prevent="$refs.searchInput.focus()">
+</script>
     <div class="fi-input-wrp w-5xl">
         <div class="fi-input-wrp-prefix fi-input-wrp-prefix-has-content fi-inline">
             <svg wire:loading.remove.delay.default="1" wire:target="search" class="fi-icon fi-size-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -11,13 +12,14 @@
         </div>
         <div class="fi-input-wrp-content-ctn">
             <input
+                x-ref="searchInput"
                 autocomplete="off"
                 maxlength="1000"
                 placeholder="Search"
                 type="search"
-                wire:key="global-search.field.input"
+                {{--wire:key="global-search.field.input"--}
                 x-bind:id="$id('input')"
-                x-on:keydown.down.prevent.stop="$dispatch('focus-first-global-search-result')"
+                {{--x-on:keydown.down.prevent.stop="$dispatch('focus-first-global-search-result')"--}}
                 wire:model.live.debounce.300ms="search"
                 x-mousetrap.global.="document.getElementById($id('input')).focus()"
                 class="fi-input fi-input-has-inline-prefix"

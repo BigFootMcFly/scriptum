@@ -33,7 +33,8 @@ class UserPanelProvider extends PanelProvider
             //->topbar(!auth()->check())
             //TODO: maybe the note search sould be in the page header section...
 
-            ->globalSearch(false)
+            ->globalSearch(false) //NOTE: we use our own
+            //->globalSearchKeyBindings(['command+f', 'shift+ctrl+f'])
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
 
