@@ -28,7 +28,7 @@ class IsAdmin
         }
 
         // logged in user is not an admin
-        if (!auth()->user()->is_admin) {
+        if (!auth()->user()->isAdmin()) {
             return redirect()->back()->with('unauthorised', 'You are unauthorised to access this page');
             //abort(403);
         }

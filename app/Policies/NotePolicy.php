@@ -14,7 +14,7 @@ class NotePolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user?->is_admin) {
+        if ($user?->isAdmin()) {
             return true;
         }
 
@@ -24,7 +24,7 @@ class NotePolicy
 
         return false;
         // allowing to show up on the nomad panel
-        //return $user->is_admin;
+        //return $user->isAdmin();
     }
 
     /**
@@ -33,7 +33,7 @@ class NotePolicy
     public function view(?User $user, Note $note): bool
     {
         // admins can view any notes
-        if ($user?->is_admin) {
+        if ($user?->isAdmin()) {
             return true;
         }
 
@@ -73,7 +73,7 @@ class NotePolicy
      */
     public function update(User $user, Note $note): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -93,7 +93,7 @@ class NotePolicy
      */
     public function delete(User $user, Note $note): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -113,7 +113,7 @@ class NotePolicy
      */
     public function deleteAny(User $user): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -126,7 +126,7 @@ class NotePolicy
      */
     public function restore(User $user, Note $note): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -146,7 +146,7 @@ class NotePolicy
      */
     public function restoreAny(User $user): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -158,7 +158,7 @@ class NotePolicy
      */
     public function forceDelete(User $user, Note $note): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -170,7 +170,7 @@ class NotePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 

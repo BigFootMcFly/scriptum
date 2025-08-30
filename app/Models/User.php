@@ -57,6 +57,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Note::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
     /**
      * Get the user's initials
      */
@@ -81,7 +86,7 @@ class User extends Authenticatable implements FilamentUser
     {
         // only admins can access the nomad panel
         if ($panel->getId() === 'nomad') {
-            return $this->is_admin;
+            return $this->isAdmin();
 
         }
 
