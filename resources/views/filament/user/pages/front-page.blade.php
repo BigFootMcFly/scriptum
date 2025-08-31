@@ -12,10 +12,11 @@
     </div>
 
     <!-- Middle (fills remaining space) -->
-    <div class="flex-1 px-2 text-center bg-gray-800">
+    <div class="flex-1 px-2 text-center bg-amber-200">
         <x-filament::input.wrapper>
             <x-filament::input
                 type="text"
+                class="ml-auto mr-auto w-9/10 bg-red-600"
                 {{--wire:model="name"--}}
             />
         </x-filament::input.wrapper>
