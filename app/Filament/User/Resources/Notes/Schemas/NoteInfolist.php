@@ -2,8 +2,12 @@
 
 namespace App\Filament\User\Resources\Notes\Schemas;
 
+use App\Filament\Helpers\NoteVisibilityColorCallback;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 
 class NoteInfolist
 {
@@ -11,18 +15,61 @@ class NoteInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('user.name'),
-                TextEntry::make('visibility'),
-                TextEntry::make('title'),
-                TextEntry::make('slug'),
-                TextEntry::make('body'),
-                TextEntry::make('body_content'),
-                TextEntry::make('deleted_at')
-                    ->dateTime(),
-                TextEntry::make('created_at')
-                    ->dateTime(),
-                TextEntry::make('updated_at')
-                    ->dateTime(),
+                Section::make('Properties')
+                    ->afterHeader([
+                        TextEntry::make('visibility')
+                            ->hiddenLabel()
+                            ->badge()
+                            ->color(NoteVisibilityColorCallback::make())
+                            ->extraAttributes([
+                                'x-show' => 'isCollapsed', // visible only when section is collapsed
+                                'x-cloak' => true,         // prevent FOUC before Alpine boots
+                            ])
+                        ,
+                        //TODO: add an icon which shows if the Note is deleted or not
+                    ])
+                    //TODO: maybe creat a custom section here, in which it is collapsed, show minimal info with badges,
+                    //      and a traditional full list if not collapsed...
+                    //->icon('heroicon-o-list-bullet')
+                    ->icon(Heroicon::ListBullet)
+                    ->iconColor(Color::Emerald)
+                    ->collapsed(true)
+                    ->collapsible(true)
+                    ->columnSpanFull()
+                    ->columns(2)
+                    ->components([
+                        TextEntry::make('title')
+                            ->color('info'),
+                        TextEntry::make('slug')
+                            ->color('info'),
+                        TextEntry::make('created_at')
+                            ->color('info')
+                            ->dateTime(),
+                        TextEntry::make('updated_at')
+                            ->color('info')
+                            ->dateTime(),
+                            TextEntry::make('visibility')
+                            ->badge()
+                            ->color(NoteVisibilityColorCallback::make())
+                        ,
+                        TextEntry::make('deleted_at')
+                            ->dateTime()
+                            ->placeholder('n/a')
+                            ->color(Color::Red)
+                            ,
+                    ]),
+                    Section::make('Content')
+                        ->icon('heroicon-o-document')
+                        ->iconColor(Color::Emerald)
+                        ->collapsible()
+                        ->columnSpanFull()
+                        ->columns(1)
+                        ->components([
+                        TextEntry::make('body')
+                            ->extraAttributes(['class'=>'fi-prose'])
+                            ->hiddenLabel()
+                        ,
+                        ]),
             ]);
     }
 }
