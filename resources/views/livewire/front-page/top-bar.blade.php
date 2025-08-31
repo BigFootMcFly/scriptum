@@ -249,7 +249,12 @@
                     class="mt-4"
                     icon="heroicon-m-plus"
                     tooltip="Add new note"
+{{--
                     wire:click="$dispatch('create-new-note')"
+--}}
+{{-- TODO: make this client side alpinejs --}}
+                    x-on:click.prevent="$dispatch('create-new-note')"
+
                 >
                 </x-filament::button>
             @endif

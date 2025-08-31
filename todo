@@ -1,5 +1,46 @@
 # ---- Pending
-☐ @today In the User/Notes View Note should be the same as the admin version...
+
+☐ @low Currently the front page shows the nodes sorted by the 'updated_at','DESC' order without the search, earlier it was 'created_by','DESC',
+        think out, which one is better, or add a swithc/butoon/etc...
+
+☐ @high If the 'New Note' button is pressed, the 'main page' note list gets refresehed, which is extensive, the modal should be shown on client side only,
+        use alpinejs here, and maybe the modal should do an authentication before is shown, to check if the user is not logged out in another window...
+        NOTE: in this case, the FrontPage->queryNodeList() is called to get the note list...
+        @see: https://w3collective.com/modal-dialog-alpine-js/
+
+☐ @low @maybe TipTapJsonContentExtractor::extractContent() maybe should have a tdo as parameter instead of 4 arrays...
+        _AND_ the pictograms should be added to that... ex.:
+                class TipTapContentDetails
+                {
+                        public function __construct
+                        (
+                                public array $result = [],
+                                public array $extras = [],
+                                public array $autoTags = []
+                                pubilc array $pictograms = [],
+                        ) {}
+
+                        public static function new(): self
+                        {
+                                return new static;
+                        }
+                }
+
+
+☐ @high MainPage class is used on /user/main-page, but FrontPage has the 'same' queryNodeList() function, One of them may not be used, sort outthose
+        NOTE: the MainPage was the first (for testing), the FrontPage waas created to replace the MainPage, but the replacement needs to be done jet...
+
+☐ @maybe In teh Nomad/Notes InfoView maybe add links to the user profile and note lists (filtered table view)
+
+☐ @low @maybe In the table view (and even on the infolist) add pictograms (small icons) to show, that the note has image,code, link, etc. in it...
+        AND maybe add big sites favicons to the list which should be atomatically detected like the autotags...
+        @see: https://www.flaticon.com/search?word=image
+        @see: https://www.flaticon.com/search?word=code
+
+
+☐ @low Add quick view actiion to notes tables like in proxima backend
+
+☐ @low Add custom color coding into Note InfoView (both nomad and User) to mark deleted messages
 
 ☐ @low Add a "Copy to clipbord" button on code blacks!
         see: https://github.com/livewire/flux/discussions/835
@@ -13,6 +54,8 @@
             'body' => $value,
             'body_content' => static::extractBodyContents($value),
         ],
+
+☐ @high User/Notes table -> edit -> delete if i delete a note, the note list table still shows the note, the table needs to be refreshed !!!
 
 ☐ @high In the User/Notes panel, after creating a note and going to the notes table, the new note is not in the list
             note: spa mode maybe...
@@ -42,6 +85,12 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @low Add color coding in the User/Notes and Nomad/Notes table for deleted/normal rows like in proxima backend @done(25-08-31 19:12)
+
+✔ @today In the User/Notes View Note should be the same as the admin version... @done(25-08-31 18:37)
+        NOTE: the 'Search index' section and the user name was removed, so it is not the same, created a new one
+
 ✔ @low User -> top menu rename 'Notes' to 'My Notes'. @done(25-08-31 12:33)
 
 ✔ @today Add a users route, without auth can reed the users public notes @done(25-08-31 12:29)
