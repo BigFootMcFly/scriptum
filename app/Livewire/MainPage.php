@@ -27,6 +27,8 @@ class MainPage extends Component
         $builder = Note::frontPage(auth()->user());
         if ($this->search !== '') {
             $builder->search($this->search, $this->partial);
+        } else {
+            $builder->orderBy('updated_at', 'desc');
         }
         return $builder->paginate(10);
     }

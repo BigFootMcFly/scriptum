@@ -177,7 +177,7 @@ class FrontPage extends Page implements HasForms
         if ('' !== $this->search) {
             $builder->search($this->search, $this->partial);
         } else {
-            $builder->orderBy('created_at', 'desc');
+            $builder->orderBy('updated_at', 'desc');
         }
         return $builder->paginate(10);
     }
