@@ -43,20 +43,26 @@ class NoteInfolist
                     ->columns(2)
                     ->components([
                         TextEntry::make('user.name')
+                        ->color('info')
                         ->label('User')
                     ,
                     TextEntry::make('visibility')
                         ->badge()
                         ->color(NoteVisibilityColorCallback::make())
                     ,
-                    TextEntry::make('title'),
-                    TextEntry::make('slug'),
+                    TextEntry::make('title')
+                        ->color('info'),
+                    TextEntry::make('slug')
+                        ->color('info'),
                     TextEntry::make('created_at')
+                        ->color('info')
                         ->dateTime(),
                     TextEntry::make('updated_at')
+                        ->color('info')
                         ->dateTime(),
                     TextEntry::make('deleted_at')
                         ->dateTime()
+                        ->color('danger')
                         ->placeholder('n/a'),
 
                     ]),

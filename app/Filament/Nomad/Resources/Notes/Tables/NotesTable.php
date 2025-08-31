@@ -3,6 +3,7 @@
 namespace App\Filament\Nomad\Resources\Notes\Tables;
 
 use App\Filament\Helpers\NoteVisibilityColorCallback;
+use App\Models\Note;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -18,6 +19,11 @@ class NotesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordClasses(fn (Note $record) => match ($record->trashed()) {
+                true => 'border-l-5 !border-l-danger-300 dark:!border-l-danger-900 bg-red-300/20 dark:bg-red-950/20',
+                false => 'border-l-5 border-l-green-300 dark:!border-l-green-900 bg-green-300/20 dark:bg-green-950/20',
+            })
+
             ->columns([
                 TextColumn::make('user.name')
                     ->searchable(),
