@@ -29,6 +29,7 @@
 
     </div>
 --}}
+{{--
     @if(auth()->check())
         <x-filament::button
             color="primary"
@@ -38,5 +39,5 @@
             New Note
         </x-filament::button>
     @endif
-
+--}}
 </div>
