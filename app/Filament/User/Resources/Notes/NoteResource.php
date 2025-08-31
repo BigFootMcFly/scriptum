@@ -53,6 +53,7 @@ class NoteResource extends Resource
             $query->search($forntPageSearch, true);
         }
 
+        $query->orderBy('updated_at', 'DESC');
 
         return $query;
     }
@@ -88,4 +89,8 @@ class NoteResource extends Resource
         return auth()->check();
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Manage My Notes');
+    }
 }
