@@ -47,7 +47,7 @@
                 {{-- Header --}}
                 <div class="p-1 ">
                     <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                        <a href="{{ route('filament.user.resources.notes.view', $note) }}" class="hover:underline">
+                        <a href="{{ route('filament.user.resources.notes.show', $note) }}" class="hover:underline">
                             {{ $note->user->handle }}
                         </a>
                     </div>
@@ -103,7 +103,7 @@
                             class="hover:underline text-xs transition duration-500 brightness-50 hover:brightness-100"
                             size="sm"
                             color="gray"
-                            href="{{ route('filament.user.resources.notes.view', $note) }}"
+                            href="{{ route('filament.user.resources.notes.show', $note) }}"
                             target="_blank"
                         >
                             permalink
