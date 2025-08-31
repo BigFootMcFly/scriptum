@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
+use App\Http\Controllers\LogoutUserController;
 use App\Livewire\MainPage;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -24,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
+
+Route::post('logout-user', LogoutUserController::class)->name('logout-user');
 
 #ifdef test
 Route::get('main', MainPage::class);
