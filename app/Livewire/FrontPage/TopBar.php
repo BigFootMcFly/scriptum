@@ -2,6 +2,7 @@
 
 namespace App\Livewire\FrontPage;
 
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Livewire\Concerns\HasTenantMenu;
@@ -22,6 +23,26 @@ class TopBar extends Component implements HasActions, HasSchemas
 
     #[On('refresh-topbar')]
     public function refresh(): void {}
+
+
+    public function mount() {
+        $this->userMenuItems([
+            Action::make('login')
+                ->label(__('Login / Register'))
+                ->icon('heroicon-o-user-circle')
+                ->url(route('filament.user.auth.login'))
+                ->sort(1)
+                ->visible( fn (): bool => !auth()->check())
+                ,
+            //NOTE: this will tak precedence over the default 'logouz' action defined by filament
+            Action::make('logout')
+                ->label(__('Logout'))
+                ->icon('heroicon-o-arrow-left-on-rectangle')
+                ->url(route('logout-user'))
+                ->postToUrl()
+                ->sort(PHP_INT_MAX)
+        ]);
+    }
 
 
     public function render()
