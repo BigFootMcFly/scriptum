@@ -99,6 +99,7 @@ class FrontPage extends Page implements HasForms
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+    #[On('create-new-note')]
     public function openEditModal(?Note $note = null): void
     {
         //NOTE: a new Note object is injected if none is provided by the client
