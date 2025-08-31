@@ -2,9 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\User\Pages\Auth\UserRegister;
 use App\Filament\User\Resources\Notes\NoteResource;
 use App\Livewire\FrontPage\TopBar;
 use App\Utils\SmartSearch;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -14,6 +16,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -28,11 +31,14 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            //->maxContentWidth(Width::Full)
-            //->navigation(false)
-            //->topbar(!auth()->check())
-            //TODO: maybe the note search sould be in the page header section...
+            ->userMenuItems([
+                'logout' => fn (Action $action) => $action->label('Log out'),
+            ])
+            /*->spaUrlExceptions(fn (): array => [
+                route('user-logout'),
+            ])*/
 
+            //->maxContentWidth(Width::Full)
             ->globalSearch(false) //NOTE: we use our own
             //->globalSearchKeyBindings(['command+f', 'shift+ctrl+f'])
             ->topbarLivewireComponent(TopBar::class)
@@ -42,6 +48,7 @@ class UserPanelProvider extends PanelProvider
             ->id('user')
             ->path('user')
             ->login()
+            ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
             ->spa(hasPrefetching: true)
             ->topNavigation()
@@ -51,6 +58,7 @@ class UserPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->viteTheme([
+                'resources/css/filament/user/theme.css',
                 'resources/css/app.css',
             ])
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\Filament\User\Resources')
@@ -60,8 +68,9 @@ class UserPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\Filament\User\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                //NOTE: this are widgets on the dashboard page
+                //AccountWidget::class,
+                //FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -75,7 +84,8 @@ class UserPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
-            ]);
+                //Authenticate::class,
+            ])
+            ;
     }
 }
