@@ -116,6 +116,7 @@
                             $groupIcon = $group->getIcon();
                         @endphp
 
+                    @if (auth()->check())
                         @if ($groupLabel)
                             <x-filament::dropdown
                                 placement="bottom-start"
@@ -215,6 +216,8 @@
                                 </x-filament-panels::topbar.item>
                             @endforeach
                         @endif
+
+                    @endif
                     @endforeach
                 </ul>
             @endif
@@ -224,6 +227,7 @@
         <!-- Front page Search Box begin -->
         @livewire('front-page.search-box')
         <!-- Front page Search Box end -->
+
         <div
             @if ($hasTenancy)
                 x-persist="topbar.end.panel-{{ filament()->getId() }}.tenant-{{ filament()->getTenant()?->getKey() }}"
@@ -239,6 +243,17 @@
             @endif
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
+            @if(auth()->check())
+                <x-filament::button
+                    color="primary"
+                    class="mt-4"
+                    icon="heroicon-m-plus"
+                    tooltip="Add new note"
+                    wire:click="$dispatch('create-new-note')"
+                >
+                </x-filament::button>
+            @endif
+
 
             @if (filament()->auth()->check())
                 @if (filament()->hasDatabaseNotifications())
@@ -246,12 +261,17 @@
                         'lazy' => filament()->hasLazyLoadedDatabaseNotifications(),
                     ])
                 @endif
-
-                @if (filament()->hasUserMenu())
-                    <x-filament-panels::user-menu />
-                @endif
             @endif
-        </div>
+
+{{--
+            @if (filament()->hasUserMenu())
+                <x-filament-panels::user-menu />
+            @endif
+--}}
+
+            <x-front-page.user-menu />
+
+</div>
 
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_END) }}
 
