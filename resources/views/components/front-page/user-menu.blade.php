@@ -42,7 +42,7 @@
             type="button"
             class="fi-user-menu-trigger"
         >
-            <x-filament-panels::avatar.user :user="$user" loading="lazy" />
+            <x-filament-panels::avatar.user :user="$user" loading="lazy" size="lg"/>
         </button>
     </x-slot>
 
