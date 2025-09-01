@@ -135,7 +135,7 @@ class FrontPage extends Page implements HasForms
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-   public function saveNote(): void
+    public function saveNote(): void
     {
         $confirmMessage = 'New note created';
 
