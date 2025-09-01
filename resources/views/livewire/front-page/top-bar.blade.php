@@ -246,7 +246,7 @@
             @if(auth()->check())
                 <x-filament::button
                     color="primary"
-                    class="mt-4"
+                    class="hover:bg-amber-100 ml-2 -mr-3"
                     icon="heroicon-m-plus"
                     tooltip="Add new note"
 {{--
