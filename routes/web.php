@@ -7,6 +7,7 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Models\Note;
+use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,7 @@ Route::get('test', function() {
 
 #ifdef test
 Route::get('search', function(){
+    dd(filament()->getUserAvatarUrl(User::first()));
     dd(Filament::getTopbarLivewireComponent());
 });
 #endif
