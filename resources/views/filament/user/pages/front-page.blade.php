@@ -1,45 +1,33 @@
 <x-filament-panels::page>
+{{--
+    //TODO: remove this if no longer needed (well, it is not needed, just kept here for any cases...)
+    <div class="flex items-center w-full">
+        <!-- Left group (3 divs) -->
+        <div class="flex space-x-2">
+            <div class="px-2 py-1 bg-gray-200">Left 1</div>
+            <div class="px-2 py-1 bg-gray-200">Left 2 - WIDE</div>
+            <div class="px-2 py-1 bg-gray-200">Left 3</div>
+            <div class="px-2 py-1 bg-gray-200">Left 4</div>
+        </div>
 
+        <!-- Middle (fills remaining space) -->
+        <div class="flex-1 px-2 text-center bg-amber-200">
+            <x-filament::input.wrapper>
+                <x-filament::input
+                    type="text"
+                    class="ml-auto mr-auto w-9/10 bg-red-600"
+                    wire:model="name"
+                />
+            </x-filament::input.wrapper>
 
+        </div>
 
-<div class="flex items-center w-full">
-    <!-- Left group (3 divs) -->
-    <div class="flex space-x-2">
-        <div class="px-2 py-1 bg-gray-200">Left 1</div>
-        <div class="px-2 py-1 bg-gray-200">Left 2</div>
-        <div class="px-2 py-1 bg-gray-200">Left 3</div>
-        <div class="px-2 py-1 bg-gray-200">Left 4</div>
+        <!-- Right -->
+        <div class="px-2 py-1 bg-gray-200">
+            Right
+        </div>
     </div>
-
-    <!-- Middle (fills remaining space) -->
-    <div class="flex-1 px-2 text-center bg-amber-200">
-        <x-filament::input.wrapper>
-            <x-filament::input
-                type="text"
-                class="ml-auto mr-auto w-9/10 bg-red-600"
-                {{--wire:model="name"--}}
-            />
-        </x-filament::input.wrapper>
-
-    </div>
-
-    <!-- Right -->
-    <div class="px-2 py-1 bg-gray-200">
-        Right
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
+--}}
 
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
         @foreach ($this->notes() as $note)
@@ -72,7 +60,6 @@
                         @endcan
                     </div>
                 </div>
-
 
                 {{-- Body (truncated height, scroll if too long) --}}
                 <div class="p-1">
@@ -134,6 +121,5 @@
             </x-filament::button>
         </x-slot>
     </x-filament::modal>
-
 
 </x-filament-panels::page>
