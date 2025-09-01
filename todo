@@ -1,4 +1,18 @@
 # ---- Pending
+☐ @critical Add UserPolicy, and reenable '->strictAuthorization()' in nomad panel
+        error: Strict authorization mode is enabled, but no policy was found for [App\Models\User].
+
+☐ Make a GuestUser helper or action or whatever, and add HasAvatar to User and add 'avatar_url' foield to User
+        and use that guest user in the user-menu.blade.php:9
+
+☐ @low Add events and notifications
+        ex.: if admin marks a note as 'hidden' or 'restricted', then create an event, which sends a notification to the user for this
+                with a uniue id, where the user can ask about it...
+☐ @low Admin -> New Usesr -> Handle should be autofilled lik in the user/register.
+
+☐ @low Adim -> Notes add tabs (deleted, restricted, etc, other "filters")
+
+☐ @low Admin -> users format email verified at (badge maybe)
 
 ☐ @low Currently the front page shows the nodes sorted by the 'updated_at','DESC' order without the search, earlier it was 'created_by','DESC',
         think out, which one is better, or add a swithc/butoon/etc...
