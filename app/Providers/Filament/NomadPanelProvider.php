@@ -28,13 +28,14 @@ class NomadPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
             ->domain('admin.localhost')
             ->brandName('Nomad - Scriptum')
             ->spa(hasPrefetching: true)
-            //->unsavedChangesAlerts() //NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
+            ->unsavedChangesAlerts() //NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
             ->databaseTransactions()
-            ->strictAuthorization()
+            //->strictAuthorization() //TODO: reenable this after UserPolicy is created
             ->login()
             ->revealablePasswords(false)
             ->profile(isSimple: false)
