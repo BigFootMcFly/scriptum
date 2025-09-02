@@ -247,7 +247,7 @@
                 {{-- TODO: make this client side alpinejs --}}
                 <button x-data="{ tooltip: true }" class="create-note"
                     @click="$dispatch('create-new-note')"
-                    x-tooltip="{ content: 'Add new Note'}"
+                    x-tooltip.raw="Add new Note"
                     @keydown.window.ctrl.shift.n.prevent="$dispatch('create-new-note')"
                 >+</button>
             @else
