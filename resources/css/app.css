@@ -74,3 +74,17 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+@layer components {
+    .create-note {
+        @apply justify-center
+                w-9 h-9 text-amber-500 text-2xl
+                border-2 border-amber-500/50 rounded-md
+                ml-3 -mr-2
+                hover:bg-amber-500
+                hover:text-orange-600
+                hover:animate-pulse
+                transition duration-300
+                hover:scale-110
+    }
+}

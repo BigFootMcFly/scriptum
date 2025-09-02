@@ -244,19 +244,15 @@
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
             @if(auth()->check())
-                <x-filament::button
-                    color="primary"
-                    class="hover:bg-amber-100 ml-2 -mr-3"
-                    icon="heroicon-m-plus"
-                    tooltip="Add new note"
-{{--
-                    wire:click="$dispatch('create-new-note')"
---}}
-{{-- TODO: make this client side alpinejs --}}
-                    x-on:click.prevent="$dispatch('create-new-note')"
-
-                >
-                </x-filament::button>
+                {{-- TODO: make this client side alpinejs --}}
+                <button x-data="{ tooltip: true }" class="create-note"
+                    @click="$dispatch('create-new-note')"
+                    x-tooltip="{ content: 'Add new Note'}"
+                    @keydown.window.ctrl.shift.n.prevent="$dispatch('create-new-note')"
+                >+</button>
+            @else
+            {{-- NOTE: this is here to compensate the space the Button would take up --}}
+                <div class="w-9 h-9 ml-3 -mr-2 inline-block"></div>
             @endif
 
 
