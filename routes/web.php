@@ -48,9 +48,10 @@ Route::get('test', function() {
 
 #ifdef test
 Route::get('search', function(){
+    dd(request()->route()->getName());
     dd(filament()->getUserAvatarUrl(User::first()));
     dd(Filament::getTopbarLivewireComponent());
-});
+})->name('search');
 #endif
 
 
