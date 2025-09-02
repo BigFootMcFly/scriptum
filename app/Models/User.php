@@ -5,16 +5,24 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Filament\Panel\Concerns\HasAvatars;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use HasAvatars;
+    use Notifiable;
+
+    protected const string default_avatar_url = '/storage/avatars/_default.svg';
+    protected const string guest_avatar_url = '/storage/avatars/_guest.svg';
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +34,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'handle',
+        'avatar_url',
     ];
 
     /**
@@ -52,14 +61,47 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    // relations
+
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
     }
 
+    // accessors
+
+    protected function avatarUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => match ($value) {
+                null => static::default_avatar_url,
+                default => $value,
+            },
+        );
+    }
+
+    // utilities
+
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    public function isGuest(): bool
+    {
+        return null === $this->id;
+    }
+
+    public function hasAvatar(): bool
+    {
+        if ($this->isGuest()) {
+            return false;
+        }
+
+        return Arr::get($this->attributes, 'avatar_url') !== null;
+        //return $this->getRawOriginal('avatar_url') !== null;
+        //return ($this->attributes['avatar_url'] ?? null) !== null;
+
     }
 
     /**
@@ -92,6 +134,14 @@ class User extends Authenticatable implements FilamentUser
 
         // other panel(s) (which there are none for now) can be accessed by logged in users
         return true;
+    }
+
+    public static function guestUser(): self
+    {
+        return static::make([
+            'name' => __('Guest User'),
+            'avatar_url' => static::guest_avatar_url
+        ]);
     }
 
 }

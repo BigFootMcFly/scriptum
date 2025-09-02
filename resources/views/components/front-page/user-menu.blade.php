@@ -6,7 +6,7 @@
     if (auth()->check()) {
         $user = filament()->auth()->user();
     } else {
-        $user = User::make(['name'=>'Guest User']);
+        $user = User::guestUser();
     }
 
     $items = $this->getUserMenuItems();
@@ -42,7 +42,14 @@
             type="button"
             class="fi-user-menu-trigger"
         >
-            <x-filament-panels::avatar.user :user="$user" loading="lazy" size="lg"/>
+            <x-filament-panels::avatar.user
+                :user="$user"
+                loading="lazy"
+                size="lg"
+                @class([
+                    "dark:invert-75 opacity-70 border-2" => !$user->hasAvatar()
+                ])
+            />
         </button>
     </x-slot>
 
