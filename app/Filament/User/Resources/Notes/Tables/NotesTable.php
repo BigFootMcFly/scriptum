@@ -4,6 +4,7 @@ namespace App\Filament\User\Resources\Notes\Tables;
 
 use App\Actions\Filament\FullPageViewAction;
 use App\Actions\Filament\ModalViewAction;
+use App\Enums\NoteVisibility;
 use App\Filament\Helpers\NoteVisibilityColorCallback;
 use App\Models\Note;
 use Filament\Actions\Action;
@@ -35,9 +36,39 @@ class NotesTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->recordClasses(fn (Note $record) => match ($record->trashed()) {
+            /*->recordClasses(fn (Note $record) => match ($record->trashed()) {
                 true => 'border-l-5 !border-l-danger-300 dark:!border-l-danger-900 bg-red-300/20 dark:bg-red-950/20',
                 false => 'border-l-5 border-l-green-300 dark:!border-l-green-900 bg-green-300/20 dark:bg-green-950/20',
+            })*/
+/*
+            ->recordClasses(function (Note $record): string {
+
+                if ($record->isAdminRestricted()) {
+                    return 'border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20 opacity-50 blur-[1px]';
+                }
+
+                if ($record->trashed()) {
+                    return 'border-l-5 !border-l-danger-300 dark:!border-l-danger-900 bg-red-300/20 dark:bg-red-950/20';
+                }
+
+                return 'border-l-5 border-l-green-300 dark:!border-l-green-900 bg-green-300/20 dark:bg-green-950/20';
+            })
+*/
+/*
+            ->recordClasses(function (Note $record): string {
+                if ($record->isAdminRestricted()) {
+                    return 'note-row-restricted';
+                }
+                if ($record->trashed()) {
+                    return 'note-row-trashed';
+                }
+                return 'note-row';
+            })
+*/
+            ->recordClasses(fn (Note $record): string => match(true) {
+                    $record->isAdminRestricted() => 'note-row-restricted',
+                    $record->trashed() => 'note-row-trashed',
+                    default => 'note-row',
             })
             //->extraAttributes(['class'=>'fi-width-5xl'])
             ->columns([
@@ -67,7 +98,13 @@ class NotesTable
             ])
             ->recordActions([
                 ModalViewAction::make(),
-                FullPageViewAction::make(self::getViewNoteUrl(...)),
+                FullPageViewAction::make(self::getViewNoteUrl(...))
+                    ->visible( fn(Note $note): bool => match ($note->visibility) {
+                        NoteVisibility::Hidden,
+                        NoteVisibility::Restricted => false,
+                        default => true,
+                    })
+                ,
                 EditAction::make(),
             ])
             ->toolbarActions([
