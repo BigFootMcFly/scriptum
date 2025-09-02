@@ -1,4 +1,10 @@
 # ---- Pending
+
+☐ @high The "Add new Note" button in the search bar only works on the 'main-page', if the 'notes' page is active, it does not work (the form is not on the page)
+        it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button
+        //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
+        __OR__ move the "Edit Note" form into it's own component and into the header...
+
 ☐ @critical Add UserPolicy, and reenable '->strictAuthorization()' in nomad panel
         error: Strict authorization mode is enabled, but no policy was found for [App\Models\User].
 
