@@ -37,11 +37,12 @@ class CodeBlock extends RichContentCustomBlock
                 //TODO: get the names from teh Language enum
                 Select::make('language')
                     ->options([
-                        'php' => 'Php',
+                        'bash' => 'Bash',
+                        'css' => 'Css',
+                        'html' => 'Html',
                         'javascript' => 'JavaScript',
                         'json' => 'JSON',
-                        'bash' => 'Bash',
-                        'html' => 'Html',
+                        'php' => 'Php',
                     ])
                     ->label(function($component, $state, Set $set) use ($code_editor_default_language){
                         if (null === $state) {
