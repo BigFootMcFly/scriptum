@@ -5,9 +5,6 @@
         //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
         __OR__ move the "Edit Note" form into it's own component and into the header...
 
-☐ @critical Add UserPolicy, and reenable '->strictAuthorization()' in nomad panel
-        error: Strict authorization mode is enabled, but no policy was found for [App\Models\User].
-
 ☐ Make a GuestUser helper or action or whatever, and add HasAvatar to User and add 'avatar_url' foield to User
         and use that guest user in the user-menu.blade.php:9
 
@@ -106,6 +103,8 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @critical Add UserPolicy, and reenable '->strictAuthorization()' in nomad panel @done(25-09-02 13:10)
+        error: Strict authorization mode is enabled, but no policy was found for [App\Models\User].
 
 ✔ @low Add color coding in the User/Notes and Nomad/Notes table for deleted/normal rows like in proxima backend @done(25-08-31 19:12)
 

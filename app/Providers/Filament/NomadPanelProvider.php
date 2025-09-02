@@ -35,7 +35,7 @@ class NomadPanelProvider extends PanelProvider
             ->spa(hasPrefetching: true)
             ->unsavedChangesAlerts() //NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
             ->databaseTransactions()
-            //->strictAuthorization() //TODO: reenable this after UserPolicy is created
+            ->strictAuthorization()
             ->login()
             ->revealablePasswords(false)
             ->profile(isSimple: false)
