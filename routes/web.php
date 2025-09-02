@@ -9,6 +9,7 @@ use App\Livewire\Settings\Profile;
 use App\Models\Note;
 use App\Models\User;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -54,5 +55,13 @@ Route::get('search', function(){
 })->name('search');
 #endif
 
+#ifdef test
+Route::get('x/{user}/{slug}', function(Request $request, string $user, string $slug) {
+    $note = Note::with('user')->where('slug', "{$user}/{$slug}")->firstOrFail();
+    //TODO: add a controller and aview for this - add filament custom page, like front page just without teh for notes in note..
+    //echo $note->renderRichContent('body');
+    return view('filament.user.pages.note-view', ['note'=>$note]);
+});
+#endif
 
 require __DIR__.'/auth.php';
