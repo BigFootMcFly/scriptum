@@ -153,6 +153,18 @@ class Note extends Model implements HasRichContent
         });
     }
 
+    // Utilities
+
+
+    public function isAdminRestricted(): bool
+    {
+        return match($this->visibility) {
+            NoteVisibility::Hidden,
+            NoteVisibility::Restricted => true,
+            default => false,
+        };
+    }
+
     // Slug handling
 
     // ----------------------------------------------------------------------------------------------------------------
