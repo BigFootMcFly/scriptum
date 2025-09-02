@@ -1,5 +1,16 @@
 # ---- Pending
 
+☐ @high In teh user domain, if an admin is logged in, it can edit all post from ewerione, this should not be,
+        - on the admin note list,add a 'details" action as well
+        - Add a custom action to open the post on the admin interface for editing
+        - mark the full page as admin coloring, but dont give any special permission
+        - check if the admin can see other users private notes on the front page (i think not, but better check, maibe even add a test for it)
+        - note: the permalink on the notes works, but it uses note id-s, nnot user/slug addressing
+
+
+☐ @low tempestphp/highlight css does not understands tailwind @apply ...
+        Maybe it's time to replace it with a "newer" highlighter, the richeditor highlighter almost handles it well...
+
 ☐ @high The "Add new Note" button in the search bar only works on the 'main-page', if the 'notes' page is active, it does not work (the form is not on the page)
         it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button
         //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
