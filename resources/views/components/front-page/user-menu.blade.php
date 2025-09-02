@@ -3,13 +3,13 @@
     use Illuminate\Support\Arr;
     use App\Models\User;
 
-    if (auth()->check()) {
-        $user = filament()->auth()->user();
-    } else {
-        $user = User::guestUser();
-    }
+
+    $user = auth()->user() ?? User::guestUser();
 
     $items = $this->getUserMenuItems();
+
+    //NOTE: in the UserPanelProvider ->userMenuItems() does not works
+    $items['profile']->url(fn (): string => '/user/edit-profile');
 
     $itemsBeforeAndAfterThemeSwitcher = collect($items)
         ->groupBy(fn (Action $item): bool => $item->getSort() < 0, preserveKeys: true)
@@ -75,12 +75,21 @@
         <x-filament::dropdown.list>
             @foreach ($itemsBeforeThemeSwitcher as $key => $item)
                 @if ($key === 'profile')
+
                     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::USER_MENU_PROFILE_BEFORE) }}
 
                     @if (auth()->user())
                         {{ $item }}
                     @else
-                        Guest user...
+                        <div class="flex justify-center items-center">
+                            <svg class="fi-icon fi-size-md opacity-40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="p-2 flex fi-dropdown-list-item-label">
+                                Welcome Guest!
+                            </span>
+
+                        </div>
                     @endif
 
                     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::USER_MENU_PROFILE_AFTER) }}

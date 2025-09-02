@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable implements FilamentUser
@@ -21,8 +22,8 @@ class User extends Authenticatable implements FilamentUser
     use HasAvatars;
     use Notifiable;
 
-    protected const string default_avatar_url = '/storage/avatars/_default.svg';
-    protected const string guest_avatar_url = '/storage/avatars/_guest.svg';
+    protected const string default_avatar_url = 'avatars/_default.svg';
+    protected const string guest_avatar_url = 'avatars/_guest.svg';
 
     /**
      * The attributes that are mass assignable.
@@ -73,10 +74,12 @@ class User extends Authenticatable implements FilamentUser
     protected function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => match ($value) {
-                null => static::default_avatar_url,
-                default => $value,
-            },
+            get: fn (?string $value): string => Storage::url(
+                match ($value) {
+                    null => static::default_avatar_url,
+                    default => $value,
+                },
+            )
         );
     }
 
@@ -143,5 +146,12 @@ class User extends Authenticatable implements FilamentUser
             'avatar_url' => static::guest_avatar_url
         ]);
     }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+        return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
+    }
+
 
 }

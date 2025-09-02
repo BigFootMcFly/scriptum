@@ -25,18 +25,14 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class UserPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->userMenuItems([
-                'logout' => fn (Action $action) => $action->label('Log out'),
-            ])
-            /*->spaUrlExceptions(fn (): array => [
-                route('user-logout'),
-            ])*/
 
             //->maxContentWidth(Width::Full)
             ->globalSearch(false) //NOTE: we use our own
@@ -86,6 +82,22 @@ class UserPanelProvider extends PanelProvider
             ->authMiddleware([
                 //Authenticate::class,
             ])
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    ->canAccess(fn () => auth()->check())
+                    ->shouldRegisterNavigation(false)
+                    ->shouldShowAvatarForm()
+                    ->shouldShowBrowserSessionsForm()
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowEmailForm(false)
+            ])
+/* //TODO: does not work, currently teh ciustomization is moved to 'user-menu.blade.php', fix or remove this!
+            ->userMenuItems([
+                'logout' => fn (Action $action) => $action->label('Log out'),
+                'profile' => fn (Action $action) => $action->url(fn (): string => '/user/edit-profile'),
+            ])
+*/
             ;
     }
 }
+// php artisan vendor:publish --tag="filament-edit-profile-config"
