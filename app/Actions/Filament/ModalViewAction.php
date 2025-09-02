@@ -12,14 +12,10 @@ class ModalViewAction
         return ViewAction::make('info')
             ->label('View')
             ->icon('heroicon-o-information-circle')
-            ->iconSize(IconSize::Small)
             //->iconButton()
+            ->iconSize(IconSize::Small)
             ->color('white')
             ->tooltip('Quick View')
-            ->extraAttributes(
-                [
-                    'title' => 'Quick View',
-                ]
-            );
+        ;
     }
 }
