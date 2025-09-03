@@ -110,8 +110,17 @@ class User extends Authenticatable implements FilamentUser
         return Arr::get($this->attributes, 'avatar_url') !== null;
         //return $this->getRawOriginal('avatar_url') !== null;
         //return ($this->attributes['avatar_url'] ?? null) !== null;
-
     }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    protected function permalink(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value): string =>
+                route('view-user-notes', ['user' => $this->handle])
+        );
+    }
+
 
     /**
      * Get the user's initials
