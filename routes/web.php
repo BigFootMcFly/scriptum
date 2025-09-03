@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\User\Pages\ViewNotePage;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use App\Http\Controllers\LogoutUserController;
 use App\Livewire\MainPage;
@@ -30,6 +31,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('logout-user', LogoutUserController::class)->name('logout-user');
 
+Route::get('notes/{user}/{slug}', ViewNotePage::class)->name('view-note');
+Route::get('notes/{user}', function(string $user) {
+    dd($user);
+})->name('view-user-notes');
+
+
 #ifdef test
 Route::get('main', MainPage::class);
 #endif
@@ -53,15 +60,6 @@ Route::get('search', function(){
     dd(filament()->getUserAvatarUrl(User::first()));
     dd(Filament::getTopbarLivewireComponent());
 })->name('search');
-#endif
-
-#ifdef test
-Route::get('x/{user}/{slug}', function(Request $request, string $user, string $slug) {
-    $note = Note::with('user')->where('slug', "{$user}/{$slug}")->firstOrFail();
-    //TODO: add a controller and aview for this - add filament custom page, like front page just without teh for notes in note..
-    //echo $note->renderRichContent('body');
-    return view('filament.user.pages.note-view', ['note'=>$note]);
-});
 #endif
 
 require __DIR__.'/auth.php';
