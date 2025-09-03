@@ -1,8 +1,10 @@
 # ---- Pending
+☐ @low If a note is updated, the note should be refreshed, not the note list (it is possible, that a noot is not even on the page... (not likely, but still...))
+
+☐ @high User -> main page ->edit note -> after save the note list is not refreshed, the note has the old values...
+
 ☐ @high User -> Notes after deleting note(s), teh main page should be refresehed, currently the deleted notes are still on the main page.
                 Also, the 'refresh-note-list' event should be triggered on any actions, that needs it...
-
-☐ @today FrontPage/Note.php - is this used anywhere? if not, remove this
 
 ☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
         - on the admin note list,add a 'details" action as well
@@ -113,6 +115,13 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @today FrontPage/Note.php - is this used anywhere? if not, remove this @done(25-09-03 22:30)
+        Deleted it.
+
+✔ @today Some Notes have a slug starting wint "#/", which should not be a thing... @done(25-09-03 22:16)
+        check for how that happens and when and change it!!!
+        NOTE: removed the settet on the slug, now works, but the bas notes must be updated.. DONE
+
 ✔ @low Add a "back to top" button to the page @done(25-09-03 21:20)
 
 ✔ @low Admin -> users format email verified at (badge maybe) @done(25-09-03 13:38)
