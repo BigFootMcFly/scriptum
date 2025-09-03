@@ -26,9 +26,7 @@
         ex.: if admin marks a note as 'hidden' or 'restricted', then create an event, which sends a notification to the user for this
                 with a uniue id, where the user can ask about it...
 
-☐ @low Adim -> Notes add tabs (deleted, restricted, etc, other "filters")
-
-☐ @low Admin -> users format email verified at (badge maybe)
+☐ @low Admin -> Notes add tabs (deleted, restricted, etc, other "filters")
 
 ☐ @low Currently the front page shows the nodes sorted by the 'updated_at','DESC' order without the search, earlier it was 'created_by','DESC',
         think out, which one is better, or add a swithc/butoon/etc...
@@ -111,6 +109,8 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low Admin -> users format email verified at (badge maybe) @done(25-09-03 13:38)
+
 ✔ @low Admin -> New User -> Handle should be autofilled lik in the user/register. @done(25-09-03 09:49)
 
 
