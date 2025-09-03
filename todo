@@ -1,6 +1,6 @@
 # ---- Pending
 
-☐ @high In teh user domain, if an admin is logged in, it can edit all post from ewerione, this should not be,
+☐ @high In the user domain, if an admin is logged in, it can edit all post from ewerione, this should not be,
         - on the admin note list,add a 'details" action as well
         - Add a custom action to open the post on the admin interface for editing
         - mark the full page as admin coloring, but dont give any special permission
@@ -22,13 +22,9 @@
         @see: https://w3collective.com/modal-dialog-alpine-js/
         NOTE: maybe this modal should be moved to it's own component...
 
-☐ Make a GuestUser helper or action or whatever, and add HasAvatar to User and add 'avatar_url' foield to User
-        and use that guest user in the user-menu.blade.php:9
-
 ☐ @low Add events and notifications
         ex.: if admin marks a note as 'hidden' or 'restricted', then create an event, which sends a notification to the user for this
                 with a uniue id, where the user can ask about it...
-☐ @low Admin -> New Usesr -> Handle should be autofilled lik in the user/register.
 
 ☐ @low Adim -> Notes add tabs (deleted, restricted, etc, other "filters")
 
@@ -115,6 +111,12 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low Admin -> New User -> Handle should be autofilled lik in the user/register. @done(25-09-03 09:49)
+
+
+✔ Make a GuestUser helper or action or whatever, and add HasAvatar to User and add 'avatar_url' foield to User @done(25-09-03 09:41)
+        and use that guest user in the user-menu.blade.php:9
+
 ✔ @critical Add UserPolicy, and reenable '->strictAuthorization()' in nomad panel @done(25-09-02 13:10)
         error: Strict authorization mode is enabled, but no policy was found for [App\Models\User].
 
