@@ -1,7 +1,12 @@
 # ---- Pending
+☐ @low Add a "back to top" button to the page
+
+☐ @high User -> Notes after deleting note(s), teh main page should be refresehed, currently the deleted notes are still on the main page.
+                Also, the 'refresh-note-list' event should be triggered on any actions, that needs it...
+
 ☐ @today FrontPage/Note.php - is this used anywhere? if not, remove this
 
-☐ @high In the user domain, if an admin is logged in, it can edit all post from ewerione, this should not be,
+☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
         - on the admin note list,add a 'details" action as well
         - Add a custom action to open the post on the admin interface for editing
         - mark the full page as admin coloring, but dont give any special permission
