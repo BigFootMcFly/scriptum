@@ -70,12 +70,16 @@ class EditNoteModalForm extends Component implements HasForms
                 $this->data
                 + ['user_id' => auth()->user()->id]
             );
-            $this->dispatch('refresh-note-list');
+            //$this->dispatch('refresh-note-list');
         }
 
         $this->editingNote = null;
 
+        //TODO: refresh only the changed note !!!
+        $this->dispatch('refresh-note-list');
+
         $this->dispatch('close-modal', id: 'edit-note');
+
         Notification::make()
             ->title($confirmMessage)
             ->success()
