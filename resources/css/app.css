@@ -87,6 +87,19 @@ select:focus[data-flux-control] {
                 transition duration-300
                 hover:scale-110
     }
+    .back-to-top {
+        @apply fixed bottom-0 right-0
+                items-center flex justify-center
+                z-10
+                w-9 h-9 text-amber-500 text-2xl
+                border-2 border-amber-500/50 rounded-md
+                mr-2 mb-2
+                hover:bg-amber-500
+                hover:text-orange-600
+                hover:animate-pulse
+                transition duration-300
+                hover:scale-110
+    }
 
     .note-row-restricted {
         @apply border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20 opacity-50 blur-[1px]

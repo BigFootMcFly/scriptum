@@ -1,6 +1,4 @@
 # ---- Pending
-☐ @low Add a "back to top" button to the page
-
 ☐ @high User -> Notes after deleting note(s), teh main page should be refresehed, currently the deleted notes are still on the main page.
                 Also, the 'refresh-note-list' event should be triggered on any actions, that needs it...
 
@@ -115,6 +113,8 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low Add a "back to top" button to the page @done(25-09-03 21:20)
+
 ✔ @low Admin -> users format email verified at (badge maybe) @done(25-09-03 13:38)
 
 ✔ @low Admin -> New User -> Handle should be autofilled lik in the user/register. @done(25-09-03 09:49)

@@ -1,5 +1,6 @@
 <x-filament-panels::page>
     <livewire:edit-note-modal-form></livewire:edit-note-modal-form>
+    <livewire:front-page.back-to-top-button></livewire:front-page.back-to-top-button>
 
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
         @foreach ($this->notes() as $note)
@@ -11,13 +12,5 @@
     <div class="mt-6">
         <x-filament::pagination :paginator="$this->notes()" />
     </div>
-
-    @push('scripts')
-        <script>
-            window.addEventListener('scroll-to-top', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        </script>
-    @endpush
 
 </x-filament-panels::page>
