@@ -104,25 +104,13 @@ class Note extends Model implements HasRichContent
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    /**
-     * get the public adddress of the note
-     *
-     * @return Attribute
-     *
-     * NOTE: full URL which this inslude FQDN
-     *
-     */
     protected function permalink(): Attribute
     {
         return Attribute::make(
             get: fn (?string $value): string =>
                 match ($this->user) {
                     null => '',
-                    default => sprintf('%s/notes/%s/%s',
-                        request()->getHttpHost(),
-                        $this->user->handle,
-                        $this->slug
-                    )
+                    default => route('view-note', ['user' => $this->user->handle, 'slug' => $this->slug])
                 }
         );
     }
