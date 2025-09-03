@@ -5,7 +5,9 @@ namespace App\Filament\Nomad\Resources\Users\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class UserForm
 {
@@ -14,7 +16,10 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state)))
+                    ,
                 TextInput::make('handle')
                     ->required(),
                 TextInput::make('email')
