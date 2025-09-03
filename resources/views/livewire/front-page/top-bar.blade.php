@@ -245,7 +245,7 @@
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
             @if(auth()->check())
                 {{-- TODO: make this client side alpinejs --}}
-                <button x-data="{ tooltip: true }" class="create-note"
+                <button x-data class="create-note"
                     @click="$dispatch('create-new-note')"
                     x-tooltip.raw="Add new Note"
                     @keydown.window.ctrl.shift.n.prevent="$dispatch('create-new-note')"
