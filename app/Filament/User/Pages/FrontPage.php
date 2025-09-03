@@ -1,23 +1,15 @@
 <?php
 
 namespace App\Filament\User\Pages;
-
-use App\Enums\NoteVisibility;
-use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
-class FrontPage extends Page implements HasForms
+class FrontPage extends Page
 {
-    use InteractsWithForms;
     use WithPagination;
 
     //protected static ?string $title = 'Custom Page Title';
@@ -31,16 +23,8 @@ class FrontPage extends Page implements HasForms
 
     protected string $view = 'filament.user.pages.front-page';
 
-    public string $search = '';
-
     public bool $partial = true;
-
-    public ?array $data = [
-        'title' => null,
-        'visibility'  => null,
-        'slug' => null,
-        'body' => [],
-    ];
+    public string $search = '';
 
     public ?Note $editingNote = null;
 
@@ -78,9 +62,14 @@ class FrontPage extends Page implements HasForms
     // Internal functions
 
     // ----------------------------------------------------------------------------------------------------------------
-    #[On('refresh-note-list')]
-    public function refreshNoteList(string $search): void {
+    #[On('search-updated')]
+    public function onSearchUpdated(string $search): void {
         $this->search = $search;
+        $this->refresh();
+    }
+
+    #[On('refresh-note-list')]
+    public function refreshNoteList(): void {
         $this->refresh();
     }
 
@@ -89,77 +78,14 @@ class FrontPage extends Page implements HasForms
         $this->search = session('front-page-search', '');
     }
 
-    // Note editing/creating modal functions
+/*
+    public function rendered()
+    {
+       $this->dispatch('scroll-to-top');
+    }
+*/
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function form(Schema $schema): Schema
-    {
-        return NoteForm::configure($schema)
-            ->statePath('data');
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    #[On('create-new-note')]
-    public function openEditModal(?Note $note = null): void
-    {
-        //NOTE: a new Note object is injected if none is provided by the client
-        if (null === $note->id) { // create new note
-            $this->editingNote = null;
-            $this->data = [
-                'body' => [],
-                'visibility' => NoteVisibility::Private,
-                'title' => '',
-                'slug' => '',
-            ];
-        } else { // update an existing note
-            $this->editingNote = $note;
-            $this->form->fill($note->toArray());
-        }
-
-        $this->dispatch('open-modal', id: 'edit-note');
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    public function cancelEditForm(): void
-    {
-        $message = match ($this->editingNote) {
-            null => 'Creating note cancelled',
-            default => 'Editing note cancelled',
-        };
-        $this->editingNote = null;
-        $this->dispatch('close-modal', id: 'edit-note');
-        Notification::make()
-            ->title($message)
-            ->info()
-            ->send();
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    public function saveNote(): void
-    {
-        $confirmMessage = 'New note created';
-
-        $this->validate();
-
-        if ($this->editingNote) { // update note
-            $this->editingNote->update($this->form->getState());
-            $confirmMessage = 'Note updated';
-        } else { // create note
-            Note::create(
-                $this->data
-                + ['user_id' => auth()->user()->id]
-            );
-        }
-
-        $this->editingNote = null;
-
-        $this->dispatch('close-modal', id: 'edit-note');
-        Notification::make()
-            ->title($confirmMessage)
-            ->success()
-            ->send();
-    }
-
     // DataBase helpers
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -179,7 +105,9 @@ class FrontPage extends Page implements HasForms
         } else {
             $builder->orderBy('updated_at', 'desc');
         }
-        return $builder->paginate(10);
+        $builder = $builder->paginate(perPage: 10);
+
+        return $builder;
     }
 
 }
