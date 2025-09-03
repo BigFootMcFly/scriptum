@@ -31,8 +31,12 @@
 
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
         @foreach ($this->notes() as $note)
+            <livewire:view-note.note :note="$note">
+
+            </livewire:view-note.note>
+{{--
             <div class="py-4">
-                {{-- Header --}}
+                <!-- Header -->
                 <div class="p-1 ">
                     <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <a href="{{ route('filament.user.resources.notes.show', $note) }}" class="hover:underline">
@@ -46,7 +50,7 @@
 
                         @can('update', $note)
 
-                        {{-- Edit button --}}
+                        <!-- Edit button -->>
                         <x-filament::icon-button
                             icon="heroicon-m-pencil-square"
                             tag="a"
@@ -61,7 +65,7 @@
                     </div>
                 </div>
 
-                {{-- Body (truncated height, scroll if too long) --}}
+                <!-- Body (truncated height, scroll if too long) -->
                 <div class="p-1">
                     <div class="
                         mt-4
@@ -81,7 +85,7 @@
                     </div>
                 </div>
 
-                {{-- Footer --}}
+                <!-- Footer -->>
                 <div class="flex justify-between items-start py-2">
                     <span class="mt-2 text-xs text-gray-500 dark:text-gray-700">{{ $note->created_at}}</span>
                     <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
@@ -90,14 +94,14 @@
                             class="hover:underline text-xs transition duration-500 brightness-50 hover:brightness-100"
                             size="sm"
                             color="gray"
-                            href="{{ route('filament.user.resources.notes.show', $note) }}"
-                            target="_blank"
+                            href="{{ $note->permalink }}"
                         >
                             permalink
                         </x-filament::link>
                     </div>
                 </div>
             </div>
+--}}
         @endforeach
     </div>
 
