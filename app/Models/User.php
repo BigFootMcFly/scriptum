@@ -90,6 +90,12 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_admin;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->email_verified_at !== null;
+    }
+
+
     public function isGuest(): bool
     {
         return null === $this->id;
