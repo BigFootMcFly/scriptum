@@ -24,7 +24,7 @@
                 <x-filament::icon-button
                     icon="heroicon-m-pencil-square"
                     tag="a"
-                    wire:click="openEditModal({{ $note->id }})"
+                    wire:click="$dispatch('edit-note', { note: {{ $note->id }} })"
                     size="sm"
                     color="warning"
                     label="Edit"
