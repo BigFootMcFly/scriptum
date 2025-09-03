@@ -82,10 +82,10 @@ class Note extends Model implements HasRichContent
      */
     protected function slug(): Attribute
     {
-        $userScope = $this->user?->handle ?? '#';
+        //$userScope = $this->user?->handle ?? '#';
         return Attribute::make(
             get: fn (?string $value) => static::getScopedSlug($value),
-            set: fn (string $value) => static::globalizeSlug($userScope,$value),
+            //set: fn (string $value) => static::globalizeSlug($userScope,$value),
         );
     }
 
@@ -127,16 +127,16 @@ class Note extends Model implements HasRichContent
 
             // creating searchable body content
             $note->body_content = static::extractBodyContents($note->body);
+            // globalizing slug
+            $user = User::find($note->user_id);
+            $note->slug = static::globalizeSlug($user->handle, $note->slug);
 
-            // creating "global" slug, if it was not set jet
-            if (str_starts_with($note->slug,'#/')) {
-                $user = $note->find($note->user_id);
-                $note->slug = static::globalizeSlug($user->handle, $note->slug);
-            }
         });
 
         static::updating(function (Note $note) {
             $note->body_content = static::extractBodyContents($note->body);
+            $user = User::find($note->user_id);
+            $note->slug = static::globalizeSlug($user->handle, $note->getAttribute('slug'));
             //TODO: check, if the slug needs to be updated or not...
         });
     }
