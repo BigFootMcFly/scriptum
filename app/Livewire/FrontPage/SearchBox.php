@@ -16,7 +16,7 @@ class SearchBox extends Component
     {
         session(['front-page-search' => $this->search]);
         //dump('alap');
-        $this->dispatch('refresh-note-list', search: $this->search);
+        $this->dispatch('search-updated', search: $this->search);
         return view('livewire.front-page.search-box');
     }
 }
