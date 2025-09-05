@@ -6,8 +6,8 @@
                 <a href="{{ $note->user->permalink }}"
                     @class([
                         "hover:underline",
-                        "text-amber-500" => ($note->user_id === auth()->user()->id),
-                        "text-teal-500" => ($note->user_id !== auth()->user()->id)
+                        "text-amber-500" => ($note->user_id === auth()?->user()?->id),
+                        "text-teal-500" => ($note->user_id !== auth()?->user()?->id)
                     ])
                 >
                     {{ $note->user->handle }}
