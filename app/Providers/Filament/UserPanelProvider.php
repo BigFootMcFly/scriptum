@@ -33,6 +33,7 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->brandLogo(fn () => view('livewire.front-page.brand-logo'))
 
             //->maxContentWidth(Width::Full)
             ->globalSearch(false) //NOTE: we use our own

@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'setup' => [
@@ -8,5 +7,6 @@ return [
         'admin_handle' => env('ADMIN_HANDLE', 'scriptum-admin'),
         'admin_password' => env('ADMIN_PASSWORD', 'PlEaSe_ChAnGe_Me'),
     ],
+    'show_logo' => env('SHOW_LOGO', false),
 
 ];
