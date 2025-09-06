@@ -1,8 +1,6 @@
 # ---- Pending
-☐ @high User -> main page ->edit note -> after save the note list is not refreshed, the note has the old values...
 
-☐ @high User -> Notes after deleting note(s), teh main page should be refresehed, currently the deleted notes are still on the main page.
-                Also, the 'refresh-note-list' event should be triggered on any actions, that needs it...
+☐ @high Add a permalink to the User/nomad -> notes -> detail infoview
 
 ☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
         - on the admin note list,add a 'details" action as well
@@ -19,12 +17,6 @@
         it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button
         //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
         __OR__ move the "Edit Note" form into it's own component and into the header...
-
-☐ @high If the 'New Note' button is pressed, the 'main page' note list gets refresehed, which is extensive, the modal should be shown on client side only,
-        use alpinejs here, and maybe the modal should do an authentication before is shown, to check if the user is not logged out in another window...
-        NOTE: in this case, the FrontPage->queryNodeList() is called to get the note list...
-        @see: https://w3collective.com/modal-dialog-alpine-js/
-        NOTE: maybe this modal should be moved to it's own component...
 
 ☐ @low Add events and notifications
         ex.: if admin marks a note as 'hidden' or 'restricted', then create an event, which sends a notification to the user for this
@@ -65,9 +57,6 @@
         @see: https://www.flaticon.com/search?word=image
         @see: https://www.flaticon.com/search?word=code
 
-
-☐ @low Add quick view actiion to notes tables like in proxima backend
-
 ☐ @low Add custom color coding into Note InfoView (both nomad and User) to mark deleted messages
 
 ☐ @low Add a "Copy to clipbord" button on code blacks!
@@ -83,11 +72,6 @@
             'body_content' => static::extractBodyContents($value),
         ],
 
-☐ @high User/Notes table -> edit -> delete if i delete a note, the note list table still shows the note, the table needs to be refreshed !!!
-
-☐ @high In the User/Notes panel, after creating a note and going to the notes table, the new note is not in the list
-            note: spa mode maybe...
-
 ☐ @low Add testing for TipTapJsonContentExtractor
         $note = Note::find(8);
         $result = [];
@@ -96,13 +80,9 @@
         TipTapJsonContentExtractor::extractContent($note->body, $result, $extras, $autoTags);
         dd($result, $extras, $autoTags);
 
-
 ☐ @low Is it a good way to use globalized "unique" slugs? Would it not be better to make a custom "unique"() validation rule and use it?
         - It would be more complicated sql, propably slower,
         + This "magic" manipulation is not good either...
-
-☐ @high When the main controller/livewire full page component gets added and the /notes/{slug} route gets added,
-        update te Note->permalink() function to use the route address instead of the currently temporally hard coded value
 
 ☐ @high Copy the Tempest/Higfhlight theme values to the CodeBlock editor theme!
 
@@ -113,6 +93,31 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low Add quick view actiion to notes tables like in proxima backend @done(25-09-06 11:27)
+
+✘ @high User/Notes table -> edit -> delete if i delete a note, the note list table still shows the note, the table needs to be refreshed !!! @cancelled(25-09-06 11:14)
+        NOTE: same, canot reproduce this eighter
+
+✘ @high In the User/Notes panel, after creating a note and going to the notes table, the new note is not in the list @cancelled(25-09-06 11:12)
+            note: spa mode maybe...
+            NOTE: it works, as it should, cannot reproduce faulti behavior, maybe some old bad solutions caused this, that were removed since...
+
+✔ @high When the main controller/livewire full page component gets added and the /notes/{slug} route gets added, @done(25-09-06 11:06)
+        update te Note->permalink() function to use the route address instead of the currently temporally hard coded value
+
+✔ @high If the 'New Note' button is pressed, the 'main page' note list gets refresehed, which is extensive, the modal should be shown on client side only, @done(25-09-06 11:02)
+        use alpinejs here, and maybe the modal should do an authentication before is shown, to check if the user is not logged out in another window...
+        NOTE: in this case, the FrontPage->queryNodeList() is called to get the note list...
+        @see: https://w3collective.com/modal-dialog-alpine-js/
+        NOTE: maybe this modal should be moved to it's own component...
+        SOLUTION: moved the 'Nwe Note' button into the top-bar
+
+✘ @high User -> Notes after deleting note(s), the main page should be refresehed, currently the deleted notes are still on the main page. @cancelled(25-09-06 11:00)
+        Also, the 'refresh-note-list' event should be triggered on any actions, that needs it...
+        It works now, after navigating back to the main page the page is reloaded, so this should not happen, must have been some bug elswhere...
+
+✔ @high User -> main page ->edit note -> after save the note list is not refreshed, the note has the old values... @done(25-09-06 10:36)
+
 
 ✔ @low If a note is updated, the note should be refreshed, not the note list (it is possible, that a noot is not even on the page... (not likely, but still...)) @done(25-09-06 10:33)
 
