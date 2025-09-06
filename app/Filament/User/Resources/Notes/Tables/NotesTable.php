@@ -7,6 +7,7 @@ use App\Actions\Filament\ModalViewAction;
 use App\Enums\NoteVisibility;
 use App\Filament\Helpers\NoteVisibilityColorCallback;
 use App\Models\Note;
+use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -96,24 +97,31 @@ class NotesTable
             ->filters([
                 TrashedFilter::make(),
             ])
+            ->recordUrl(
+                fn (Note $record): string => match ($record->visibility) {
+                    NoteVisibility::Hidden,
+                    NoteVisibility::Restricted => '',
+                    default => route('filament.user.resources.notes.edit', ['record' => $record]),
+                }
+            )
             ->recordActions([
-                ModalViewAction::make(),
+                ModalViewAction::make()
+                    ->visible(static::actionAllowedByVisibility()),
                 FullPageViewAction::make(self::getViewNoteUrl(...))
-                    ->visible( fn(Note $note): bool => match ($note->visibility) {
-                        NoteVisibility::Hidden,
-                        NoteVisibility::Restricted => false,
-                        default => true,
-                    })
-                ,
-                EditAction::make(),
+                    ->visible(static::actionAllowedByVisibility()),
+                EditAction::make()
+                    ->visible(static::actionAllowedByVisibility()),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
-            ])
+            ->toolbarActions([])
             ;
+    }
+
+    public static function actionAllowedByVisibility(): Closure
+    {
+        return fn(Note $note): bool => match ($note->visibility) {
+            NoteVisibility::Hidden,
+            NoteVisibility::Restricted => false,
+            default => true,
+        };
     }
 }
