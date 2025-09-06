@@ -7,7 +7,14 @@ use Livewire\Component;
 
 class MainPage extends Component
 {
+/*
+    protected static string $routeName = 'front-page';
 
+    public static function routeName(): string
+    {
+        return static::$routeName;
+    }
+*/
     public string $search = '';
 
     public bool $partial = false;
