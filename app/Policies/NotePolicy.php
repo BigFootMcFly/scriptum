@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\NoteVisibility;
+use App\Filament\User\Pages\FrontPage;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -73,6 +74,7 @@ class NotePolicy
      */
     public function update(User $user, Note $note): bool
     {
+
         if ($user->isAdmin()) {
             return true;
         }
@@ -175,6 +177,14 @@ class NotePolicy
         }
 
         return false;
+    }
+
+    /**
+     * Determines if the current user can edit a post listed on the front page
+     */
+    public function updateOnFrontPage(User $user, Note $note): bool
+    {
+        return $note->user_id === $user->id;
     }
 
 }

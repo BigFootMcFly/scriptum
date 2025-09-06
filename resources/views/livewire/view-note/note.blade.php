@@ -22,7 +22,8 @@
                     {{ $note->title }}
                 </h1>
 
-                @can('update', $note)
+
+                @if (auth()->user()->can('updateOnFrontPage', $note))
 
                 {{-- Edit button --}}
                 <x-filament::icon-button
@@ -35,7 +36,7 @@
                     tooltip="Edit Note"
                     class="grayscale hover:grayscale-0 duration-1000 cursor-pointer"
                 />
-                @endcan
+                @endif
             </div>
         </div>
 
