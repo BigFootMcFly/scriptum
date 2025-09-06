@@ -4,7 +4,6 @@ use App\Filament\User\Pages\FrontPage;
 use App\Filament\User\Pages\ViewNotePage;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use App\Http\Controllers\LogoutUserController;
-use App\Livewire\MainPage;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -14,11 +13,11 @@ use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-*/
+
 /*
 //TODO: remove this
 Route::view('dashboard', 'dashboard')
@@ -40,16 +39,6 @@ Route::get('notes/{user}/{slug}', ViewNotePage::class)->name('view-note');
 Route::get('notes/{user}', function(string $user) {
     dd($user);
 })->name('view-user-notes');
-
-
-#ifdef test
-/*
-Route::get('main', MainPage::class)
-    ->name(FrontPage::getSlug())
-    //->name('front-page')
-    ;
-*/
-#endif
 
 #ifdef test
 Route::get('test', function() {
