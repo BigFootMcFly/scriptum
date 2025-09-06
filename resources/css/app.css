@@ -163,6 +163,9 @@ select:focus[data-flux-control] {
     .note-row-restricted {
         @apply border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20 opacity-50 blur-[1px]
     }
+    .note-row-admin-restricted {
+        @apply border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20
+    }
     .note-row-trashed {
         @apply border-l-5 !border-l-red-300 dark:!border-l-red-900 bg-red-300/20 dark:bg-red-950/20
     }
