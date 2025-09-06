@@ -2,6 +2,8 @@
 
 namespace App\Filament\Nomad\Resources\Notes\Tables;
 
+use App\Actions\Filament\FullPageViewAction;
+use App\Actions\Filament\ModalViewAction;
 use App\Filament\Helpers\NoteVisibilityColorCallback;
 use App\Models\Note;
 use Filament\Actions\BulkActionGroup;
@@ -10,6 +12,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -19,6 +22,14 @@ use Filament\Tables\Table;
 
 class NotesTable
 {
+
+    public static function getViewNoteUrl(Note $note): string
+    {
+        return route('filament.nomad.resources.notes.show', [
+            'record' => $note,
+        ]);
+    }
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -76,15 +87,18 @@ class NotesTable
                     ,
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->modalHeading("View Note")
-                    ->modalDescription(fn ($record) => "\"{$record->title}\"")
-                ,
+                ModalViewAction::make(),
+                FullPageViewAction::make(self::getViewNoteUrl(...)),
                 EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->after( function () {
+                            /** @var \Livewire\Component $this */
+                            //$this->dispatch('refresh-note-list');
+                        })
+                    ,
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),

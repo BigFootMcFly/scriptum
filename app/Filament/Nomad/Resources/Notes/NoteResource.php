@@ -61,6 +61,7 @@ class NoteResource extends Resource
             'index' => ListNotes::route('/'),
             'create' => CreateNote::route('/create'),
             //'view' => ViewNote::route('/{record}'),
+            'show' => ViewNote::route('/{record}'),
             'edit' => EditNote::route('/{record}/edit'),
         ];
     }
