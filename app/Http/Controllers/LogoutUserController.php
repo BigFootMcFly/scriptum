@@ -13,6 +13,6 @@ class LogoutUserController extends Controller
     public function __invoke(Request $request)
     {
         LogoutUser::execute();
-        return redirect()->to(route('filament.user.pages.main-page'));
+        return redirect()->to(route('filament.user.pages.front-page'));
     }
 }

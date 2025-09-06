@@ -1,12 +1,18 @@
 # ---- Pending
+☐ @low rename 'front-page' slug -OR- remove it and the whole 'user' path, it looks terrible...
+        NOTE: if the user panel provider path is set to '', some things break, fix them and be the 'front-page' be the '' page
+
 ☐ @low @livewire-error see:https://github.com/livewire/livewire/discussions/7746
 
-☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
-        - on the admin note list,add a 'details" action as well
-        - Add a custom action to open the post on the admin interface for editing
-        - mark the full page as admin coloring, but dont give any special permission
-        - check if the admin can see other users private notes on the front page (i think not, but better check, maibe even add a test for it)
-        - note: the permalink on the notes works, but it uses note id-s, nnot user/slug addressing
+☐ @low on the front page, amybe add som possibility for the admin to edit a "bougus" note, without the need to go to "manage" -> table and find it again
+        _OR_ add a possible edit link/button on the "/notes/{slug}" page for it, so it is not on the front page, but still more accessible for the admin
+        _AND_ maybe mark the page in some awy to pressure, that it is in 'admin' mode....
+        _AND_ mark the full page as admin coloring, but dont give any special permission
+                which pages? it depends, the "/notes/{slug}" is a good candidate for it
+        _AND_ maybe it would be  agood idea, to add an 'admin mode" button on the front page for the admin, with full page color/etc marking...
+
+☐ @low check if the admin can see other users private notes on the front page (i think not, but better check, maibe even add a test for it)
+        No, it cannot see, but a test would be a good thing to have for later "changes"
 
 ☐ @low tempestphp/highlight css does not understands tailwind @apply ...
         Maybe it's time to replace it with a "newer" highlighter, the richeditor highlighter almost handles it well...
@@ -37,9 +43,6 @@
                                 return new static;
                         }
                 }
-
-☐ @high MainPage class is used on /user/main-page, but FrontPage has the 'same' queryNodeList() function, One of them may not be used, sort outthose
-        NOTE: the MainPage was the first (for testing), the FrontPage waas created to replace the MainPage, but the replacement needs to be done jet...
 
 ☐ @maybe In teh Nomad/Notes InfoView maybe add links to the user profile and note lists (filtered table view)
 
@@ -84,6 +87,15 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @high MainPage class is used on /user/main-page, but FrontPage has the 'same' queryNodeList() function, One of them may not be used, sort outthose @done(25-09-06 17:59)
+        NOTE: the MainPage was the first (for testing), the FrontPage waas created to replace the MainPage, but the replacement needs to be done jet...
+        SOLUTION: removed MainPage
+
+✔ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be, - DONE @done(25-09-06 17:58)
+        - on the admin note list,add a 'details" action as well - DONE
+        - Add a custom action to open the post on the admin interface for editing - MOVED TO SEPARATE TODO
+        - note: the permalink on the notes works, but it uses note id-s, nnot user/slug addressing - DONE
 
 ✔ @low @maybe User -> "Manage My Notes" maybe remove the "New note" button fromn the table (headerActions), and use the global insert button, @done(25-09-06 17:18)
         just don't forget to update the list after a new record is added.

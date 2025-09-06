@@ -19,7 +19,7 @@ class FrontPage extends Page
     //protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
     protected static ?string $title = 'My Notes';
 
-    protected static ?string $slug = 'main-page';
+    protected static ?string $slug = 'front-page';
 
     protected string $view = 'filament.user.pages.front-page';
 
