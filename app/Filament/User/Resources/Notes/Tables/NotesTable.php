@@ -20,7 +20,6 @@ use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class NotesTable
 {
@@ -94,6 +93,7 @@ class NotesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->heading(fn () =>view('front-page.notes.table-heading'))
             ->filters([
                 TrashedFilter::make(),
             ])
