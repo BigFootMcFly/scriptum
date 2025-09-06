@@ -77,9 +77,11 @@ class NotesTable
                     ->sortable()
                     ->color(NoteVisibilityColorCallback::make()),
                 TextColumn::make('title')
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(50),
                 TextColumn::make('slug')
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(50),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

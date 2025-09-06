@@ -12,12 +12,11 @@
 ☐ @low Nomad -> add Global Search for user/notes/etc... (currently the global search is disabled)
         also, for refernce @see: https://proxima.goliath.hu/proxima/backend
 
-☐ @low User / notes ->limit the lengths of the title and slug columns, it can make the table scroll out of view...
-
 ☐ @low @maybe @later in the admin /notes table, maybe add caching for the getTabs() queries
         the count() querys are reloaded on each refresh, meybe ther should be cached (like in the proxima)
         NOTE: if i remember correctly, i added caching for this in the proxima backend @see: https://proxima.goliath.hu/proxima/backend
                 but maybe the published version has that stripped it as well, need to check...
+        NOTE: there maybe already some caching present, need to read trough the source code again...
 
 ☐ @low on teh admin notes table, color code the 'hidden' and 'restricted' fields as well...
         NOTE: i already added a class for 'hidden' somewhere, with a colors and blur...
@@ -108,6 +107,10 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @low User / notes ->limit the lengths of the title and slug columns, it can make the table scroll out of view... @done(25-09-06 22:53)
+        NOTE: did limit to 50 characters, on small screen or mobil it still scrolls, so this is of limited use...
+
 ✔ @high User / notes -> update the list if the global search is updated @done(25-09-06 22:39)
 
 ✔ @low User / notes -> add a notice above the table if the "with deleted record" filter is not set, @done(25-09-06 22:07)
