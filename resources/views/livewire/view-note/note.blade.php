@@ -23,7 +23,7 @@
                 </h1>
 
 
-                @if (auth()->user()->can('updateOnFrontPage', $note))
+                @if (auth()?->user()?->can('updateOnFrontPage', $note))
 
                 {{-- Edit button --}}
                 <x-filament::icon-button
