@@ -1,4 +1,7 @@
 <div class="fi-topbar-ctn">
+
+    <livewire:edit-note-modal-form></livewire:edit-note-modal-form>
+
     @php
         $navigation = filament()->getNavigation();
         $isRtl = __('filament-panels::layout.direction') === 'rtl';

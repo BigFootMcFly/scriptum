@@ -15,12 +15,14 @@ class NewNoteButton extends Component
 
     #[On('refresh-new-note-button')]
     public function onNavigated(string $pathName) {
+        /*
+        //NOTE: for now, the disabled button is not used anywhere, this functionality will propably be removed later, if teher could no new use for it be found
+        //      the event may be remaining here, in case a refres is needed, but could be removed as well...
         $frontPagePath =  parse_url(FrontPage::getNavigationUrl(),  PHP_URL_PATH);
         $manageMyNotesPath = parse_url(ListNotes::getNavigationUrl(),  PHP_URL_PATH);
-
-        // disabée on the notes for now, that is a button for this over the list.
-        //TODO: maybe later remove that button and use the main button and update the table after a new record is added.
-        $this->disabled = $manageMyNotesPath === $pathName;
+        //$this->disabled = $manageMyNotesPath === $pathName;
+        $this->disabled = false;
+        */
     }
 
     public function render()

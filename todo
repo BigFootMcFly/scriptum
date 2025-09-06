@@ -1,8 +1,4 @@
 # ---- Pending
-☐ @low @maybe User -> "Manage My Notes" maybe remove the "New note" button fromn the table (headerActions), and use the global insert button,
-        just don't forget to update the list after a new record is added.
-        @see: NewNoteButton.php:22
-
 ☐ @low @livewire-error see:https://github.com/livewire/livewire/discussions/7746
 
 ☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
@@ -88,6 +84,11 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @low @maybe User -> "Manage My Notes" maybe remove the "New note" button fromn the table (headerActions), and use the global insert button, @done(25-09-06 17:18)
+        just don't forget to update the list after a new record is added.
+        @see: NewNoteButton.php:22
+        SOLUTION: the global button is used for now, no need to have different buttons for the same thing
 
 ✔ @high The "Add new Note" button in the search bar only works on the 'main-page', if the 'notes' page is active, it does not work (the form is not on the page) @done(25-09-06 16:11)
         it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button

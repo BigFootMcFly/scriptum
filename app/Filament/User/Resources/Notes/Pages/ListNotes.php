@@ -21,7 +21,8 @@ class ListNotes extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            //NOTE: moved functionality to the main "Ad New Note" button
+            //CreateAction::make(),
         ];
     }
 }
