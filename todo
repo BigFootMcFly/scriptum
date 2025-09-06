@@ -1,6 +1,9 @@
 # ---- Pending
+☐ @low @maybe User -> "Manage My Notes" maybe remove the "New note" button fromn the table (headerActions), and use the global insert button,
+        just don't forget to update the list after a new record is added.
+        @see: NewNoteButton.php:22
 
-☐ @high Add a permalink to the User/nomad -> notes -> detail infoview
+☐ @low @livewire-error see:https://github.com/livewire/livewire/discussions/7746
 
 ☐ @high In the user domain, if an admin is logged in, it can edit all post from everyone, this should not be,
         - on the admin note list,add a 'details" action as well
@@ -9,14 +12,8 @@
         - check if the admin can see other users private notes on the front page (i think not, but better check, maibe even add a test for it)
         - note: the permalink on the notes works, but it uses note id-s, nnot user/slug addressing
 
-
 ☐ @low tempestphp/highlight css does not understands tailwind @apply ...
         Maybe it's time to replace it with a "newer" highlighter, the richeditor highlighter almost handles it well...
-
-☐ @high The "Add new Note" button in the search bar only works on the 'main-page', if the 'notes' page is active, it does not work (the form is not on the page)
-        it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button
-        //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
-        __OR__ move the "Edit Note" form into it's own component and into the header...
 
 ☐ @low Add events and notifications
         ex.: if admin marks a note as 'hidden' or 'restricted', then create an event, which sends a notification to the user for this
@@ -26,7 +23,6 @@
 
 ☐ @low Currently the front page shows the nodes sorted by the 'updated_at','DESC' order without the search, earlier it was 'created_by','DESC',
         think out, which one is better, or add a swithc/butoon/etc...
-
 
 ☐ @low @maybe TipTapJsonContentExtractor::extractContent() maybe should have a tdo as parameter instead of 4 arrays...
         _AND_ the pictograms should be added to that... ex.:
@@ -45,7 +41,6 @@
                                 return new static;
                         }
                 }
-
 
 ☐ @high MainPage class is used on /user/main-page, but FrontPage has the 'same' queryNodeList() function, One of them may not be used, sort outthose
         NOTE: the MainPage was the first (for testing), the FrontPage waas created to replace the MainPage, but the replacement needs to be done jet...
@@ -93,6 +88,15 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @high The "Add new Note" button in the search bar only works on the 'main-page', if the 'notes' page is active, it does not work (the form is not on the page) @done(25-09-06 16:11)
+        it should be 'disabled' or should navigate to the '/user/notes/create' page like in the listNote action button
+        //NOTE: spa - the header is not loaded in the switch between the tabs, so maybe a script ot $dispatch, or something???
+        __OR__ move the "Edit Note" form into it's own component and into the header...
+        SOLUTION: added an enabled state and disabling it on the "/users/notes" page
+
+✔ @high Add a permalink to the User/nomad -> notes -> detail infoview @done(25-09-06 16:09)
+
 ✔ @low Add quick view actiion to notes tables like in proxima backend @done(25-09-06 11:27)
 
 ✘ @high User/Notes table -> edit -> delete if i delete a note, the note list table still shows the note, the table needs to be refreshed !!! @cancelled(25-09-06 11:14)
