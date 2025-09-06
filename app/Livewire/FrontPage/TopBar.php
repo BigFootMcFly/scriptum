@@ -2,6 +2,7 @@
 
 namespace App\Livewire\FrontPage;
 
+use App\Filament\User\Pages\FrontPage;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -13,19 +14,19 @@ use Filament\Support\Concerns\EvaluatesClosures;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class TopBar extends Component implements HasActions, HasSchemas
+class TopBar extends Component
 {
     use EvaluatesClosures;
     use HasTenantMenu;
     use HasUserMenu;
-    use InteractsWithActions;
-    use InteractsWithSchemas;
+
+    public bool $disableNewNoteButton = false;
 
     #[On('refresh-topbar')]
     public function refresh(): void {}
 
-
     public function mount() {
+        $this->disableNewNoteButton = !request()->routeIs(FrontPage::getRouteName());
         $this->userMenuItems([
             Action::make('login')
                 ->label(__('Login / Register'))

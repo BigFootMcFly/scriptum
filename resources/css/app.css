@@ -134,14 +134,22 @@ select:focus[data-flux-control] {
 @layer components {
     .create-note {
         @apply justify-center
-                w-9 h-9 text-amber-500 text-2xl
-                border-2 border-amber-500/50 rounded-md
+                w-9 h-9 text-2xl
+                border-2  rounded-md
                 ml-3 -mr-2
-                hover:bg-amber-500
-                hover:text-orange-600
-                hover:animate-pulse
+                text-gray-500
+                border-gray-500
+                cursor-default
                 transition duration-300
-                hover:scale-110
+    }
+    .create-note-enabled {
+        @apply
+            text-amber-500
+            border-amber-500/50
+            hover:bg-amber-500
+            hover:text-orange-600
+            hover:animate-pulse
+            hover:scale-110
     }
     .back-to-top {
         @apply fixed bottom-0 right-0

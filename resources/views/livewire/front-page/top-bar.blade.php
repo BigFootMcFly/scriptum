@@ -243,18 +243,7 @@
             @endif
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
-            @if(auth()->check())
-                {{-- TODO: make this client side alpinejs --}}
-                <button x-data class="create-note"
-                    @click="$dispatch('create-new-note')"
-                    x-tooltip.raw="Add new Note"
-                    @keydown.window.ctrl.shift.n.prevent="$dispatch('create-new-note')"
-                >+</button>
-            @else
-            {{-- NOTE: this is here to compensate the space the Button would take up --}}
-                <div class="w-9 h-9 ml-3 -mr-2 inline-block"></div>
-            @endif
-
+            <livewire:front-page.new-note-button :disabled="$disableNewNoteButton"></livewire:front-page.new-note-button>
 
             @if (filament()->auth()->check())
                 @if (filament()->hasDatabaseNotifications())
