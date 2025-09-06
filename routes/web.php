@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\User\Pages\FrontPage;
 use App\Filament\User\Pages\ViewNotePage;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use App\Http\Controllers\LogoutUserController;
@@ -13,14 +14,18 @@ use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
+/*
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
+*/
+/*
+//TODO: remove this
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-
+*/
+/*
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -28,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
-
+*/
 Route::post('logout-user', LogoutUserController::class)->name('logout-user');
 
 Route::get('notes/{user}/{slug}', ViewNotePage::class)->name('view-note');
@@ -38,7 +43,12 @@ Route::get('notes/{user}', function(string $user) {
 
 
 #ifdef test
-Route::get('main', MainPage::class);
+/*
+Route::get('main', MainPage::class)
+    ->name(FrontPage::getSlug())
+    //->name('front-page')
+    ;
+*/
 #endif
 
 #ifdef test
