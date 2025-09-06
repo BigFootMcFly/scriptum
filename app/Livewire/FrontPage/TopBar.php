@@ -20,13 +20,10 @@ class TopBar extends Component
     use HasTenantMenu;
     use HasUserMenu;
 
-    public bool $disableNewNoteButton = false;
-
     #[On('refresh-topbar')]
     public function refresh(): void {}
 
     public function mount() {
-        $this->disableNewNoteButton = !request()->routeIs(FrontPage::getRouteName());
         $this->userMenuItems([
             Action::make('login')
                 ->label(__('Login / Register'))

@@ -10,9 +10,6 @@ use Livewire\Component;
 class NewNoteButton extends Component
 {
 
-    public bool $disabled = false;
-
-
     #[On('refresh-new-note-button')]
     public function onNavigated(string $pathName) {
         /*

@@ -246,7 +246,7 @@
             @endif
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
-            <livewire:front-page.new-note-button :disabled="$disableNewNoteButton"></livewire:front-page.new-note-button>
+            <livewire:front-page.new-note-button></livewire:front-page.new-note-button>
 
             @if (filament()->auth()->check())
                 @if (filament()->hasDatabaseNotifications())

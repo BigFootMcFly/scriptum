@@ -11,17 +11,10 @@
     @if(auth()->check())
     <button
         x-data
-        @class([
-        "create-note",
-        "create-note-enabled" => ! $disabled
-    ])
-    @if(!$disabled)
+        class="create-note"
         wire:click="$dispatch('create-new-note')"
         @keydown.window.ctrl.shift.n.prevent="$dispatch('create-new-note')"
         x-tooltip.raw="Add new Note"
-    @else
-        x-tooltip.raw="Disabled"
-    @endif
     >+</button>
     @else
     {{-- NOTE: this is here to compensate the space the Button would take up --}}
