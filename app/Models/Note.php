@@ -264,11 +264,29 @@ class Note extends Model implements HasRichContent
 
     // ----------------------------------------------------------------------------------------------------------------
     /**
-     * Returns the records with public visibility
+     * Returns the records with private visibility
      */
     public function scopePrivate(Builder $query): Builder
     {
         return $query->where('visibility',NoteVisibility::Private);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the records with hidden visibility
+     */
+    public function scopeHidden(Builder $query): Builder
+    {
+        return $query->where('visibility',NoteVisibility::Hidden);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the records with restricted visibility
+     */
+    public function scopeRestricted(Builder $query): Builder
+    {
+        return $query->where('visibility',NoteVisibility::Restricted);
     }
 
 
