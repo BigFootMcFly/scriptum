@@ -1,4 +1,5 @@
 # ---- Pending
+
 ☐ @low @maybe add a self statistics to the profile or somewhere, to show info about the user like:
         - registration date, profile picture, all usefull stuff
         - note statistics, count of private/published/etc.
@@ -109,6 +110,12 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low User / notes -> add a notice above the table if the "with deleted record" filter is not set, @done(25-09-06 22:07)
+                that records are hidden from teh listing, and change the filter to seee _ALL_ records
+
+✔ @high User / Notes - if the note is hidden/restricted, but the user is admin, the view/edit actions are present and the note is editable, @done(25-09-06 20:39)
+        that should not be the case!!! Those records should only be editable in the admin interface !!!
+        SOLUTION: added visible() to the actions, in the uzser view not even admin can use those actions.
 
 ✔ @low Admin -> Notes add tabs (deleted, restricted, etc, other "filters") @done(25-09-06 18:41)
 
