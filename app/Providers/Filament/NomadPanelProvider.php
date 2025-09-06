@@ -28,6 +28,7 @@ class NomadPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->globalSearch(false)
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
             ->domain('admin.localhost')

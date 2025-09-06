@@ -43,17 +43,16 @@ class NotesTable
             ->searchPlaceholder('Search (Name, Title, Slug)')
             ->columns([
                 TextColumn::make('user.name')
-                    ->searchable(),
-                TextColumn::make('visibility')
-                    ->searchable()
-                    ->badge()
-                    ->sortable()
-                    ->color(NoteVisibilityColorCallback::make())
-                    ,
+                    ->searchable(isIndividual: true, isGlobal: true),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable(isIndividual: true, isGlobal: true),
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable(isIndividual: true, isGlobal: true),
+                TextColumn::make('visibility')
+                    ->badge()
+                    ->color(NoteVisibilityColorCallback::make())
+                    ->searchable()
+                    ->sortable(),
                 IconColumn::make('Deleted')
                     ->boolean()
                     ->state( fn (Note $record): bool => $record->deleted_at === null)
