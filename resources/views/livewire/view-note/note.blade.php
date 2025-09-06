@@ -1,7 +1,11 @@
-<div class="divide-y divide-gray-200 dark:divide-gray-800">
+<div @class([
+        "divide-y divide-gray-200 dark:divide-gray-800  divide-double",
+        "animate-note-updated" => $pulse,
+    ])
+>
     <div class="py-4">
         {{-- Header --}}
-        <div class="p-1 ">
+        <div class="p-1">
             <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 <a href="{{ $note->user->permalink }}"
                     @class([

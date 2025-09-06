@@ -19,6 +19,54 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+
+    --animate-note-updated: animate-note-updated-keyframes 1s ease-in-out 1;
+
+    @keyframes animate-note-updated-keyframes {
+        0% {
+            background-color: inherit;
+            scale: 100%;
+        }
+        50% {
+            scale: 1.10 1.10;
+            background-color: var(--animate-note-updated-bg);
+        }
+        100% {
+            scale: 100%;
+            background-color: inherit;
+        }
+    }
+
+/*
+    NOTE: liwevire updates instantly, the "fade ont" should happen before update, the fade in after, but wire cannot do this and it may be slow,
+            so this is kept here to be able to thinker with later
+*/
+/*
+    --animate-note-updated: animate-ping-keyframes 2s ease-in-out 1;
+
+    @keyframes animate-ping-keyframes {
+        0% {
+            background-color: inherit;
+            scale: 100%;
+            opacity: 1;
+        }
+        40% {
+            background-color: inherit;
+            scale: 75%;
+            opacity: 0;
+        }
+        80% {
+            scale: 1.10 1.10;
+            opacity: 1;
+            background-color: var(--animate-ping-bg);
+        }
+        100% {
+            scale: 100%;
+            background-color: inherit;
+        }
+    }
+*/
+
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --color-zinc-50: #fafafa;
@@ -55,6 +103,14 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+
+    :root {
+        --animate-note-updated-bg: theme(colors.stone.200); /* light mode */
+      }
+
+      .dark {
+        --animate-note-updated-bg: theme(colors.stone.900); /* dark mode */
+      }
 }
 
 [data-flux-field]:not(ui-radio, ui-checkbox) {

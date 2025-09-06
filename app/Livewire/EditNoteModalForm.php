@@ -64,9 +64,10 @@ class EditNoteModalForm extends Component implements HasForms
 
         if ($this->editingNote) { // update note
             $this->editingNote->update($this->form->getState());
+            $noteUpdates = $this->editingNote;
             $confirmMessage = 'Note updated';
         } else { // create note
-            Note::create(
+            $noteUpdates = Note::create(
                 $this->data
                 + ['user_id' => auth()->user()->id]
             );
@@ -75,8 +76,7 @@ class EditNoteModalForm extends Component implements HasForms
 
         $this->editingNote = null;
 
-        //TODO: refresh only the changed note !!!
-        $this->dispatch('refresh-note-list');
+        $this->dispatch('refresh-note', noteId: $noteUpdates->id);
 
         $this->dispatch('close-modal', id: 'edit-note');
 

@@ -1,6 +1,4 @@
 # ---- Pending
-☐ @low If a note is updated, the note should be refreshed, not the note list (it is possible, that a noot is not even on the page... (not likely, but still...))
-
 ☐ @high User -> main page ->edit note -> after save the note list is not refreshed, the note has the old values...
 
 ☐ @high User -> Notes after deleting note(s), teh main page should be refresehed, currently the deleted notes are still on the main page.
@@ -115,6 +113,9 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @low If a note is updated, the note should be refreshed, not the note list (it is possible, that a noot is not even on the page... (not likely, but still...)) @done(25-09-06 10:33)
+
 ✔ @today FrontPage/Note.php - is this used anywhere? if not, remove this @done(25-09-03 22:30)
         Deleted it.
 
