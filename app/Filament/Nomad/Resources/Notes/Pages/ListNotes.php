@@ -32,19 +32,19 @@ class ListNotes extends ListRecords
                 ->badge(Note::onlyTrashed()->count())
                 ->badgeColor('danger'),
             'public' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->where('visibility', NoteVisibility::Public))
-                ->badge(Note::withoutTrashed()->where('visibility', NoteVisibility::Public)->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->public())
+                ->badge(Note::withoutTrashed()->public()->count()),
             'private' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->where('visibility', NoteVisibility::Private))
-                ->badge(Note::withoutTrashed()->where('visibility', NoteVisibility::Private)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->private())
+                ->badge(Note::withoutTrashed()->private()->count())
                 ->badgeColor('success'),
             'hidden' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->where('visibility', NoteVisibility::Hidden))
-                ->badge(Note::withoutTrashed()->where('visibility', NoteVisibility::Hidden)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->hidden())
+                ->badge(Note::withoutTrashed()->hidden()->count())
                 ->badgeColor('danger'),
             'restricted' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->where('visibility', NoteVisibility::Restricted))
-                ->badge(Note::withoutTrashed()->where('visibility', NoteVisibility::Restricted)->count())
+                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->restricted())
+                ->badge(Note::withoutTrashed()->restricted()->count())
                 ->badgeColor('danger'),
         ];
     }
