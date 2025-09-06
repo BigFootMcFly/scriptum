@@ -20,6 +20,12 @@ class ListNotes extends ListRecords
         //$this->dispatch('$refresh'); // Refreshes the Livewire component
     }
 
+    #[On('search-updated')]
+    public function onSearchUpdated(string $search): void
+    {
+        $this->resetPage();
+    }
+
     public function getTabs(): array
     {
         return [
