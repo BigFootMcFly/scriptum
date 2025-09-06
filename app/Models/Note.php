@@ -255,6 +255,27 @@ class Note extends Model implements HasRichContent
 
     // ----------------------------------------------------------------------------------------------------------------
     /**
+     * Returns the records with public visibility
+     */
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('visibility',NoteVisibility::Public);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * Returns the records with public visibility
+     */
+    public function scopePrivate(Builder $query): Builder
+    {
+        return $query->where('visibility',NoteVisibility::Private);
+    }
+
+
+
+
+    // ----------------------------------------------------------------------------------------------------------------
+    /**
      * Full Text Search in the 'body_content' and 'title' fields
      *
      * @param Builder $query The Eloquen Builder instance (auto injected)
