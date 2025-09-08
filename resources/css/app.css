@@ -7,6 +7,10 @@
 @import './highlight/light-plus.css';
 @import './highlight/dark-plus.css';
 
+@import './FrontPage/front-page.css';
+@import './FrontPage/view-mode.css';
+@import './FrontPage/note-list.css';
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
@@ -130,46 +134,3 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
-
-@layer components {
-    .create-note {
-        @apply justify-center
-                w-9 h-9 text-2xl
-                border-2  rounded-md
-                ml-3 -mr-2
-                transition duration-300
-                text-amber-500
-                border-amber-500/50
-                hover:bg-amber-500
-                hover:text-orange-600
-                hover:animate-pulse
-                hover:scale-110
-    }
-
-    .back-to-top {
-        @apply fixed bottom-0 right-0
-                items-center flex justify-center
-                z-10
-                w-9 h-9 text-amber-500 text-2xl
-                border-2 border-amber-500/50 rounded-md
-                mr-2 mb-2
-                hover:bg-amber-500
-                hover:text-orange-600
-                hover:animate-pulse
-                transition duration-300
-                hover:scale-110
-    }
-
-    .note-row-restricted {
-        @apply border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20 opacity-50 blur-[1px]
-    }
-    .note-row-admin-restricted {
-        @apply border-l-5 !border-l-gray-300 dark:!border-l-gray-900 bg-gray-500/20 dark:bg-gray-950/20
-    }
-    .note-row-trashed {
-        @apply border-l-5 !border-l-red-300 dark:!border-l-red-900 bg-red-300/20 dark:bg-red-950/20
-    }
-    .note-row {
-        @apply border-l-5 border-l-green-300 dark:!border-l-green-900 bg-green-300/20 dark:bg-green-950/20
-    }
-}
