@@ -103,11 +103,14 @@
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_LOGO_AFTER) }}
         </div>
 
+        <livewire:front-page.toggle-viewing-mode-button></livewire:front-page.toggle-viewing-mode-button>
+
         <!-- resource/page items begin -->
         @if ($hasTopNavigation || (! $hasNavigation))
             @if ($hasTenancy && filament()->hasTenantMenu())
                 <x-filament-panels::tenant-menu />
             @endif
+
 
             @if ($hasNavigation)
                 <ul class="fi-topbar-nav-groups">
@@ -271,4 +274,6 @@
     </nav>
 
     <x-filament-actions::modals />
+
+    @vite('resources/js/scriptum.js')
 </div>

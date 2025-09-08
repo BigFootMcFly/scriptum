@@ -4,6 +4,7 @@
             document.addEventListener('livewire:navigated', (event) => {
                 let url = new URL(event.target.URL);
                 $dispatch('refresh-new-note-button', [url.pathname]);
+                $dispatch('update-vieving-mode');
             })
         </script>
     @endscript
