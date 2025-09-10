@@ -3,13 +3,10 @@
     use Illuminate\Support\Arr;
     use App\Models\User;
 
-
+    //NOTE: the main purpose for this custom view is to be able to suppert guest user functionality
     $user = auth()->user() ?? User::guestUser();
 
     $items = $this->getUserMenuItems();
-
-    //NOTE: in the UserPanelProvider ->userMenuItems() does not works
-    $items['profile']->url(fn (): string => '/user/edit-profile');
 
     $itemsBeforeAndAfterThemeSwitcher = collect($items)
         ->groupBy(fn (Action $item): bool => $item->getSort() < 0, preserveKeys: true)
@@ -94,7 +91,6 @@
 
                     {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::USER_MENU_PROFILE_AFTER) }}
                 @else
-                    {{ dump($item) }}
                     {{ $item }}
                 @endif
             @endforeach

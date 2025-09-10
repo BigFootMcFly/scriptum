@@ -1,5 +1,6 @@
-window.zaj="ZAJ";
-
+window.scriptum={
+    version: "0.3.dev"
+};
 
 window.serializePointerEvent = function(e) {
     return {
@@ -11,18 +12,4 @@ window.serializePointerEvent = function(e) {
         x: e.clientX,
         y: e.clientY
     }
-}
-
-PointerEvent.prototype.serializePointerEvent = function() {
-    let e = this;
-    return {
-        ctrl: e.ctrlKey,
-        shift: e.shiftKey,
-        alt: e.altKey,
-        meta: e.metaKey,
-        button: e.button,
-        x: e.clientX,
-        y: e.clientY
-    }
-
 }
