@@ -59,9 +59,6 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * The User the Note belonsg to
-     *
-     * @return BelongsTo
-     *
      */
     public function user(): BelongsTo
     {
@@ -83,7 +80,6 @@ class Note extends Model implements HasRichContent
      */
     protected function slug(): Attribute
     {
-        //$userScope = $this->user?->handle ?? '#';
         return Attribute::make(
             get: fn (?string $value) => static::getScopedSlug($value),
             //set: fn (string $value) => static::globalizeSlug($userScope,$value),
@@ -93,9 +89,6 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Generate the body_content from the body property
-     *
-     * @return Attribute
-     *
      */
     protected function bodyContent(): Attribute
     {
@@ -145,6 +138,12 @@ class Note extends Model implements HasRichContent
     // Utilities
 
 
+    /**
+     * Determines, if the Note can be seen/updated/deleted by the user
+     *
+     * @return bool true if _ONLY_ an admin can access the Note, false otherwise
+     *
+     */
     public function isAdminRestricted(): bool
     {
         return match($this->visibility) {
@@ -165,7 +164,7 @@ class Note extends Model implements HasRichContent
      *
      * @return string The "unique" slug trough the database
      *
-     * NOTE: this is here for if the format should be changed or extended, that can be in one place
+     * NOTE: this is here in case the format should be changed or extended, that can be done in one place
      *
      */
     public static function globalizeSlug(string $scope, string $slug): string
@@ -222,46 +221,13 @@ class Note extends Model implements HasRichContent
 
     // ----------------------------------------------------------------------------------------------------------------
     /**
-     * Returns the combined list of records that are visible to the current user or guest
+     * Returns the combined list of records that are visible to the current user or guest on the FrontPage
      *
      * guest => all "public" notes
-     * user => all "public" notes ant its own "private" notes
+     * user => all "public" notes and its own "private" notes (if the user ViewingMode is set to public)
+     * user => its own "private" notes (if the user ViewingMode is set to private)
      *
      */
-/*
-    public function scopeFrontPage(Builder $query, ?User $user = null): Builder
-    {
-
-        $sessionViewingMode = session('user.viewing_mode', null);
-
-        // admin view mode
-        if ($user?->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
-            return $this->viewModeAdminScope($query);
-        }
-
-
-        return $query->where(function ($q) use ($user) {
-
-            // Public is always visible
-            //$q->where('visibility', NoteVisibility::Public->value);
-
-            // if guest or the user allows public notes
-            if (null === $user || $user->isGuest() || $user->viewing_mode === FrontPageViewingMode::Public) {
-                $q->where('visibility', NoteVisibility::Public->value);
-            }
-
-            if ($user) {
-                // Private only to owner
-                //NOTE: 'hidden' and 'restricted' are not handled (not shown) here for now, they reserved to require admin intervention
-                $q->orWhere(function ($q) use ($user) {
-                    $q->where('visibility', NoteVisibility::Private->value)
-                      ->where('user_id', $user->id);
-                });
-            }
-        });
-    }
-*/
-
     public function scopeFrontPage(Builder $query, ?User $user = null): Builder
     {
         // Guest viewing mode
@@ -269,6 +235,7 @@ class Note extends Model implements HasRichContent
             return $this->viewModeGuestScope($query, $user);
         }
 
+        //NOTE: admin mode is only stored temporary, in the session
         $sessionViewingMode = session('user.viewing_mode', null);
 
         // admin viewing mode
@@ -362,9 +329,6 @@ class Note extends Model implements HasRichContent
     {
         return $query->where('visibility',NoteVisibility::Restricted);
     }
-
-
-
 
     // ----------------------------------------------------------------------------------------------------------------
     /**
