@@ -1,4 +1,24 @@
+# ---- Notes
+
+- The Custom TopBar and and <x-front-page.user-menu> was created to be able to handle "guest" users.
+        By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
+
 # ---- Pending
+☐ @low NOTE: it tried to set the viewmode to admin, and it did not work... AND then it hit me, i was logged in with a non-admin test acc :D
+        This may be a bit confusing for the testing, but works...
+
+☐ @high @today The frontpage search is broken, if in private viewing mode a search for "nem" returns 5 result on the front page,
+        but 6 in the Notes table (the one missing from the front page is a "public" note,
+        so the scope is bad (there is an orWhere, which propably missing the precluding where))
+        - IMPORTANT - the stats are on Public version, even in Private mode
+        - IMPORTANT - the User/notes the tab badges are not correct
+☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
+        "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
+        Try to find a solution for this (currenly works, but it should not be ignored)
+
+☐ @high if the viewmode is changed, the 'page' parameter should be reset and the page shoud be scrolled to the top
+
+☐ @low admin / notes - if search for user/title/etc., the tab badges should reflect the result numbers
 
 ☐ @low @maybe add a self statistics to the profile or somewhere, to show info about the user like:
         - registration date, profile picture, all usefull stuff
