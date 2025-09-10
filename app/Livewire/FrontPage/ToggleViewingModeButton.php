@@ -8,6 +8,9 @@ use Livewire\Component;
 
 class ToggleViewingModeButton extends Component
 {
+
+    //public static bool $persist = false;
+
     public $viewingMode = FrontPageViewingMode::Guest;
 
     public function booted(): void
@@ -46,6 +49,9 @@ class ToggleViewingModeButton extends Component
         return;
 
     }
+
+    #[On('refresh-viewing-mode-button')]
+    public function onRefreshCOmponent() {}
 
     /**
      * Saves the current ViewingMode into the database
