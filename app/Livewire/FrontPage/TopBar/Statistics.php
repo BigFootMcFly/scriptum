@@ -36,22 +36,15 @@ class Statistics extends Component
         $userId = auth()?->user()?->id ?? 0;
         $search = session('front-page-search', '');
 
-        $query = Note::frontPage(auth()->user());
+        $query = Note::query()->frontPage(auth()->user());
 
-        //NOTE: search results are ordered by FTS RANK
         if ('' !== $search) {
-            $query->search(term: $search, prefix: true, ranked: false);
+            $query->search($search, true);
         }
 
-        $stats = $query->selectRaw('
-            COUNT(*) as total,
-            COUNT(CASE WHEN notes.user_id = ? THEN 1 END) as own_notes,
-            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id = ? THEN 1 END) as own_public_notes,
-            COUNT(CASE WHEN notes.visibility = "private" AND notes.user_id = ? THEN 1 END) as own_private_notes,
-            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id != ? THEN 1 END) as other_public_notes
-        ', [$userId, $userId, $userId, $userId])
-        ->first()
-        ->toArray();
+        $query->statistics($userId);
+
+        $stats = $query->first()->toArray();
 
         //TODO: make a DTO for this
         $this->noteCount = $stats['total'];

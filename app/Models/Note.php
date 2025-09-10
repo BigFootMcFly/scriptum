@@ -8,6 +8,7 @@ use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -228,7 +229,8 @@ class Note extends Model implements HasRichContent
      * user => its own "private" notes (if the user ViewingMode is set to private)
      *
      */
-    public function scopeFrontPage(Builder $query, ?User $user = null): Builder
+    #[Scope]
+    public function frontPage(Builder $query, ?User $user = null): Builder
     {
         // Guest viewing mode
         if (null === $user || $user->isGuest()) {
@@ -289,7 +291,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records that belongs to the provided user
      */
-    public function scopeOwned(Builder $query, User $user): Builder
+    #[Scope]
+     public function owned(Builder $query, User $user): Builder
     {
         return $query->where('user_id',$user->id);
     }
@@ -298,7 +301,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with public visibility
      */
-    public function scopePublic(Builder $query): Builder
+    #[Scope]
+    public function public(Builder $query): Builder
     {
         return $query->where('visibility',NoteVisibility::Public);
     }
@@ -307,7 +311,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with private visibility
      */
-    public function scopePrivate(Builder $query): Builder
+    #[Scope]
+    public function private(Builder $query): Builder
     {
         return $query->where('visibility',NoteVisibility::Private);
     }
@@ -316,7 +321,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with hidden visibility
      */
-    public function scopeHidden(Builder $query): Builder
+    #[Scope]
+    public function hidden(Builder $query): Builder
     {
         return $query->where('visibility',NoteVisibility::Hidden);
     }
@@ -325,7 +331,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with restricted visibility
      */
-    public function scopeRestricted(Builder $query): Builder
+    #[Scope]
+    public function restricted(Builder $query): Builder
     {
         return $query->where('visibility',NoteVisibility::Restricted);
     }
@@ -337,16 +344,13 @@ class Note extends Model implements HasRichContent
      * @param Builder $query The Eloquen Builder instance (auto injected)
      * @param string $term The search string, can have multiple tokens
      * @param bool $prefix If true, each search token can be partial (a '*' will be added at the end of each one, so 'lara*' will match 'laravel')
-     * @param bool $rank If true, the result will be ordered by the 'rank' column and the 'rank','highlight_title','highlight_body_content' columns will be returned as well
-     *                   Ff false,those calculated columns will not be returned (so it can be useed with aggregated values for statistics)
-     *
-     * NOTE: SQLite FTS5 functions like bm25() and highlight() can only be used in the SELECT list of the main FTS query, not in aggregate queries (with COUNT(*), GROUP BY, etc.).
      *
      * @return Builder
      *
      *
      */
-    public function scopeSearch(Builder $query, string $term, bool $prefix = false, $ranked = true): Builder
+    #[Scope]
+     public function search(Builder $query, string $term, bool $prefix = false): Builder
     {
         // Clean up term
         $term = trim($term);
@@ -365,17 +369,38 @@ class Note extends Model implements HasRichContent
         $result = $query->from('notes as notes')
             ->join('notes_fts', 'notes.id', '=', 'notes_fts.rowid')
             ->whereRaw('notes_fts MATCH ?', [$term]);
-            if ($ranked) {
-                $result->select(
-                    'notes.*',
-                    DB::raw('bm25(notes_fts) as rank'),
-                    DB::raw("highlight(notes_fts, 0, '<mark>', '</mark>') as highlight_title"),
-                    DB::raw("highlight(notes_fts, 1, '<mark>', '</mark>') as highlight_body_content"),
-                )
-                ->orderBy('rank')
-                ;
-            }
         return $result;
+    }
+
+    #[Scope]
+    /**
+     * Adds 'rank','highlight_title','highlight_body_content' colums to the search result, oredered by 'rank'
+     *
+     * NOTE: SQLite FTS5 functions like bm25() and highlight() can only be used in the SELECT list of the main FTS query,
+     *       not in aggregate queries (with COUNT(*), GROUP BY, etc.).
+     *
+     */
+    public function ranked(Builder $query): Builder
+    {
+        return $query->select(
+            'notes.*',
+            DB::raw('bm25(notes_fts) as rank'),
+            DB::raw("highlight(notes_fts, 0, '<mark>', '</mark>') as highlight_title"),
+            DB::raw("highlight(notes_fts, 1, '<mark>', '</mark>') as highlight_body_content"),
+        )
+        ->orderBy('rank');
+    }
+
+    #[Scope]
+    public function statistics(Builder $query, int $userId = 0): Builder
+    {
+        return $query->selectRaw('
+            COUNT(*) as total,
+            COUNT(CASE WHEN notes.user_id = ? THEN 1 END) as own_notes,
+            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id = ? THEN 1 END) as own_public_notes,
+            COUNT(CASE WHEN notes.visibility = "private" AND notes.user_id = ? THEN 1 END) as own_private_notes,
+            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id != ? THEN 1 END) as other_public_notes
+        ', [$userId, $userId, $userId, $userId]);
     }
 
     // Filament helpers

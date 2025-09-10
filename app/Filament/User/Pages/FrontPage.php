@@ -104,11 +104,11 @@ class FrontPage extends Page
     // ----------------------------------------------------------------------------------------------------------------
     protected function getQuery()
     {
-        $builder = Note::frontPage(auth()->user());
+        $builder = Note::query()->frontPage(auth()->user());
 
-        //NOTE: search results are ordered by FTS RANK
         if ('' !== $this->search) {
-            $builder->search($this->search, $this->partial);
+            //NOTE: search results are ordered by FTS RANK
+            $builder->search($this->search, $this->partial)->ranked();
         } else {
             $builder->orderBy('updated_at', 'desc');
         }
