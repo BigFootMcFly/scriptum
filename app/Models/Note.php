@@ -337,11 +337,16 @@ class Note extends Model implements HasRichContent
      * @param Builder $query The Eloquen Builder instance (auto injected)
      * @param string $term The search string, can have multiple tokens
      * @param bool $prefix If true, each search token can be partial (a '*' will be added at the end of each one, so 'lara*' will match 'laravel')
+     * @param bool $rank If true, the result will be ordered by the 'rank' column and the 'rank','highlight_title','highlight_body_content' columns will be returned as well
+     *                   Ff false,those calculated columns will not be returned (so it can be useed with aggregated values for statistics)
+     *
+     * NOTE: SQLite FTS5 functions like bm25() and highlight() can only be used in the SELECT list of the main FTS query, not in aggregate queries (with COUNT(*), GROUP BY, etc.).
      *
      * @return Builder
      *
+     *
      */
-    public function scopeSearch(Builder $query, string $term, bool $prefix = false): Builder
+    public function scopeSearch(Builder $query, string $term, bool $prefix = false, $ranked = true): Builder
     {
         // Clean up term
         $term = trim($term);
@@ -357,17 +362,20 @@ class Note extends Model implements HasRichContent
             $term = '"' . $term .'"';
         }
 
-        return $query->from('notes as notes')
+        $result = $query->from('notes as notes')
             ->join('notes_fts', 'notes.id', '=', 'notes_fts.rowid')
-            ->whereRaw('notes_fts MATCH ?', [$term])
-            ->select(
-                'notes.*',
-                DB::raw('bm25(notes_fts) as rank'),
-                DB::raw("highlight(notes_fts, 0, '<mark>', '</mark>') as highlight_title"),
-                DB::raw("highlight(notes_fts, 1, '<mark>', '</mark>') as highlight_body_content"),
-            )
-            ->orderBy('rank')
-            ;
+            ->whereRaw('notes_fts MATCH ?', [$term]);
+            if ($ranked) {
+                $result->select(
+                    'notes.*',
+                    DB::raw('bm25(notes_fts) as rank'),
+                    DB::raw("highlight(notes_fts, 0, '<mark>', '</mark>') as highlight_title"),
+                    DB::raw("highlight(notes_fts, 1, '<mark>', '</mark>') as highlight_body_content"),
+                )
+                ->orderBy('rank')
+                ;
+            }
+        return $result;
     }
 
     // Filament helpers

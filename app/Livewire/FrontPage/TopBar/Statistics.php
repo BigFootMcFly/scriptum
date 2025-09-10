@@ -34,6 +34,37 @@ class Statistics extends Component
     protected function queryStatistics(): void
     {
         $userId = auth()?->user()?->id ?? 0;
+        $search = session('front-page-search', '');
+
+        $query = Note::frontPage(auth()->user());
+
+        //NOTE: search results are ordered by FTS RANK
+        if ('' !== $search) {
+            $query->search(term: $search, prefix: true, rank: false);
+        }
+
+        $stats = $query->selectRaw('
+            COUNT(*) as total,
+            COUNT(CASE WHEN notes.user_id = ? THEN 1 END) as own_notes,
+            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id = ? THEN 1 END) as own_public_notes,
+            COUNT(CASE WHEN notes.visibility = "private" AND notes.user_id = ? THEN 1 END) as own_private_notes,
+            COUNT(CASE WHEN notes.visibility = "public" AND notes.user_id != ? THEN 1 END) as other_public_notes
+        ', [$userId, $userId, $userId, $userId])
+        ->first()
+        ->toArray();
+
+        //TODO: make a DTO for this
+        $this->noteCount = $stats['total'];
+        $this->ownCount = $stats['own_notes'];
+        $this->ownPublicCount = $stats['own_public_notes'];
+        $this->ownPrivateCount = $stats['own_private_notes'];
+        $this->otherPublicDount = $stats['other_public_notes'];
+
+    }
+
+    protected function queryStatistics___OLD(): void
+    {
+        $userId = auth()?->user()?->id ?? 0;
 
         //TODO: the search term should be handled the same as in the scope (tokenized, partials added, etc)
 
