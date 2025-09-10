@@ -4,13 +4,13 @@
 
     {{-- Note list --}}
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
-        @foreach ($this->notes() as $note)
+        @foreach ($this->notes as $note)
             <livewire:view-note.note :note="$note" :key="$note->id"></livewire:view-note.note>
         @endforeach
     </div>
 
     {{-- Pagination --}}
     <div class="mt-6">
-        <x-filament::pagination :paginator="$this->notes()" />
+        <x-filament::pagination :paginator="$this->notes" />
     </div>
 </x-filament-panels::page>
