@@ -40,7 +40,7 @@ class Statistics extends Component
 
         //NOTE: search results are ordered by FTS RANK
         if ('' !== $search) {
-            $query->search(term: $search, prefix: true, rank: false);
+            $query->search(term: $search, prefix: true, ranked: false);
         }
 
         $stats = $query->selectRaw('
