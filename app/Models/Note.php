@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FrontPageViewingMode;
 use App\Enums\NoteVisibility;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
@@ -227,11 +228,26 @@ class Note extends Model implements HasRichContent
      * user => all "public" notes ant its own "private" notes
      *
      */
-    public function scopeFrontPage(Builder $query, ?Model $user = null): Builder
+    public function scopeFrontPage(Builder $query, ?User $user = null): Builder
     {
+
+        $sessionViewingMode = session('user.viewing_mode', null);
+
+        // admin view mode
+        if ($user?->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
+            return $query;
+        }
+
+
         return $query->where(function ($q) use ($user) {
+
             // Public is always visible
-            $q->where('visibility', NoteVisibility::Public->value);
+            //$q->where('visibility', NoteVisibility::Public->value);
+
+            // if guest or the user allows public notes
+            if (null === $user || $user->isGuest() || $user->viewing_mode === FrontPageViewingMode::Public) {
+                $q->where('visibility', NoteVisibility::Public->value);
+            }
 
             if ($user) {
                 // Private only to owner

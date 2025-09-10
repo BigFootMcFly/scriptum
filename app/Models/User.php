@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\FrontPageViewingMode;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Filament\Panel\Concerns\HasAvatars;
@@ -36,6 +37,7 @@ class User extends Authenticatable implements FilamentUser
         'password',
         'handle',
         'avatar_url',
+        'viewing_mode',
     ];
 
     /**
@@ -58,7 +60,8 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_admin' => 'boolean'
+            'is_admin' => 'boolean',
+            'viewing_mode' => FrontPageViewingMode::class,
         ];
     }
 

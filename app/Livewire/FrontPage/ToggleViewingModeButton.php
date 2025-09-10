@@ -6,147 +6,136 @@ use App\Enums\FrontPageViewingMode;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-use function Symfony\Component\String\b;
-
 class ToggleViewingModeButton extends Component
 {
-    protected $_viewingMode; // = FrontPageViewingMode::Guest;
-
-    protected bool $_update_mode = false;
-
-    public FrontPageViewingMode $viewingMode {
-        get {
-            return $this->_viewingMode ?? $this->getSavedViewMode();
-        }
-        set(FrontPageViewingMode $value) {
-            if (true !== $this->_update_mode) {
-                //dump('UNWANTED WRITE DETECTED !!!');
-                return;
-            }
-            $this->_viewingMode = $value;
-            if (auth()->check() && $value !== FrontPageViewingMode::Admin) {
-                $this->saveCurrentState();
-            }
-            $this->dispatch('viewing-mode-updated');
-            $this->_update_mode = false;
-        }
-    }
-
-    protected function saveCurrentState(): void
-    {
-        if (!auth()->check()) {
-            return;
-        }
-
-        auth()->user()->refresh();
-        if (auth()->user()->viewing_mode === $this->viewingMode) {
-            return;
-        }
-
-        auth()->user()->update(['viewing_mode' => $this->viewingMode]);
-        auth()->user()->refresh();
-
-    }
-
-    public function mount(): void
-    {
-        $this->updateViewingMode();
-    }
+    public $viewingMode = FrontPageViewingMode::Guest;
 
     public function booted(): void
     {
-        //dump($this->_viewingMode);
-        $this->_viewingMode = $this->getSavedViewMode();
-        //dump($this->_viewingMode);
-
-        //$this->updateViewingMode();
+        $this->initializeViewingMode();
     }
 
-
-    #[On('spa-navigation')]
-    public function onSpaNavigation(string $pathName): void {
-        // add changees here if needed
-    }
-
-    #[On('update-vieving-mode')]
-    public function updateViewingMode(): void
+    /**
+     * Sets the Viewing Mode based on session and user values
+     * NOTE: Admin mode is only stored temporary in the session, not in the database
+     */
+    protected function initializeViewingMode(): void
     {
-
         // guest is always guest
         if (!auth()->check()) {
-            $this->_viewingMode = FrontPageViewingMode::Guest;
+            $this->viewingMode = FrontPageViewingMode::Guest;
             return;
         }
 
         $sessionViewingMode = session('user.viewing_mode', null);
 
-        if ($sessionViewingMode == FrontPageViewingMode::Admin && auth()->user()->isAdmin()) {
-            $this->_viewingMode = FrontPageViewingMode::Admin;
+        // check for admin mode
+        if ($sessionViewingMode === FrontPageViewingMode::Admin && auth()->user()->isAdmin()) {
+            $this->viewingMode = FrontPageViewingMode::Admin;
             return;
         }
 
-        auth()->user()->refresh();
-        $this->_viewingMode = auth()->user()->viewing_mode;
+        // failsafe
+        if ($sessionViewingMode !== null) {
+            //TODO: add logging here, this should not happen
+            session()->forget('user.viewing_mode');
+        }
+
+        // hydrate view mode from the user
+        $this->viewingMode = auth()->user()->viewing_mode;
         return;
 
     }
 
-    protected function getSavedViewMode(): FrontPageViewingMode
+    /**
+     * Saves the current ViewingMode into the database
+     */
+    protected function saveCurrentState(): void
     {
+        // failsave
         if (!auth()->check()) {
-            return FrontPageViewingMode::Guest;
+            //TODO: add logging here, this should not happen
+            return;
         }
 
-        //auth()->user()->refresh();
-        return auth()->user()->viewing_mode;
+        // skip if not changed
+        if (auth()->user()->viewing_mode === $this->viewingMode) {
+            return;
+        }
+
+        // save the new value
+        auth()->user()->update(['viewing_mode' => $this->viewingMode]);
     }
-#
+
+    /**
+     * The handler for the browser ViewMode show/change button
+     */
     #[On('toggle-viewing-mode')]
     public function toggleViewingMode(array $event): void
     {
         // guests cannot change viewing mode
         if (!auth()->check()) {
-            //TODO: a a notification to the guest
-            $this->_viewingMode = FrontPageViewingMode::Guest;
+            //TODO: maybe send a notification to the guest, that this is only available to registered users... - or not
+            $this->viewingMode = FrontPageViewingMode::Guest;
             return;
         }
 
-        $requestedAdminMode = $this->isAdminModerequest($event);
+        $adminModeRequested = $this->isRequestingForAdminMode($event);
 
         // handle admin mode request
-        if ($requestedAdminMode && auth()->user()->isAdmin()) {
-            $this->_viewingMode = FrontPageViewingMode::Admin;
+        if ($adminModeRequested && auth()->user()->isAdmin()) {
+            $this->viewingMode = FrontPageViewingMode::Admin;
             session(['user.viewing_mode' => FrontPageViewingMode::Admin]);
+            $this->dispatchUpdateRequests();
             return;
         }
 
+        //forget admin mode
+        session()->forget('user.viewing_mode');
+
         // deny admin mode request for non-admin users
-        if ($requestedAdminMode) {
+        if ($adminModeRequested) {
             //TODO: ad logging here
             //NOTE: if this was aa accidental bad click or  ahacking attempt, we simple treat it as a normal change mode request
         }
 
-        // failsafe for livewire rehydrate call
+        // failsafe
         if ($this->viewingMode === FrontPageViewingMode::Guest) {
-            $this->_viewingMode = $this->getSavedViewMode();
+            $this->viewingMode = auth()->user()->viewing_mode;;
+            //TODO: ad logging here
+            dump('THIS SHOULD REALLY NOT HAPPEN'); //TODO: after made sure, this does not happen, remove this line
         }
 
-        $this->_update_mode = true;
-        $x = match($this->viewingMode) {
-            //FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
-            FrontPageViewingMode::Private => FrontPageViewingMode::Public,
-            FrontPageViewingMode::Public => FrontPageViewingMode::Private,
-            //default => false, //something went wrong, this should not happenenig, //TODO: add error handling/logging here
-        };
         $this->viewingMode =  match($this->viewingMode) {
-            //FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
             FrontPageViewingMode::Private => FrontPageViewingMode::Public,
             FrontPageViewingMode::Public => FrontPageViewingMode::Private,
+            FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
             //default => false, //something went wrong, this should not happenenig, //TODO: add error handling/logging here
         };
+        $this->saveCurrentState();
+        $this->dispatchUpdateRequests();
     }
 
-    protected function isAdminModerequest(array $event): bool
+    /**
+     * Dispathes update requests to other component(s)
+     *
+     * @param bool $noteList - requesst for \App\Filament\User\Pages\FrontPage
+     * @param bool $topBar - requesst for \App\Livewire\FrontPage\TopBar
+     */
+    protected function dispatchUpdateRequests(bool $noteList = true, bool $topBar = true): void {
+        if ($noteList) {
+            $this->dispatch('refresh-note-list');
+        }
+        if ($topBar) {
+            $this->dispatch('refresh-topbar');
+        }
+    }
+
+    /**
+     * Check, if te user did request for admin mode
+     * NOTE: admin mode can be requested by admin users by pressing CTRL+ALT+SHIT+LeftClick
+     */
+    protected function isRequestingForAdminMode(array $event): bool
     {
         return $event['ctrl'] && $event['alt'] && $event['shift'];
     }
