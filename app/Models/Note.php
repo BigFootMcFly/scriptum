@@ -228,6 +228,7 @@ class Note extends Model implements HasRichContent
      * user => all "public" notes ant its own "private" notes
      *
      */
+/*
     public function scopeFrontPage(Builder $query, ?User $user = null): Builder
     {
 
@@ -235,7 +236,7 @@ class Note extends Model implements HasRichContent
 
         // admin view mode
         if ($user?->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
-            return $query;
+            return $this->viewModeAdminScope($query);
         }
 
 
@@ -259,6 +260,63 @@ class Note extends Model implements HasRichContent
             }
         });
     }
+*/
+
+    public function scopeFrontPage(Builder $query, ?User $user = null): Builder
+    {
+        // Guest viewing mode
+        if (null === $user || $user->isGuest()) {
+            return $this->viewModeGuestScope($query, $user);
+        }
+
+        $sessionViewingMode = session('user.viewing_mode', null);
+
+        // admin viewing mode
+        if ($user?->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
+            return $this->viewModeAdminScope($query, $user);
+        }
+
+        // private viewing mode
+        if ($user->viewing_mode == FrontPageViewingMode::Private) {
+            return $this->viewModePrivateScope($query, $user);
+        }
+
+        // public viewing mode
+        if ($user->viewing_mode == FrontPageViewingMode::Public) {
+            return $this->viewModePublicScope($query, $user);
+        }
+
+        return $query;
+
+    }
+
+    protected function viewModeAdminScope(Builder $query, ?User $user): Builder
+    {
+        return $query;
+    }
+
+    protected function viewModeGuestScope(Builder $query, ?User $user): Builder
+    {
+        return $query->where(function ($q) {
+            $q->where('visibility', NoteVisibility::Public->value);
+        });
+    }
+
+    protected function viewModePrivateScope(Builder $query, User $user): Builder
+    {
+        return $query->where(function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+        });
+    }
+
+    protected function viewModePublicScope(Builder $query, User $user): Builder
+    {
+        return $query->where(function ($q) use ($user) {
+            $q->where('user_id', $user->id)
+              ->orWhere('visibility', NoteVisibility::Public->value);
+        });
+    }
+
 
     // ----------------------------------------------------------------------------------------------------------------
     /**
