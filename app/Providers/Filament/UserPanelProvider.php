@@ -47,7 +47,8 @@ class UserPanelProvider extends PanelProvider
             ->login()
             ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
-            ->spa(hasPrefetching: true)
+            //NOTE: DO NOT USE PREFETCHING!!!! It does not work well with the Viewing Mode Button... :(
+            ->spa(hasPrefetching: false)
             ->topNavigation()
             ->emailChangeVerification()
             ->unsavedChangesAlerts()
@@ -91,14 +92,13 @@ class UserPanelProvider extends PanelProvider
                     ->shouldShowBrowserSessionsForm()
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowEmailForm(false)
-            ])
-/* //TODO: does not work, currently teh ciustomization is moved to 'user-menu.blade.php', fix or remove this!
+            ]);
+ /*
+            //NOTE: moved to TopBar->mount()
             ->userMenuItems([
                 'logout' => fn (Action $action) => $action->label('Log out'),
                 'profile' => fn (Action $action) => $action->url(fn (): string => '/user/edit-profile'),
-            ])
+            ]);
 */
-            ;
     }
 }
-// php artisan vendor:publish --tag="filament-edit-profile-config"
