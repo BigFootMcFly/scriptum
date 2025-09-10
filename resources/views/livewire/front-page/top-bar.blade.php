@@ -1,4 +1,14 @@
+@use('App\Enums\FrontPageViewingMode')
+@persist('top_bar')
 <div class="fi-topbar-ctn">
+    @script
+    <script>
+        document.addEventListener('livewire:navigated', (event) => {
+            let url = new URL(event.target.URL);
+            $dispatch('spa-navigation', [url.pathname]);
+        })
+    </script>
+    @endscript
 
     <livewire:edit-note-modal-form></livewire:edit-note-modal-form>
 
@@ -12,7 +22,15 @@
         $hasTenancy = filament()->hasTenancy();
     @endphp
 
-    <nav class="fi-topbar">
+    <nav
+        {{-- TODO: add light mode, and normalize colors --}}
+        @class([
+           "fi-topbar transition-all duration-1000",
+           "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
+           "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
+           "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
+        ])
+    >
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_START) }}
 
         @if ($hasNavigation)
@@ -103,7 +121,7 @@
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_LOGO_AFTER) }}
         </div>
 
-        <livewire:front-page.toggle-viewing-mode-button></livewire:front-page.toggle-viewing-mode-button>
+        <livewire:front-page.toggle-viewing-mode-button x-persist="viewing-mode-button"></livewire:front-page.toggle-viewing-mode-button>
 
         <!-- resource/page items begin -->
         @if ($hasTopNavigation || (! $hasNavigation))
@@ -267,13 +285,26 @@
 
             <x-front-page.user-menu />
 
-</div>
+
+        </div>
 
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_END) }}
 
     </nav>
+    <div
+        {{-- TODO: add light mode, and normalize colors --}}
+        @class([
+           "flex justify-center transition-all duration-1000 text-gray-500 border-t-1 border-t-stone-950/50",
+           "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
+           "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
+           "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
+        ])
+    >
+        <livewire:front-page.top-bar.statistics></livewire:front-page.top-bar.statistics>
+    </div>
 
     <x-filament-actions::modals />
 
     @vite('resources/js/scriptum.js')
 </div>
+@endpersist
