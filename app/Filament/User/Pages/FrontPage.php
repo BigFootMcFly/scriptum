@@ -23,13 +23,15 @@ class FrontPage extends Page
 
     protected string $view = 'filament.user.pages.front-page';
 
+    //TODO: this is not currelnty used, maybe it should be removed
     public bool $partial = true;
+
     public string $search = '';
 
     public ?Note $editingNote = null;
 
     // ----------------------------------------------------------------------------------------------------------------
-    //TODO: make this dinamic based on search
+    //TODO: make this dynamic based on search
     public static function getNavigationLabel(): string
     {
         return __('Main');
@@ -68,6 +70,7 @@ class FrontPage extends Page
         $this->refresh();
     }
 
+    // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-note-list')]
     public function refreshNoteList(): void {
         $this->refresh();
@@ -89,13 +92,17 @@ class FrontPage extends Page
     // DataBase helpers
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function notes()
+    public function getNotesProperty()
     {
-        return $this->queryNodeList();
+        $query = $this->getQuery();
+
+        $this->dispatch('front-page-updated');
+
+        return $query->paginate(10);
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    protected function queryNodeList()
+    protected function getQuery()
     {
         $builder = Note::frontPage(auth()->user());
 
@@ -105,7 +112,6 @@ class FrontPage extends Page
         } else {
             $builder->orderBy('updated_at', 'desc');
         }
-        $builder = $builder->paginate(perPage: 10);
 
         return $builder;
     }
