@@ -7,6 +7,9 @@ return [
         'admin_handle' => env('ADMIN_HANDLE', 'scriptum-admin'),
         'admin_password' => env('ADMIN_PASSWORD', 'PlEaSe_ChAnGe_Me'),
     ],
+    'debug' => [
+        'dump_sql_queries' => env('DUMP_SQL_QUERIES', false),
+    ],
     'show_logo' => env('SHOW_LOGO', false),
 
 ];
