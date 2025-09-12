@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Filament\User\Pages;
+
+use App\Enums\NoteVisibility;
+use App\Filament\Traits\ModalNoteEditor;
+use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
@@ -11,6 +17,7 @@ use Livewire\WithPagination;
 class FrontPage extends Page
 {
     use WithPagination;
+    use ModalNoteEditor;
 
     //protected static ?string $title = 'Custom Page Title';
 
@@ -27,8 +34,6 @@ class FrontPage extends Page
     public bool $partial = true;
 
     public string $search = '';
-
-    public ?Note $editingNote = null;
 
     // ----------------------------------------------------------------------------------------------------------------
     //TODO: make this dynamic based on search
@@ -115,5 +120,28 @@ class FrontPage extends Page
 
         return $builder;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

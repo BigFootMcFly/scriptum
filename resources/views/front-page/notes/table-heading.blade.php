@@ -1,4 +1,8 @@
 <div class="text-xs italic flex items-center">
+    {{-- ModalNoteEditor - Modal begin --}}
+    {{ $this->getModalView() }}
+    {{-- ModalNoteEditor - Modal end --}}
+
     <span class="bold mr-2">NOTE:</span>
     <span class="font-thin">You may need to enable "With Deleted Records" in the filters to show all records.</span>
     <span class="font-thin px-1">(</span>
