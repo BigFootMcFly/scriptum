@@ -1,5 +1,5 @@
 @use('App\Enums\FrontPageViewingMode')
-{{--@persist('top_bar')--}}
+@persist('top_bar')
 <div class="fi-topbar-ctn">
     @script
     <script>
@@ -308,4 +308,4 @@
 
     @vite('resources/js/scriptum.js')
 </div>
-{{--@endpersist--}}
+@endpersist
