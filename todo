@@ -12,6 +12,7 @@
         so the scope is bad (there is an orWhere, which propably missing the precluding where))
         - IMPORTANT - the stats are on Public version, even in Private mode
         - IMPORTANT - the User/notes the tab badges are not correct
+
 ☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
         "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
         Try to find a solution for this (currenly works, but it should not be ignored)
