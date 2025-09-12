@@ -1,34 +1,33 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Filament\Traits;
 
 use App\Enums\NoteVisibility;
 use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
+use Illuminate\View\View;
 use Livewire\Attributes\On;
-use Livewire\Component;
 
-class EditNoteModalForm extends Component implements HasForms, HasActions
+trait ModalNoteEditor
 {
-    use InteractsWithForms;
-    use InteractsWithActions;
-
-    public ?Note $note = null;
-
-    public ?Note $editingNote = null; // ??? kell ez ???
-
     public ?array $data = [
         'title' => null,
         'visibility'  => null,
         'slug' => null,
-        'body' => [],
+        'body' => [
+            "type" => "doc",
+        ],
     ];
+
+    public function getModalView(): View
+    {
+        return view('filament.traits.modal-note-editor');
+    }
+
+    public ?Note $editingNote = null;
+
 
     // ----------------------------------------------------------------------------------------------------------------
     public function form(Schema $schema): Schema
@@ -37,6 +36,8 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
             ->statePath('data');
     }
 
+
+    // ----------------------------------------------------------------------------------------------------------------
     #[On('create-new-note')]
     #[On('edit-note')]
     public function openEditModal(?Note $note = null): void
@@ -45,7 +46,11 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
         if (null === $note->id) { // create new note
             $this->editingNote = null;
             $this->data = [
-                'body' => [],
+                /*'body' => [],*/
+                'body' => [
+                    "type" => "doc",
+                ],
+
                 'visibility' => NoteVisibility::Private,
                 'title' => '',
                 'slug' => '',
@@ -57,6 +62,7 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
 
         $this->dispatch('open-modal', id: 'edit-note');
     }
+
 
     // ----------------------------------------------------------------------------------------------------------------
     public function saveNote(): void
@@ -80,8 +86,6 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
 
         $this->editingNote = null;
 
-
-
         $this->dispatch('close-modal', id: 'edit-note');
 
         Notification::make()
@@ -90,10 +94,4 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
             ->send();
     }
 
-/*
-    public function render()
-    {
-        return view('livewire.edit-note-modal-form');
-    }
-*/
 }

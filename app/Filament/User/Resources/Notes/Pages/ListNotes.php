@@ -2,6 +2,7 @@
 
 namespace App\Filament\User\Resources\Notes\Pages;
 
+use App\Filament\Traits\ModalNoteEditor;
 use App\Filament\User\Resources\Notes\NoteResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
@@ -11,6 +12,8 @@ use Livewire\Attributes\On;
 
 class ListNotes extends ListRecords
 {
+    use ModalNoteEditor;
+
     protected static string $resource = NoteResource::class;
 
     #[On('refresh-note-list')]

@@ -1,6 +1,13 @@
 <x-filament-panels::page>
     {{-- Common components --}}
     <livewire:front-page.back-to-top-button></livewire:front-page.back-to-top-button>
+{{--
+    <livewire:edit-note-modal-form></livewire:edit-note-modal-form>
+--}}
+
+    {{-- ModalNoteEditor - Modal begin --}}
+    {{ $this->getModalView() }}
+    {{-- ModalNoteEditor - Modal end --}}
 
     {{-- Note list --}}
     <div class="divide-y divide-gray-200 dark:divide-gray-800">
