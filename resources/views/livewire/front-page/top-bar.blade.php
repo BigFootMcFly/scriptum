@@ -1,5 +1,5 @@
 @use('App\Enums\FrontPageViewingMode')
-@persist('top_bar')
+{{--@persist('top_bar')--}}
 <div class="fi-topbar-ctn">
     @script
     <script>
@@ -7,11 +7,14 @@
             let url = new URL(event.target.URL);
             $dispatch('spa-navigation', [url.pathname]);
         })
+        document.addEventListener('sync-action-modals', (event) => {
+            console.log('sync-action-modals', event);
+        })
     </script>
     @endscript
-
+{{--
     <livewire:edit-note-modal-form></livewire:edit-note-modal-form>
-
+--}}
     @php
         $navigation = filament()->getNavigation();
         $isRtl = __('filament-panels::layout.direction') === 'rtl';
@@ -267,6 +270,7 @@
             @endif
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::GLOBAL_SEARCH_AFTER) }}
+
             <livewire:front-page.new-note-button></livewire:front-page.new-note-button>
 
             @if (filament()->auth()->check())
@@ -307,4 +311,4 @@
 
     @vite('resources/js/scriptum.js')
 </div>
-@endpersist
+{{--@endpersist--}}
