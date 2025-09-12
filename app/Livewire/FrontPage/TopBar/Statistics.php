@@ -19,12 +19,10 @@ class Statistics extends Component
 
     public int $otherPublicDount;
 
-    public function booted(): void
+    public function mount(): void
     {
         $this->queryStatistics();
     }
-
-
     #[On('front-page-updated')]
     public function onFrontPageUpdated(): void
     {
@@ -54,7 +52,7 @@ class Statistics extends Component
         $this->otherPublicDount = $stats['other_public_notes'];
 
     }
-
+/*
     protected function queryStatistics___OLD(): void
     {
         $userId = auth()?->user()?->id ?? 0;
@@ -91,7 +89,7 @@ class Statistics extends Component
         $this->otherPublicDount = $stats['other_public_notes'];
 
     }
-
+*/
     public function render()
     {
         return view('livewire.front-page.top-bar.statistics');
