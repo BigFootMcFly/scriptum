@@ -7,9 +7,6 @@
             let url = new URL(event.target.URL);
             $dispatch('spa-navigation', [url.pathname]);
         })
-        document.addEventListener('sync-action-modals', (event) => {
-            console.log('sync-action-modals', event);
-        })
     </script>
     @endscript
 {{--
