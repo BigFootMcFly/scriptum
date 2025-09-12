@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Enums\NoteVisibility;
 use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -12,9 +14,10 @@ use Filament\Schemas\Schema;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class EditNoteModalForm extends Component implements HasForms
+class EditNoteModalForm extends Component implements HasForms, HasActions
 {
     use InteractsWithForms;
+    use InteractsWithActions;
 
     public ?Note $note = null;
 
@@ -24,7 +27,9 @@ class EditNoteModalForm extends Component implements HasForms
         'title' => null,
         'visibility'  => null,
         'slug' => null,
-        'body' => [],
+        'body' => [
+            "type" => "doc",
+          ],
     ];
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -42,7 +47,9 @@ class EditNoteModalForm extends Component implements HasForms
         if (null === $note->id) { // create new note
             $this->editingNote = null;
             $this->data = [
-                'body' => [],
+                'body' => [
+                    "type" => "doc",
+                  ],
                 'visibility' => NoteVisibility::Private,
                 'title' => '',
                 'slug' => '',
