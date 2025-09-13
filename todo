@@ -15,6 +15,7 @@
         "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
         Try to find a solution for this (currenly works, but it should not be ignored)
         NOTE: this is only a problem with SPA mode.
+        NOTE: currently spa mode is disabled, until a solution is found.
 
 ☐ @low admin / notes - if search for user/title/etc., the tab badges should reflect the result numbers
 
