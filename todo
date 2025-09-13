@@ -4,8 +4,6 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
-☐ @low NOTE: it tried to set the viewmode to admin, and it did not work... AND then it hit me, i was logged in with a non-admin test acc :D
-        This may be a bit confusing for the testing, but works...
 
 ☐ @high @today The frontpage search is broken, if in private viewing mode a search for "nem" returns 5 result on the front page,
         but 6 in the Notes table (the one missing from the front page is a "public" note,
@@ -16,8 +14,7 @@
 ☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
         "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
         Try to find a solution for this (currenly works, but it should not be ignored)
-
-☐ @high if the viewmode is changed, the 'page' parameter should be reset and the page shoud be scrolled to the top
+        NOTE: this is only a problem with SPA mode.
 
 ☐ @low admin / notes - if search for user/title/etc., the tab badges should reflect the result numbers
 
@@ -125,6 +122,11 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @high if the viewmode is changed, the 'page' parameter should be reset and the page shoud be scrolled to the top @done(25-09-13 13:58)
+
+✔ @low NOTE: I tried to set the viewmode to admin, and it did not work... AND then it hit me, i was logged in with a non-admin test acc :D @done(25-09-12 14:49)
+        This may be a bit confusing for the testing, but works...
+        SOLUTION: this is the intended behaviour, "magic" viweing mode changes not a good solution, but i dont want to add another button or selector for it
 
 ✔ @low on the admin notes table, color code the 'hidden' and 'restricted' fields as well... @done(25-09-06 23:11)
         NOTE: i already added a class for 'hidden' somewhere, with a colors and blur...

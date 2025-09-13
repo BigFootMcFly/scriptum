@@ -11,6 +11,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -34,6 +35,8 @@ class FrontPage extends Page
     public bool $partial = true;
 
     public string $search = '';
+
+    protected bool $resetPagination = false;
 
     // ----------------------------------------------------------------------------------------------------------------
     //TODO: make this dynamic based on search
@@ -78,6 +81,7 @@ class FrontPage extends Page
     // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-note-list')]
     public function refreshNoteList(): void {
+        $this->resetPagination = true;
         $this->refresh();
     }
 
@@ -103,7 +107,14 @@ class FrontPage extends Page
 
         $this->dispatch('front-page-updated');
 
-        return $query->paginate(10);
+        // reste the pagination to the first page
+        $page = $this->resetPagination ? 1 : null and $this->resetPagination = false;
+        /* //NOTE: the above is the same as this: ( i just keep this here for now, it is not a good practice ;) )
+        $page = $this->resetPagination ? 1 : null;
+        $this->resetPagination = false;
+        */
+
+        return $query->paginate(perPage: 10, page: $page);
     }
 
     // ----------------------------------------------------------------------------------------------------------------
