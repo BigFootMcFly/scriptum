@@ -48,7 +48,7 @@ class UserPanelProvider extends PanelProvider
             ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
             //NOTE: DO NOT USE PREFETCHING!!!! It does not work well with the Viewing Mode Button... :(
-            ->spa(hasPrefetching: false)
+            //->spa(hasPrefetching: false)
             ->topNavigation()
             ->emailChangeVerification()
             ->unsavedChangesAlerts()
