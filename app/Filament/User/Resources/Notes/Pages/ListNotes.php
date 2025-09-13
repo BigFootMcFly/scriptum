@@ -33,18 +33,18 @@ class ListNotes extends ListRecords
     {
         return [
             'all' => Tab::make()
-                ->badge(auth()->user()->notes()->withTrashed()->count())
+                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->count())
                 ->badgeColor('info'),
             'public' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->public())
-                ->badge(auth()->user()->notes()->withTrashed()->public()->count()),
+                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->public()->count()),
             'private' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->private())
-                ->badge(auth()->user()->notes()->withTrashed()->private()->count())
+                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->private()->count())
                 ->badgeColor('success'),
             'deleted' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed())
-                ->badge(auth()->user()->notes()->onlyTrashed()->count())
+                ->badge(auth()->user()->notes()->sessionSearch()->onlyTrashed()->count())
                 ->badgeColor('danger'),
         ];
     }

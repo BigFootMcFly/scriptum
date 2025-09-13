@@ -373,6 +373,18 @@ class Note extends Model implements HasRichContent
     }
 
     #[Scope]
+    public function sessionSearch(Builder $query, bool $prefix = true): Builder
+    {
+        $search = session('front-page-search','');
+
+        if ('' === $search) {
+            return $query;
+        }
+
+        return $query->search($search, $prefix);
+    }
+
+    #[Scope]
     /**
      * Adds 'rank','highlight_title','highlight_body_content' colums to the search result, oredered by 'rank'
      *
