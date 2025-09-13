@@ -27,4 +27,16 @@
                 hover:scale-110
     }
 
+    /* hide pagination default overwiew
+        ex.: "Showing 11 to 20 of 28 results"
+    */
+    .front-page .fi-pagination-overview {
+        display: none;
+    }
+
+    /* remove empty gap on top of page content */
+    .front-page .fi-page-header-main-ctn {
+        row-gap: 0;
+    }
+
 }

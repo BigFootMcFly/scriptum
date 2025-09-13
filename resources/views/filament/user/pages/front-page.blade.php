@@ -1,4 +1,9 @@
-<x-filament-panels::page>
+<x-filament-panels::page class="front-page">
+    {{-- Pagination --}}
+    <nav aria-label="Pagination navigation" role="navigation" class="">
+        <x-filament::pagination :paginator="$this->notes" />
+    </nav>
+
     <div class="fi-layout">
     {{-- Common components --}}
         <livewire:front-page.back-to-top-button></livewire:front-page.back-to-top-button>
@@ -17,9 +22,13 @@
             @endforeach
         </div>
 
-        {{-- Pagination --}}
-        <div class="mt-6">
-            <x-filament::pagination :paginator="$this->notes" />
-        </div>
     </div>
+
+    {{-- Pagination --}}
+    <nav aria-label="Pagination navigation" role="navigation" class="">
+        <x-filament::pagination :paginator="$this->notes" />
+    </nav>
+
+
+    {{--<nav aria-label="Pagination navigation" role="navigation" class="fi-pagination">s</nav>--}}
 </x-filament-panels::page>
