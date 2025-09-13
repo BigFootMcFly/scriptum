@@ -1,6 +1,6 @@
 @use('App\Enums\FrontPageViewingMode')
 {{--@persist('top_bar')--}}
-<div class="fi-topbar-ctn fixed top-0 left-0 w-full bg-black border-b-1 border-stone-700">
+<div class="fi-topbar-ctn bg-white dark:bg-black border-b-1 border-stone-700">
     @script
     <script>
         document.addEventListener('livewire:navigated', (event) => {
