@@ -47,8 +47,19 @@ class UserPanelProvider extends PanelProvider
             ->login()
             ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
+
             //NOTE: DO NOT USE PREFETCHING!!!! It does not work well with the Viewing Mode Button... :(
             //->spa(hasPrefetching: false)
+
+/*
+            //NOTE: does not work, still got errors:
+                Uncaught (in promise) Component not found: nU0zJagSrTqWRRFpWCYv
+                Uncaught Component not found: nU0zJagSrTqWRRFpWCYv
+            ->spa()
+            ->spaUrlExceptions([
+                url('/user/notes*'),
+            ])
+*/
             ->topNavigation()
             ->emailChangeVerification()
             ->unsavedChangesAlerts()
