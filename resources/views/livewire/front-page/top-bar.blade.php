@@ -1,6 +1,6 @@
 @use('App\Enums\FrontPageViewingMode')
 {{--@persist('top_bar')--}}
-<div class="fi-topbar-ctn bg-white dark:bg-black border-b-1 border-stone-700">
+<div class="fi-topbar-ctn bg-white dark:bg-black border-b-1 border-zinc-300 dark:border-stone-700">
     @script
     <script>
         document.addEventListener('livewire:navigated', (event) => {
@@ -25,7 +25,7 @@
     <nav
         {{-- TODO: add light mode, and normalize colors --}}
         @class([
-           "fi-topbar transition-all duration-1000",
+           "fi-topbar transition-all duration-300",
            "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
            "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
            "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
@@ -299,6 +299,7 @@
            "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
            "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
            "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
+           "dark:bg-zinc-900" => !auth()->check(),
         ])
     >
         <livewire:front-page.top-bar.statistics></livewire:front-page.top-bar.statistics>
