@@ -3,6 +3,7 @@
 namespace App\Livewire\FrontPage\TopBar;
 
 use App\Models\Note;
+use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -21,23 +22,32 @@ class Statistics extends Component
 
     public function mount(): void
     {
-        $this->queryStatistics();
+        // on the note resource pages use only our own notes
+        $routeIsNoteResourrce = Route::is('filament.user.resources.notes.*');
+        $this->queryStatistics( $routeIsNoteResourrce );
     }
+
     #[On('front-page-updated')]
     public function onFrontPageUpdated(): void
     {
         $this->queryStatistics();
     }
 
-    protected function queryStatistics(): void
+    protected function queryStatistics(bool $ownedOnly = false): void
     {
-        $userId = auth()?->user()?->id ?? 0;
+        $user = auth()?->user();
+        $userId = $user?->id ?? 0;
         $search = session('front-page-search', '');
 
-        $query = Note::query()->frontPage(auth()->user());
+        $query = Note::query()->frontPage($user);
 
         if ('' !== $search) {
             $query->search($search, true);
+        }
+
+        // only get owned note statistics
+        if ($user && $ownedOnly) {
+            $query->owned($user);
         }
 
         $query->statistics($userId);
