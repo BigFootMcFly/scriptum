@@ -34,7 +34,7 @@
                     color="warning"
                     label="Edit"
                     tooltip="Edit Note"
-                    class="grayscale hover:grayscale-0 duration-1000 cursor-pointer"
+                    class="grayscale hover:grayscale-0 duration-300 cursor-pointer"
                 />
                 @endif
             </div>
@@ -66,7 +66,7 @@
             <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                 <x-filament::link
                     icon="heroicon-m-arrow-top-right-on-square"
-                    class="hover:underline text-xs transition duration-500 brightness-50 hover:brightness-100"
+                    class="hover:underline text-xs transition duration-300 brightness-50 hover:brightness-100"
                     size="sm"
                     color="gray"
                     href="{{ $note->permalink }}"
