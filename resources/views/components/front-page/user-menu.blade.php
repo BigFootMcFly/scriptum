@@ -6,7 +6,11 @@
     //NOTE: the main purpose for this custom view is to be able to suppert guest user functionality
     $user = auth()->user() ?? User::guestUser();
 
+    //NOTE: sometimes this may be reset to the default BUTTON_VIEW, don'T know why, this is a failsafe
     $items = $this->getUserMenuItems();
+    foreach($items as $item) {
+        $item->defaultView(Action::GROUPED_VIEW);
+    }
 
     $itemsBeforeAndAfterThemeSwitcher = collect($items)
         ->groupBy(fn (Action $item): bool => $item->getSort() < 0, preserveKeys: true)
