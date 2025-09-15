@@ -295,7 +295,7 @@
     <div
         {{-- TODO: add light mode, and normalize colors --}}
         @class([
-           "flex justify-center transition-all duration-1000 text-gray-500 border-t-1 border-t-stone-950/50",
+           "flex justify-center transition-all duration-1000 text-gray-500 border-t-0 border-t-stone-950/50",
            "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
            "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
            "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
