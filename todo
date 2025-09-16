@@ -29,9 +29,6 @@
                 but maybe the published version has that stripped it as well, need to check...
         NOTE: there maybe already some caching present, need to read trough the source code again...
 
-☐ @low rename 'front-page' slug -OR- remove it and the whole 'user' path, it looks terrible...
-        NOTE: if the user panel provider path is set to '', some things break, fix them and be the 'front-page' be the '' page
-
 ☐ @low @livewire-error see:https://github.com/livewire/livewire/discussions/7746
 
 ☐ @low on the front page, amybe add som possibility for the admin to edit a "bougus" note, without the need to go to "manage" -> table and find it again
@@ -115,6 +112,9 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @low rename 'front-page' slug -OR- remove it and the whole 'user' path, it looks terrible... @done(25-09-16 10:45)
+        NOTE: if the user panel provider path is set to '', some things break, fix them and be the 'front-page' be the '' page
 
 ✔ @low @maybe add a samll summary under the search bar ex.: total notes: X, own notes: Y (base on search result) @done(25-09-15 13:42)
 

@@ -9,14 +9,17 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Models\Note;
 use App\Models\User;
+use Filament\Auth\Pages\Login;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
-
+/*
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('user/front-page');
+    //return view('welcome');
 })->name('home');
+*/
 
 /*
 //TODO: remove this
@@ -24,6 +27,11 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 */
+
+Route::middleware('guest')->group(function () {
+    Route::get("login", Login::class)->name('filament.user.auth.login');
+});
+
 /*
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -61,4 +69,4 @@ Route::get('search', function(){
 })->name('search');
 #endif
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';

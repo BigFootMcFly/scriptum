@@ -33,6 +33,7 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
             ->brandLogo(fn () => view('livewire.front-page.brand-logo'))
 
             //->maxContentWidth(Width::Full)
@@ -43,8 +44,9 @@ class UserPanelProvider extends PanelProvider
 
             ->default()
             ->id('user')
-            ->path('user')
-            ->login()
+            //->path('user')
+            ->path('')
+            //->login()
             ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
 
