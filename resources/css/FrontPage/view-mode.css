@@ -24,6 +24,6 @@
         @apply border-red-500 text-red-200
     }
     .view-mode-guest {
-        @apply border-gray-300 text-gray-200/50 bg-gray-300/50 dark:border-gray-600 dark:bg-zinc-800
+        @apply border-gray-400/50 text-gray-200/50 bg-gray-400/50 dark:border-gray-600 dark:bg-zinc-800
     }
 }

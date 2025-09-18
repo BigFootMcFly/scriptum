@@ -1,4 +1,4 @@
-<div class="flex space-x-1 items-center pb-0.5">
+<div class="flex space-x-1 items-center pb-0.5 bg-inherit flex justify-center">
     {{-- all notes --}}
     <span class="flex items-center space-x-0.5 text-sky-800">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">

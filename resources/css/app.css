@@ -10,6 +10,7 @@
 @import './FrontPage/front-page.css';
 @import './FrontPage/view-mode.css';
 @import './FrontPage/note-list.css';
+@import './FrontPage/top-bar.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

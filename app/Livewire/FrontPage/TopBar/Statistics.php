@@ -33,6 +33,7 @@ class Statistics extends Component
         $this->queryStatistics();
     }
 
+    //NOTE: in Admin VIewingMode the numbers are incorect !!!
     protected function queryStatistics(bool $ownedOnly = false): void
     {
         $user = auth()?->user();

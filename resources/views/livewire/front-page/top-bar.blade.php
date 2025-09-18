@@ -1,6 +1,12 @@
 @use('App\Enums\FrontPageViewingMode')
 {{--@persist('top_bar')--}}
-<div class="fi-topbar-ctn bg-white dark:bg-black border-b-1 border-zinc-300 dark:border-stone-700">
+<div @class([
+        "top-bar transition-all duration-300",
+        "bg-red-200/50 dark:bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
+        "bg-amber-200/30 dark:bg-amber-800/20" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
+        "bg-green-200/30 dark:bg-green-800/20" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
+    ])
+>
     @script
     <script>
         document.addEventListener('livewire:navigated', (event) => {
@@ -22,14 +28,7 @@
         $hasTenancy = filament()->hasTenancy();
     @endphp
 
-    <nav
-        {{-- TODO: add light mode, and normalize colors --}}
-        @class([
-           "fi-topbar transition-all duration-300",
-           "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
-           "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
-           "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
-        ])
+    <nav class="fi-topbar"
     >
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_START) }}
 
@@ -292,18 +291,7 @@
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::TOPBAR_END) }}
 
     </nav>
-    <div
-        {{-- TODO: add light mode, and normalize colors --}}
-        @class([
-           "flex justify-center transition-all duration-1000 text-gray-500 border-t-0 border-t-stone-950/50",
-           "bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
-           "bg-amber-500/10" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
-           "bg-green-950/50" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
-           "dark:bg-zinc-900" => !auth()->check(),
-        ])
-    >
-        <livewire:front-page.top-bar.statistics></livewire:front-page.top-bar.statistics>
-    </div>
+    <livewire:front-page.top-bar.statistics></livewire:front-page.top-bar.statistics>
 
     <x-filament-actions::modals />
 
