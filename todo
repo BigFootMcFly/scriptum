@@ -5,6 +5,8 @@
 
 # ---- Pending
 
+☐ @today Add a global viewingMode helper, what can help determine the current mode, so other components/services can use it.
+
 ☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
         "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
         Try to find a solution for this (currenly works, but it should not be ignored)
@@ -31,7 +33,7 @@
 
 ☐ @low @livewire-error see:https://github.com/livewire/livewire/discussions/7746
 
-☐ @low on the front page, amybe add som possibility for the admin to edit a "bougus" note, without the need to go to "manage" -> table and find it again
+☐ @low on the front page, amybe add some possibility for the admin to edit a "bougus" note, without the need to go to "manage" -> table and find it again
         _OR_ add a possible edit link/button on the "/notes/{slug}" page for it, so it is not on the front page, but still more accessible for the admin
         _AND_ maybe mark the page in some awy to pressure, that it is in 'admin' mode....
         _AND_ mark the full page as admin coloring, but dont give any special permission
