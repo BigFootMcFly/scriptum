@@ -48,6 +48,7 @@ class NoteResource extends Resource
         $query = parent::getEloquentQuery();
 
         if (auth()->check()) {
+            $query->with('user'); //NOTE: prevent duplicate queries @see: App/Models/Note.php:106
             $query->where('user_id', auth()->user()->id);
         }
 

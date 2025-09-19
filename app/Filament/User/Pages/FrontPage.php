@@ -130,7 +130,7 @@ class FrontPage extends Page
             $builder->orderBy('updated_at', 'desc');
         }
 
-        return $builder;
+        return $builder->with('user');
     }
 
 
