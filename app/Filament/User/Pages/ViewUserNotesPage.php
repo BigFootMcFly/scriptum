@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Filament\User\Pages;
+
+use App\Filament\Traits\ModalNoteEditor;
+use App\Models\User;
+use Filament\Pages\Page;
+use Livewire\Attributes\On;
+use Livewire\WithPagination;
+
+class ViewUserNotesPage extends Page
+{
+    use ModalNoteEditor;
+    use WithPagination;
+
+    protected string $view = 'filament.user.pages.view-user-notes-page';
+
+    protected static bool $shouldRegisterNavigation = false;
+
+    protected bool $resetPagination = false;
+
+    public User $user;
+
+    // ----------------------------------------------------------------------------------------------------------------
+    #[On('refresh-user-note-list')]
+    public function refreshNoteList(): void {
+        $this->resetPagination = true;
+        $this->refresh();
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    protected function queryNotes()
+    {
+        $list = $this->user->notes();
+        if (auth()->user()->is($this->user)) {
+            return $list;
+        }
+
+        return $list->public();
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    public function getNotesProperty()
+    {
+        $query = $this->queryNotes();
+        //dd($query->count());
+
+        $this->dispatch('user-notes-page-updated');
+
+        // reste the pagination to the first page
+        $page = $this->resetPagination ? 1 : null and $this->resetPagination = false;
+        /* //NOTE: the above is the same as this: ( i just keep this here for now, it is not a good practice ;) )
+        $page = $this->resetPagination ? 1 : null;
+        $this->resetPagination = false;
+        */
+
+        return $query->paginate(perPage: 10, page: $page);
+    }
+
+    public function getHeading(): string
+    {
+        return __("Notes of \"{$this->user->name}\"");
+    }
+/*
+    public function getSubHeading(): string
+    {
+        return __("Notes of \"{$this->user->name}\"");
+    }
+*/
+}

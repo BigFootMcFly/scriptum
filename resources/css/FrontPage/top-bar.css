@@ -1,6 +1,6 @@
 @layer components {
     .top-bar {
-        @apply bg-zinc-300 dark:bg-zinc-900 sticky top-0 z-30 overflow-x-clip shadow-lg  shadow-zinc-800/25;
+        @apply bg-zinc-300 dark:bg-zinc-900 sticky top-0 z-30 overflow-x-clip shadow-lg shadow-zinc-800/25;
     }
 
     .top-bar .fi-topbar {
