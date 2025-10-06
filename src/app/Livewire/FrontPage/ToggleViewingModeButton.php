@@ -51,7 +51,7 @@ class ToggleViewingModeButton extends Component
     }
 
     #[On('refresh-viewing-mode-button')]
-    public function onRefreshCOmponent() {}
+    public function onRefreshComponent() {}
 
     /**
      * Saves the current ViewingMode into the database
@@ -92,6 +92,7 @@ class ToggleViewingModeButton extends Component
         if ($adminModeRequested && auth()->user()->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
             session(['user.viewing_mode' => FrontPageViewingMode::Admin]);
+            //session()->put('user.viewing_mode', FrontPageViewingMode::Admin);
             $this->dispatchUpdateRequests();
             return;
         }
