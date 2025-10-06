@@ -89,7 +89,7 @@ function generate_application_key {
 
     php artisan state:initialized --silent || {
 
-        php artisan cli:info "Running for the forst time, generating application key"
+        php artisan cli:info "Running for the first time, generating application key"
 
         local key=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64) \
         && sed s~APP_KEY=.*\$~APP_KEY\=base64:$key~ .env > /tmp/.env \
