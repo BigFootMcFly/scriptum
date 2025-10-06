@@ -7,7 +7,7 @@ FROM alpine:${ALPINE_VERSION}
 ARG PHP_VERSION=84
 ARG USER_ID=1000
 ARG GROUP_ID=1000
-ARG WORKDIR=/app/Backend
+ARG WORKDIR=/app/Scriptum
 ARG PHP_FPM_LISTEN_DIR=/app/run
 ARG LOG_DIR=/app/log
 
@@ -97,9 +97,9 @@ RUN sed -i.bak "s/->modalWidth('md')/->modalWidth('xl')/g" vendor/joaopaulolndev
 COPY --chown=${USER_ID}:${GROUP_ID} --chmod=0555 ${BUILD_CONTENTS}/entrypoint.sh .
 
 # define the storage volume
-VOLUME [ "/app/Backend/storage" ]
+VOLUME [ "/app/Scriptum/storage" ]
 
-VOLUME [ "/app/Backend/database/sqlite" ]
+VOLUME [ "/app/Scriptum/database/sqlite" ]
 
 # define the exposed port
 EXPOSE 9000
