@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\FrontPageViewingMode;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -28,11 +29,13 @@ class UserFactory extends Factory
         $name = fake()->name();
         return [
             'name' => $name,
+            'is_admin' => false,
             'handle' => Str::slug($name),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'viewing_mode' => FrontPageViewingMode::Private,
         ];
     }
 
