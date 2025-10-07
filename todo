@@ -5,6 +5,8 @@
 
 # ---- Pending
 
+☐ @low @maybe If a note changes on the admin panel, the user panel should be noticed over the change so it can re-render the mote...
+
 ☐ @today Add a global viewingMode helper, what can help determine the current mode, so other components/services can use it.
 
 ☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
