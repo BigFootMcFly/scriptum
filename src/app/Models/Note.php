@@ -246,13 +246,18 @@ class Note extends Model implements HasRichContent
         }
 
         // private viewing mode
-        if ($user->viewing_mode == FrontPageViewingMode::Private) {
+        if ($user->viewing_mode === FrontPageViewingMode::Private) {
             return $this->viewModePrivateScope($query, $user);
         }
 
         // public viewing mode
-        if ($user->viewing_mode == FrontPageViewingMode::Public) {
+        if ($user->viewing_mode === FrontPageViewingMode::Public) {
             return $this->viewModePublicScope($query, $user);
+        }
+
+        //NOTE: fallback, if the viewing mode is not set (possible malicious/buggy code)
+        if ($user->viewing_mode === null) {
+            return $this->owned($query, $user);
         }
 
         return $query;
