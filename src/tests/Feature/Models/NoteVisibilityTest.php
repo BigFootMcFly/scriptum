@@ -7,7 +7,7 @@ use App\Models\User;
 it('shows public Notes to anyone', function () {
     $Note = Note::factory()->create(['visibility' => NoteVisibility::Public]);
 
-    $result = Note::frontPage(null)->get();
+    $result = Note::query()->frontPage()->get();
 
     expect($result)->toHaveCount(1);
     expect($result->first()->id)->toBe($Note->id);
@@ -16,7 +16,7 @@ it('shows public Notes to anyone', function () {
 it('does not show private Notes to guests', function () {
     Note::factory()->create(['visibility' => NoteVisibility::Private]);
 
-    $result = Note::frontPage(null)->get();
+    $result = Note::query()->frontPage()->get();
 
     expect($result)->toBeEmpty();
 });
@@ -28,7 +28,7 @@ it('shows private Notes to the owner', function () {
         'user_id' => $user->id,
     ]);
 
-    $result = Note::frontPage($user)->get();
+    $result = Note::query()->frontPage($user)->get();
 
     expect($result)->toHaveCount(1);
     expect($result->first()->id)->toBe($Note->id);
@@ -36,9 +36,9 @@ it('shows private Notes to the owner', function () {
 
 it('does not show other users private Notes', function () {
     $user = User::factory()->create();
-    Note::factory()->create(['visibility' => NoteVisibility::Private]);
+    $note = Note::factory()->create(['visibility' => NoteVisibility::Private]);
 
-    $result = Note::frontPage($user)->get();
+    $result = Note::query()->frontPage($user)->get();
 
     expect($result)->toBeEmpty();
 });
@@ -51,7 +51,7 @@ it('does not show soft deleted posts', function () {
         'deleted_at' => now(),
     ]);
 
-    $result = Note::frontPage($user)->get();
+    $result = Note::query()->frontPage($user)->get();
 
     expect($result)->toBeEmpty();
 });

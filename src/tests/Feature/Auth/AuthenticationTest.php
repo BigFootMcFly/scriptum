@@ -1,7 +1,7 @@
 <?php
 
-use App\Livewire\Auth\Login;
 use App\Models\User;
+use Filament\Auth\Pages\Login;
 use Livewire\Livewire;
 
 test('login screen can be rendered', function () {
@@ -14,13 +14,15 @@ test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
     $response = Livewire::test(Login::class)
-        ->set('email', $user->email)
-        ->set('password', 'password')
-        ->call('login');
+        ->set('data.email', $user->email)
+        ->set('data.password', 'password')
+        ->call('authenticate');
 
     $response
         ->assertHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        //->assertRedirect(route('dashboard', absolute: false))
+        ->assertRedirect(route('filament.user.pages..', absolute: false))
+        ;
 
     $this->assertAuthenticated();
 });
@@ -29,11 +31,11 @@ test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
     $response = Livewire::test(Login::class)
-        ->set('email', $user->email)
-        ->set('password', 'wrong-password')
-        ->call('login');
+        ->set('data.email', $user->email)
+        ->set('data.password', 'wrong-password')
+        ->call('authenticate');
 
-    $response->assertHasErrors('email');
+    $response->assertHasErrors('data.email');
 
     $this->assertGuest();
 });
@@ -41,9 +43,14 @@ test('users can not authenticate with invalid password', function () {
 test('users can logout', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/logout');
+    $response = $this
+        ->actingAs($user)
+        ->session([])
+        ->post(route('logout-user'), [
+            '_token' => csrf_token(),
+        ]);
 
-    $response->assertRedirect('/');
+    $response->assertRedirect(route('filament.user.pages..'));
 
     $this->assertGuest();
 });

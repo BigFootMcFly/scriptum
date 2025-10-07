@@ -3,6 +3,8 @@
 use App\Livewire\Auth\Register;
 use Livewire\Livewire;
 
+beforeEach(fn () => null)->skipIfNoDefaultAuth();
+
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
 
