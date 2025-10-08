@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\FrontPageViewingMode;
+use Database\Factories\GuestFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Filament\Panel\Concerns\HasAvatars;
@@ -24,7 +25,7 @@ class User extends Authenticatable implements FilamentUser
     use Notifiable;
 
     protected const string default_avatar_url = 'avatars/_default.svg';
-    protected const string guest_avatar_url = 'avatars/_guest.svg';
+    public const string guest_avatar_url = 'avatars/_guest.svg';
 
     /**
      * The attributes that are mass assignable.
@@ -67,6 +68,9 @@ class User extends Authenticatable implements FilamentUser
 
     // relations
 
+    /**
+     * @return HasMany<Note, $this>
+     */
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
@@ -159,10 +163,7 @@ class User extends Authenticatable implements FilamentUser
 
     public static function guestUser(): self
     {
-        return static::make([
-            'name' => __('Guest User'),
-            'avatar_url' => static::guest_avatar_url
-        ]);
+        return new GuestFactory()->make();
     }
 
     public function getFilamentAvatarUrl(): ?string
