@@ -117,7 +117,7 @@ class ToggleViewingModeButton extends Component
             FrontPageViewingMode::Private => FrontPageViewingMode::Public,
             FrontPageViewingMode::Public => FrontPageViewingMode::Private,
             FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
-            //default => false, //something went wrong, this should not happenenig, //TODO: add error handling/logging here
+            default => FrontPageViewingMode::Private, //TODO: add error handling/logging here, this should not happen
         };
         $this->saveCurrentState();
         $this->dispatchUpdateRequests();

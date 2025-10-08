@@ -24,7 +24,7 @@ class TextContentExtractor implements ContentExtractor
         if ($block['marks'] ?? null) {
             foreach ($block['marks'] as $mark) {
                 // extra info is for a link
-                if ($mark['type'] ?? null === 'link') {
+                if (($mark['type'] ?? null) === 'link') {
                     // link has a href attribute
                     if ($mark['attrs']['href'] ?? null) {
                         $result['url'][] = $mark['attrs']['href'];

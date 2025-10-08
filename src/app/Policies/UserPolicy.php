@@ -10,7 +10,7 @@ class UserPolicy
 
     protected function adminOnly(User $user): bool
     {
-        if ($user?->isAdmin()) {
+        if ($user->isAdmin()) {
             return true;
         }
 

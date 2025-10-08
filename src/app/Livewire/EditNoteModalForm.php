@@ -44,7 +44,7 @@ class EditNoteModalForm extends Component implements HasForms, HasActions
     public function openEditModal(?Note $note = null): void
     {
         //NOTE: a new Note object is injected if none is provided by the client
-        if (null === $note->id) { // create new note
+        if (null === $note?->id) { // create new note
             $this->editingNote = null;
             $this->data = [
                 'body' => [

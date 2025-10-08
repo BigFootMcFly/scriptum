@@ -36,10 +36,11 @@ class Statistics extends Component
     //NOTE: in Admin VIewingMode the numbers are incorect !!!
     protected function queryStatistics(bool $ownedOnly = false): void
     {
-        $user = auth()?->user();
-        $userId = $user?->id ?? 0;
+        $user = auth()->user();
+        $userId = $user->id ?? 0;
         $search = session('front-page-search', '');
 
+        // @phpstan-ignore-next-line
         $query = Note::query()->frontPage($user);
 
         if ('' !== $search) {

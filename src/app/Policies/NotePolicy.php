@@ -15,7 +15,7 @@ class NotePolicy
      */
     public function viewAny(User $user): bool
     {
-        if ($user?->isAdmin()) {
+        if ($user->isAdmin()) {
             return true;
         }
 
@@ -33,32 +33,25 @@ class NotePolicy
      */
     public function view(?User $user, Note $note): bool
     {
+
         // admins can view any notes
         if ($user?->isAdmin()) {
             return true;
         }
 
-        // Public is visible to anyone
-        if ($note->visibility === NoteVisibility::Public) {
-            return true;
-        }
+        return match ($note->visibility) {
+            // Public: visible to anyone
+            NoteVisibility::Public => true,
+            // Private: only the owner
+            NoteVisibility::Private => $user && $user->id === $note->user_id,
+            // Hidden: currently reserved for maintanance reasons
+            NoteVisibility::Hidden => false,
+            // Restricted: needs admin intervention
+            // @phpstan-ignore-next-line
+            NoteVisibility::Restricted => false,
+            default => false,
+        };
 
-        // Private: only the owner
-        if ($note->visibility === NoteVisibility::Private) {
-            return $user && $user->id === $note->user_id;
-        }
-
-        // Restricted: needs admin intervention
-        if ($note->visibility === NoteVisibility::Restricted) {
-            return false;
-        }
-
-        // Hidden: currently reserved for maintanance reasons
-        if ($note->visibility === NoteVisibility::Hidden) {
-            return false;
-        }
-
-        return false;
     }
 
     /**
@@ -66,7 +59,7 @@ class NotePolicy
      */
     public function create(User $user): bool
     {
-        return null !== $user;
+        return !$user->isGuest();
     }
 
     /**
