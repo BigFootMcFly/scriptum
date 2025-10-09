@@ -163,7 +163,18 @@ class User extends Authenticatable implements FilamentUser
 
     public static function guestUser(): self
     {
-        return new GuestFactory()->make();
+        //return new GuestFactory()->make();
+        return self::make([
+            'name' => __('Guest User'),
+            'is_admin' => false,
+            'handle' => 'guest-user',
+            'email' => 'guest@nowhere.local',
+            'email_verified_at' => null,
+            'password' => null,
+            'remember_token' => null,
+            'avatar_url' => User::guest_avatar_url,
+            'viewing_mode' => FrontPageViewingMode::Guest,
+        ]);
     }
 
     public function getFilamentAvatarUrl(): ?string
