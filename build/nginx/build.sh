@@ -2,7 +2,7 @@
 
 # ---------------------------------------------------------------------------
 # setting constants
-PACKAGE_REPOSITORY=proxima.goliath.hu/scriptum
+PACKAGE_REPOSITORY=git.magrathea.hu/bigfoot/scriptum
 BUILD_TAG=nginx
 UID=$(id -u)
 GID=$(id -g)
@@ -42,9 +42,14 @@ tag=${PACKAGE_TAG:-temp}
 [[ $branch == master ]] && tag=latest
 
 # ---------------------------------------------------------------------------
+echo Creating multi platform driver...
+
+docker buildx create --name goliath; docker buildx use goliath; docker buildx inspect --bootstrap;
+
+# ---------------------------------------------------------------------------
 echo Building image...
 
-docker build . \
+docker buildx build . \
     --tag ${PACKAGE_REPOSITORY}:$tag \
     --build-arg GROUP_ID=${GID} \
     --build-arg USER_ID=${UID} \
