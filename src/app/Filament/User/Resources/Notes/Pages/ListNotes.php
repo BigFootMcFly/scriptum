@@ -14,6 +14,13 @@ class ListNotes extends ListRecords
 {
     use ModalNoteEditor;
 
+    public function mount(): void
+    {
+        if (!auth()->check()) {
+            abort(403, 'Please login to manage your notes.');
+        }
+    }
+
     protected static string $resource = NoteResource::class;
 
     #[On('refresh-note-list')]

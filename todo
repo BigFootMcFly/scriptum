@@ -4,11 +4,6 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
-☐ @high if logged in on two pages, and logging out in one, on teh other clicking on the "Manage my notes" pbutton gives an error:
-        "Call to a member function notes() on null"
-                file: app/Filament/User/Resources/Notes/Pages/ListNotes.php :36
-        This should result a 404!
-
 
 ☐ @low Add user avatar pictures to the front page and the /users/xxx page
 
@@ -125,6 +120,12 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @high if logged in on two pages, and logging out in one, on teh other clicking on the "Manage my notes" pbutton gives an error: @done(25-10-12 12:18)
+        "Call to a member function notes() on null"
+                file: app/Filament/User/Resources/Notes/Pages/ListNotes.php :36
+        This should result a 403!
+        NOTE: added check and abort(403...)
 
 ✔ @high Add a notification bar to the bottom of the top bar to logged in but unverified users, with a button to resend the email @done(25-10-12 11:35)
 
