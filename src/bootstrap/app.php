@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is_admin' => IsAdmin::class
         ]);
+        $middleware->trustProxies(at: [
+            '172.200.0.0/8',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
