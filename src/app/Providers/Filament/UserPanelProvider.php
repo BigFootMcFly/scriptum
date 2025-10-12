@@ -7,6 +7,8 @@ use App\Filament\User\Resources\Notes\NoteResource;
 use App\Livewire\FrontPage\TopBar;
 use App\Utils\SmartSearch;
 use Filament\Actions\Action;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Auth\MultiFactor\Email\EmailAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -62,6 +64,12 @@ class UserPanelProvider extends PanelProvider
                 url('/user/notes*'),
             ])
 */
+            ->multiFactorAuthentication([
+                EmailAuthentication::make(),
+                AppAuthentication::make()
+                    ->recoverable()
+                    ->regenerableRecoveryCodes(false),
+            ])
             ->topNavigation()
             ->emailChangeVerification()
             ->unsavedChangesAlerts()
@@ -105,6 +113,7 @@ class UserPanelProvider extends PanelProvider
                     ->shouldShowBrowserSessionsForm()
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowEmailForm(false)
+                    ->shouldShowMultiFactorAuthentication(true)
             ]);
  /*
             //NOTE: moved to TopBar->mount()
