@@ -59,7 +59,7 @@ class NotePolicy
      */
     public function create(User $user): bool
     {
-        return !$user->isGuest();
+        return !$user->isGuest() && $user->isVerified();
     }
 
     /**
@@ -76,7 +76,7 @@ class NotePolicy
             return false;
         }
 
-        if ($user->id === $note->user_id) {
+        if ($user->id === $note->user_id && $user->isVerified()) {
             return true;
         }
 
@@ -96,7 +96,7 @@ class NotePolicy
             return false;
         }
 
-        if ($user->id === $note->user_id) {
+        if ($user->id === $note->user_id && $user->isVerified()) {
             return true;
         }
 
@@ -129,7 +129,7 @@ class NotePolicy
             return false;
         }
 
-        if ($user->id === $note->user_id) {
+        if ($user->id === $note->user_id && $user->isVerified()) {
             return true;
         }
 
@@ -177,7 +177,7 @@ class NotePolicy
      */
     public function updateOnFrontPage(User $user, Note $note): bool
     {
-        return $note->user_id === $user->id;
+        return $note->user_id === $user->id && $user->isVerified();
     }
 
 }

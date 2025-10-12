@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\FrontPageViewingMode;
 use Database\Factories\GuestFactory;
 use Filament\Models\Contracts\FilamentUser;
@@ -17,7 +17,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -182,6 +182,5 @@ class User extends Authenticatable implements FilamentUser
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
-
 
 }

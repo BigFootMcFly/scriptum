@@ -12,17 +12,24 @@ use Livewire\Component;
 class VerifyEmail extends Component
 {
     /**
+     * @return array<string>
+     */
+    public function via ($notifiable) {
+        return ['mail'];
+    }
+
+    /**
      * Send an email verification notification to the user.
      */
     public function sendVerification(): void
     {
-        if (Auth::user()->hasVerifiedEmail()) {
+        if (auth()->user()->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
 
             return;
         }
 
-        Auth::user()->sendEmailVerificationNotification();
+        auth()->user()->sendEmailVerificationNotification();
 
         Session::flash('status', 'verification-link-sent');
     }

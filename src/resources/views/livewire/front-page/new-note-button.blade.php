@@ -1,5 +1,5 @@
 <div>
-    @if(auth()->check())
+    @if(auth()->check() && auth()->user()->isVerified())
     <button
         x-data
         class="create-note"

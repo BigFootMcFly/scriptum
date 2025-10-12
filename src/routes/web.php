@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Overwrite\EmailVerificationPrompt;
 use App\Filament\User\Pages\FrontPage;
 use App\Filament\User\Pages\ViewNotePage;
 use App\Filament\User\Pages\ViewUserNotesPage;
@@ -10,6 +11,7 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Models\Note;
 use App\Models\User;
+use Filament\Auth\Http\Controllers\EmailVerificationController;
 use Filament\Auth\Pages\Login;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Request;
@@ -65,6 +67,10 @@ Route::get('test', function() {
     dd($result, $extras, $autoTags);
 });
 #endif
+
+// Add email verification routes
+Route::get('email-verification/verify/{id}/{hash}', EmailVerificationController::class)->name('filament.user.auth.email-verification.verify');
+//Route::get('email-verification/prompt', EmailVerificationPrompt::class)->name('filament.user.auth.email-verification.prompt');
 
 #ifdef test
 Route::get('search', function(){

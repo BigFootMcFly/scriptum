@@ -293,6 +293,9 @@
 
         </nav>
         <livewire:front-page.top-bar.statistics></livewire:front-page.top-bar.statistics>
+        @if (auth()->user() && !auth()->user()->isVerified())
+            <livewire:front-page.un-verified-notice></livewire:front-page.un-verified-notice>
+        @endif
 
         <x-filament-actions::modals />
 
