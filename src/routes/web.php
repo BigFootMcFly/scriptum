@@ -70,7 +70,10 @@ Route::get('test', function() {
 
 // Add email verification routes
 Route::get('email-verification/verify/{id}/{hash}', EmailVerificationController::class)->name('filament.user.auth.email-verification.verify');
-//Route::get('email-verification/prompt', EmailVerificationPrompt::class)->name('filament.user.auth.email-verification.prompt');
+
+// disablind filament export/import routes
+Route::get('filament/exports/{export}/download', fn () => abort('404'));
+Route::get('filament/imports/{import}/failed-rows/download', fn () => abort(404) );
 
 #ifdef test
 Route::get('search', function(){
