@@ -86,6 +86,7 @@ USER ${USER_ID}:${GROUP_ID}
 # initialize composer
 RUN mkdir -p storage/framework/views \
     && composer install \
+    --no-cache \
     --no-interaction \
     --no-dev \
     --optimize-autoloader

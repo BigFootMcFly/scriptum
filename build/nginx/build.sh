@@ -49,12 +49,11 @@ docker buildx create --name goliath; docker buildx use goliath; docker buildx in
 # ---------------------------------------------------------------------------
 echo Building image...
 
-docker buildx build . \
+docker build . \
     --tag ${PACKAGE_REPOSITORY}:$tag \
     --build-arg GROUP_ID=${GID} \
     --build-arg USER_ID=${UID} \
     --file build/${BUILD_TAG}/Dockerfile \
-    --platform linux/amd64,linux/arm64 \
     --provenance=false \
     --sbom=false \
 #    --push \
