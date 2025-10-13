@@ -6,7 +6,6 @@
 /storage/*.key
 /storage/pail
 /storage/debugbar
-!/storage/avatars/app/public/_*.svg
 /vendor
 .env
 .env.backup
