@@ -77,6 +77,7 @@ Route::get('filament/imports/{import}/failed-rows/download', fn () => abort(404)
 
 #ifdef test
 Route::get('search', function(){
+    dd($_SERVER);
     dd(request()->route()->getName());
     dd(filament()->getUserAvatarUrl(User::first()));
     dd(Filament::getTopbarLivewireComponent());
