@@ -1,3 +1,4 @@
 *
 !.gitignore
-!avatars/*.svg
+!avatars/_guest.svg
+!avatars/_default.svg
