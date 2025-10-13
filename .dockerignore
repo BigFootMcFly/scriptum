@@ -17,7 +17,7 @@ src/package-lock.json
 src/storage/*.key
 src/storage/pail
 src/storage/debugbar
-!src/storage/avatars/_*.svg
+!src/storage/avatars/app/public/_*.svg
 volumes/
 .git/
 .git-crypt/
