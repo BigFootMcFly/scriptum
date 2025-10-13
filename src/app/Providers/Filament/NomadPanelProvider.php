@@ -31,7 +31,7 @@ class NomadPanelProvider extends PanelProvider
             ->globalSearch(false)
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
-            ->domain('scriptum-admin.goliath.hu')
+            ->domain('nomad-scriptum.goliath.hu')
             //->domain('admin.localhost')
             ->brandName('Nomad - Scriptum')
             ->spa(hasPrefetching: true)
