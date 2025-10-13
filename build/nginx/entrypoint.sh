@@ -174,6 +174,9 @@ function start_server_processes {
     start_process "nginx" "Nginx"
 
     # start schedule:work
+    start_process "queue" "Queue"
+
+    # start schedule:work
     start_process "scheduler" "Scheduler"
 
 }
