@@ -13,7 +13,9 @@ src/vite.config.js
 src/tailwind.config.js
 src/postcss.config.js
 src/package-lock.json
-src/storage
+src/storage/*.key
+src/storage/pail
+!src/storage/avatars/_*.svg
 volumes/
 .git/
 .git-crypt/
