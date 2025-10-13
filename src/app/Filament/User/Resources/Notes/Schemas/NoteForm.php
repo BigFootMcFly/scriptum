@@ -45,15 +45,17 @@ class NoteForm
                     ->columnSpanFull()
                     ->activePanel('customBlocks')
                     ->toolbarButtons([
-                        ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript'],
+                        ['textColor', 'bold', 'italic', 'underline', 'strike', 'subscript', 'superscript'],
                         ['clearFormatting'],
                         ['details'],
                         ['h1', 'h2', 'h3', 'alignStart', 'alignCenter', 'alignEnd'],
+                        ['grid', 'gridDelete'],
                         ['blockquote', 'bulletList', 'orderedList', 'horizontalRule'],
                         ['link'],
                         ['table', 'attachFiles', 'mergeTags', 'customBlocks'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
                         ['undo', 'redo'],
                     ])
+                    ->customTextColors()
             ]);
     }
 }
