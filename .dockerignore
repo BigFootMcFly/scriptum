@@ -21,3 +21,10 @@ volumes/
 .git/
 .git-crypt/
 .github/
+src/auth.json
+src/.fleet
+src/.idea
+src/.nova
+src/.vscode
+src/.zed
+
