@@ -3,7 +3,8 @@ src/database/database.*
 src/database/sqlite/database.*
 src/node_modules
 src/.env
-src/.env.example
+src/.env.backup
+src/.env.production
 src/.scribe
 src/public/vendor/telescope
 src/phpunit.xml
