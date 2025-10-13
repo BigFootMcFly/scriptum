@@ -17,11 +17,11 @@ function create_storage_folders {
     }
 
     # link storage folder
-    php artisan storage:link || {
-        # fail if something went wrong
-        php artisan cli:error "Could not link storage!"
-        exit 1
-    }
+    #php artisan storage:link || {
+    #    # fail if something went wrong
+    #    php artisan cli:error "Could not link storage!"
+    #    exit 1
+    #}
 
     # create log folder
     mkdir -p ./storage/logs || {
