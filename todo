@@ -5,6 +5,12 @@
 
 # ---- Pending
 
+☐ Try run in the entrypoint:
+        composer install \
+        --no-interaction \
+        --no-dev \
+        --optimize-autoloader
+
 ☐ @low Add user avatar pictures to the front page and the /users/xxx page
 
 ☐ @high Add two factor authentication!

@@ -35,6 +35,11 @@ function create_storage_folders {
 # Initalizing caches
 function initalize_cache {
 
+    composer install \
+        --no-interaction \
+        --no-dev \
+        --optimize-autoloader
+
     # populating/updating caches
     php artisan optimize \
     && php artisan filament:cache-components || {

@@ -91,7 +91,7 @@ RUN mkdir -p storage/framework/views \
     --optimize-autoloader
 
 #NOTE: this is a messy hack, there is no guaranty it wont be changed, use this only until a better way is found
-RUN sed -i.bak "s/->modalWidth('md')/->modalWidth('xl')/g" vendor/joaopaulolndev/filament-edit-profile/src/Livewire/SanctumTokens.php
+#RUN sed -i.bak "s/->modalWidth('md')/->modalWidth('xl')/g" vendor/joaopaulolndev/filament-edit-profile/src/Livewire/SanctumTokens.php
 
 # copy the entrypoint script
 COPY --chown=${USER_ID}:${GROUP_ID} --chmod=0555 ${BUILD_CONTENTS}/entrypoint.sh .
