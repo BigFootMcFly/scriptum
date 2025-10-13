@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/debugbar
 !/storage/avatars/_*.svg
 /vendor
 .env
