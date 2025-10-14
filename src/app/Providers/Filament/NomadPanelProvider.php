@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Http\Middleware\IsAdmin;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Auth\MultiFactor\Email\EmailAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -39,6 +41,12 @@ class NomadPanelProvider extends PanelProvider
             ->revealablePasswords(false)
             ->profile(isSimple: false)
             ->emailChangeVerification()
+            ->multiFactorAuthentication([
+                EmailAuthentication::make(),
+                AppAuthentication::make()
+                    ->recoverable()
+                    ->regenerableRecoveryCodes(false),
+            ], isRequired: true)
             ->id('nomad')
             ->path('')
             ->colors([

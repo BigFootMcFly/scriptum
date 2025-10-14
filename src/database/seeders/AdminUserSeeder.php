@@ -59,6 +59,7 @@ class AdminUserSeeder extends Seeder
             'handle' => $adminHandle,
             'password' => $adminPassword,
             'is_admin' => true,
+            'has_email_authentication' => true,
         ]);
     }
 }
