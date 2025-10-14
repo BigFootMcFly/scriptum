@@ -45,6 +45,7 @@ class UserPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop(false)
 
             ->default()
+            ->domain(config('scriptum.production.domain'))
             ->id('user')
             //->path('user')
             ->path('')
