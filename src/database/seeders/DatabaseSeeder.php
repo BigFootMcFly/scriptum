@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Exception;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -23,14 +24,8 @@ class DatabaseSeeder extends Seeder
             return;
         }
 
-        // create the admin user
-        $user = User::create([
-            'name' => config('scriptum.setup.admin_name'),
-            'email' => config('scriptum.setup.admin_email'),
-            'handle' => config('scriptum.setup.admin_handle'),
-            'password' => Hash::make(config('scriptum.setup.admin_password')),
-            'is_admin' => true,
+        $this->call([
+            AdminUserSeeder::class,
         ]);
-
     }
 }
