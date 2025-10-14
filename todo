@@ -4,16 +4,9 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
-
-☐ Try run in the entrypoint:
-        composer install \
-        --no-interaction \
-        --no-dev \
-        --optimize-autoloader
+☐ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form...
 
 ☐ @low Add user avatar pictures to the front page and the /users/xxx page
-
-☐ @high Add two factor authentication!
 
 ☐ @low @maybe If a note changes on the admin panel, the user panel should be noticed over the change so it can re-render the mote...
 
@@ -126,6 +119,14 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @high Add two factor authentication! @done(25-10-14 18:17)
+
+✘ Try run in the entrypoint: @cancelled(25-10-14 18:15)
+        composer install \
+        --no-interaction \
+        --no-dev \
+        --optimize-autoloader
+        NOTE: after updating composer packages, the error could not be recreated.
 
 ✔ @high if logged in on two pages, and logging out in one, on teh other clicking on the "Manage my notes" pbutton gives an error: @done(25-10-12 12:18)
         "Call to a member function notes() on null"
