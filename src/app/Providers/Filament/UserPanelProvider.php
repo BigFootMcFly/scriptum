@@ -3,24 +3,15 @@
 namespace App\Providers\Filament;
 
 use App\Filament\User\Pages\Auth\UserRegister;
-use App\Filament\User\Resources\Notes\NoteResource;
 use App\Livewire\FrontPage\TopBar;
-use App\Utils\SmartSearch;
-use Filament\Actions\Action;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Auth\MultiFactor\Email\EmailAuthentication;
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Width;
-use Filament\Support\Icons\Heroicon;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,7 +19,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
-use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -37,34 +27,15 @@ class UserPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->brandLogo(fn () => view('livewire.front-page.brand-logo'))
-
-            //->maxContentWidth(Width::Full)
             ->globalSearch(false) //NOTE: we use our own
-            //->globalSearchKeyBindings(['command+f', 'shift+ctrl+f'])
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
-
             ->default()
             ->domain(config('scriptum.production.domain'))
             ->id('user')
-            //->path('user')
             ->path('')
-            //->login()
             ->registration(UserRegister::class) // NOTE: our custom register page
             ->profile(isSimple: false)
-
-            //NOTE: DO NOT USE PREFETCHING!!!! It does not work well with the Viewing Mode Button... :(
-            //->spa(hasPrefetching: false)
-
-/*
-            //NOTE: does not work, still got errors:
-                Uncaught (in promise) Component not found: nU0zJagSrTqWRRFpWCYv
-                Uncaught Component not found: nU0zJagSrTqWRRFpWCYv
-            ->spa()
-            ->spaUrlExceptions([
-                url('/user/notes*'),
-            ])
-*/
             ->multiFactorAuthentication([
                 EmailAuthentication::make(),
                 AppAuthentication::make()
@@ -83,9 +54,6 @@ class UserPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\Filament\User\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\Filament\User\Pages')
-            ->pages([
-                //Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\Filament\User\Widgets')
             ->widgets([
                 //NOTE: this are widgets on the dashboard page

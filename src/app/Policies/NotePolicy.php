@@ -3,10 +3,8 @@
 namespace App\Policies;
 
 use App\Enums\NoteVisibility;
-use App\Filament\User\Pages\FrontPage;
 use App\Models\Note;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class NotePolicy
 {
@@ -24,8 +22,6 @@ class NotePolicy
         }
 
         return false;
-        // allowing to show up on the nomad panel
-        //return $user->isAdmin();
     }
 
     /**

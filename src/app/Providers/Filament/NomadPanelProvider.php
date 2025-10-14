@@ -8,13 +8,11 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
-use Filament\Pages\Enums\SubNavigationPosition;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -50,20 +48,11 @@ class NomadPanelProvider extends PanelProvider
                 'resources/css/filament/nomad/theme.css',
                 'resources/css/app.css',
             ])
-
-            // without the nomad panel
-            //->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            //->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
-
             ->discoverResources(in: app_path('Filament/Nomad/Resources'), for: 'App\Filament\Nomad\Resources')
             ->discoverPages(in: app_path('Filament/Nomad/Pages'), for: 'App\Filament\Nomad\Pages')
             ->pages([
                 Dashboard::class,
             ])
-
-            // without the nomad panel
-            //->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-
             ->discoverWidgets(in: app_path('Filament/Nomad/Widgets'), for: 'App\Filament\Nomad\Widgets')
             ->widgets([
                 AccountWidget::class,
