@@ -10,6 +10,7 @@ ARG GROUP_ID=1000
 ARG WORKDIR=/app/Scriptum
 ARG PHP_FPM_LISTEN_DIR=/app/run
 ARG LOG_DIR=/app/log
+ARG APP_VERSION
 
 ENV BUILD_CONTENTS=build/nginx
 ENV PHP_INI_DIR=/etc/php${PHP_VERSION}
@@ -76,6 +77,9 @@ RUN chown -R ${USER_ID}:${GROUP_ID} ${WORKDIR} ${PHP_FPM_LISTEN_DIR} ${LOG_DIR}
 
 # set the workdir
 WORKDIR ${WORKDIR}
+
+# add app version to the image
+RUN echo ${APP_VERSION} > bootstrap/cache/APP_VERSION
 
 # copy the application
 COPY --chown=${USER_ID}:${GROUP_ID} src/ .
