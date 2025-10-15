@@ -79,7 +79,7 @@ RUN chown -R ${USER_ID}:${GROUP_ID} ${WORKDIR} ${PHP_FPM_LISTEN_DIR} ${LOG_DIR}
 WORKDIR ${WORKDIR}
 
 # add app version to the image
-RUN echo ${APP_VERSION} > bootstrap/cache/APP_VERSION
+RUN echo ${APP_VERSION} > src/bootstrap/cache/APP_VERSION
 
 # copy the application
 COPY --chown=${USER_ID}:${GROUP_ID} src/ .
