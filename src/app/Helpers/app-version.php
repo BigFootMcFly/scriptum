@@ -3,7 +3,7 @@
 if (!function_exists('app_version')) {
     function app_version(): string
     {
-        $path = base_path('bootstrap/cache/VERSION');
+        $path = base_path('bootstrap/cache/APP_VERSION');
 
         if (file_exists($path)) {
             return trim(file_get_contents($path));

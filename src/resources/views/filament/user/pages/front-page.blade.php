@@ -31,4 +31,5 @@
 
 
     {{--<nav aria-label="Pagination navigation" role="navigation" class="fi-pagination">s</nav>--}}
+    <livewire:page-footer></livewire:page-footer>
 </x-filament-panels::page>

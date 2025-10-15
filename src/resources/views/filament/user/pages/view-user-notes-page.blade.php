@@ -29,5 +29,5 @@
         <x-filament::pagination :paginator="$this->notes" />
     </nav>
 
-
+    <livewire:page-footer></livewire:page-footer>
 </x-filament-panels::page>

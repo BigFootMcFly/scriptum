@@ -21,6 +21,8 @@
                         <x-filament::badge size="sm" color="info">private</x-filament::badge>
                     @endif
                 </a>
+                <x-note.permalink :note=$note/>
+
                 @if (auth()?->user()?->can('updateOnFrontPage', $note))
                     {{-- Edit button --}}
                     <x-filament::icon-button
@@ -66,17 +68,7 @@
             <span class="mt-2 text-xs text-gray-500 dark:text-gray-600">
                 {{ $note->created_at}}
             </span>
-            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                <x-filament::link
-                    icon="heroicon-m-arrow-top-right-on-square"
-                    class="hover:underline text-xs transition duration-300 brightness-50 hover:brightness-100"
-                    size="sm"
-                    color="gray"
-                    href="{{ $note->permalink }}"
-                >
-                    permalink
-                </x-filament::link>
-            </div>
+            <x-note.permalink :note=$note/>
         </div>
     </div>
 </div>
