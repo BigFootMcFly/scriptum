@@ -60,7 +60,7 @@ jobs:
             run: |
               docker buildx build . \
                 --file build/nginx/Dockerfile \
-                --build-arg APP_VERSION=$(git describe --tags --always --abbrev=4)
+                --build-arg APP_VERSION=$(git describe --tags --always --abbrev=4) \
                 --platform linux/amd64,linux/arm64 \
                 --tag ${{ vars.PACKAGE_REPOSITORY }}/${{ vars.PACKAGE_ORGANIZATION }}/${{ env.PACKAGE_NAME }}:${{ env.PACKAGE_TAG }} \
                 --provenance=false \
