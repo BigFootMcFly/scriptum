@@ -4,6 +4,9 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+
+☐ The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes
+
 ☐ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form...
 
 ☐ @low Add user avatar pictures to the front page and the /users/xxx page
