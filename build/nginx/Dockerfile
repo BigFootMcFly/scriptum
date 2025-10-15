@@ -82,7 +82,7 @@ WORKDIR ${WORKDIR}
 COPY --chown=${USER_ID}:${GROUP_ID} src/ .
 
 # add app version to the image
-RUN echo ${APP_VERSION} > src/bootstrap/cache/APP_VERSION \
+RUN echo ${APP_VERSION} > bootstrap/cache/APP_VERSION \
     && chown ${USER_ID}:${GROUP_ID} bootstrap/cache/APP_VERSION
 
 # change to the user
