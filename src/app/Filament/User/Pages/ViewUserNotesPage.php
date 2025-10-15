@@ -32,7 +32,9 @@ class ViewUserNotesPage extends Page
     protected function queryNotes()
     {
         $list = $this->user->notes();
-        if (auth()->user()->is($this->user)) {
+        $currentUser = auth()->user() ?? User::guestUser();
+
+        if ($currentUser->is($this->user)) {
             return $list;
         }
 
