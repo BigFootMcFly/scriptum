@@ -5,6 +5,9 @@ namespace App\Filament\User\Pages;
 use App\Filament\Traits\ModalNoteEditor;
 use App\Models\User;
 use Filament\Pages\Page;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -20,6 +23,15 @@ class ViewUserNotesPage extends Page
     protected bool $resetPagination = false;
 
     public User $user;
+
+    // ----------------------------------------------------------------------------------------------------------------
+    public function mount(string $user): void
+    {
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::FOOTER,
+            fn () => view('components.note.page-footer')
+        );
+    }
 
     // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-user-note-list')]
@@ -63,7 +75,7 @@ class ViewUserNotesPage extends Page
     {
         return __("Notes of \"{$this->user->name}\"");
     }
-/*
+    /*
     public function getSubHeading(): string
     {
         return __("Notes of \"{$this->user->name}\"");

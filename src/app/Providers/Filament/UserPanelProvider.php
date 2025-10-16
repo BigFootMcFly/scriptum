@@ -48,7 +48,7 @@ class UserPanelProvider extends PanelProvider
             ->unsavedChangesAlerts()
             ->renderHook(
                 PanelsRenderHook::FOOTER,
-                fn () => Blade::render('<livewire:page-footer></livewire:page-footer>')
+                fn () => view('components.note.page-footer')
             )
             ->colors([
                 'primary' => Color::Amber,
