@@ -16,17 +16,31 @@ function create_storage_folders {
         exit 1
     }
 
-    # link storage folder
-    php artisan storage:link || {
-        # fail if something went wrong
-        php artisan cli:error "Could not link storage!"
-        exit 1
-    }
-
     # create log folder
     mkdir -p ./storage/logs || {
         # fail if something went wrong
         php artisan cli:error "Making log folder failed!"
+        exit 1
+    }
+
+    # create public folder
+    mkdir -p ./storage/app/public ||
+        # fail if something went wrong
+        php artisan cli:error "Making public folders failed!"
+        exit 1
+    }
+
+    # copy the avatars to the public folder
+    cp -r -n resources/images/avatars storage/app/public/||
+        # fail if something went wrong
+        php artisan cli:error "Making avatar folders failed!"
+        exit 1
+    }
+
+    # link storage folder
+    php artisan storage:link || {
+        # fail if something went wrong
+        php artisan cli:error "Could not link storage!"
         exit 1
     }
 
