@@ -4,15 +4,6 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
-☐ @critical On the PROD page the version is "Version: b672" (no tag)
-
-☐ @critical The permalinki in the header of the note is in bad position if the note is editable by the user !!!
-
-☐ @critical On ViewNotePage and ViewUserNotesPage pages the modal edit is not present !!!
-        and the footer is on the wrong place
-
-☐ @critical On recreating the container, all uploaded data is lost, even custom profile images!!!
-        and all images in the notes !!!
 
 ☐ @low The "initalize_environment_file" in the entrypoint needs some work.
         Currently in each run the .env file cannot exists, it is not saved in a docker volume, so it will always be copied,
@@ -20,8 +11,6 @@
         but in this case, all of the MFA app keys (fields marked as encrypted in the User casts list) cannot be decrypted
         after a key regen!
         For now, i added the .env file as a volume to the composer, so it will newer be overwritten (even merked as read only)
-
-☐ @low The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes
 
 ☐ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form...
 
@@ -138,6 +127,21 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+✔ @low The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes @done(25-10-16 18:54)
+
+✔ @critical On ViewNotePage and ViewUserNotesPage pages the modal edit is not present !!! @done(25-10-16 18:49)
+        and the footer is on the wrong place
+
+✔ @critical On recreating the container, all uploaded data is lost, even custom profile images!!! @done(25-10-16 18:33)
+        and all images in the notes !!!
+        The storage volume is now passed in with the docker compose file, it is necessary, not optional...
+
+✔ @critical On the PROD page the version is "Version: b672" (no tag) @done(25-10-16 18:32)
+        Added full checkout to the workflow.
+
+✔ @critical The permalinki in the header of the note is in bad position if the note is editable by the user !!! @done(25-10-16 18:31)
+        Removed it completly.
+
 ✔ @high Add two factor authentication! @done(25-10-14 18:17)
 
 ✘ Try run in the entrypoint: @cancelled(25-10-14 18:15)

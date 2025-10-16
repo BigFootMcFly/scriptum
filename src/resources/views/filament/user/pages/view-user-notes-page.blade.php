@@ -16,7 +16,7 @@
         {{-- ModalNoteEditor - Modal end --}}
 
         {{-- Note list --}}
-        <div class="divide-y divide-gray-200 dark:divide-gray-800">
+        <div class="divide-y divide-gray-200 dark:divide-gray-800 w-full">
             @foreach ($this->notes as $note)
                 <livewire:view-note.note :note="$note" :key="$note->id"></livewire:view-note.note>
             @endforeach
@@ -28,6 +28,5 @@
     <nav aria-label="Pagination navigation" role="navigation" class="">
         <x-filament::pagination :paginator="$this->notes" />
     </nav>
-
 
 </x-filament-panels::page>
