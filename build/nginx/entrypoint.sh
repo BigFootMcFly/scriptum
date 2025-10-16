@@ -9,12 +9,16 @@ dataBaseFile=database/sqlite/database.sqlite
 # Creating storage folders
 function create_storage_folders {
 
+    echo OK::0
+
     # create storage folders for laravel
     mkdir -p ./storage/framework/{cache,sessions,testing,views} || {
         # fail if something went wrong
         php artisan cli:error "Making storage folders failed!"
         exit 1
     }
+
+    echo OK::1
 
     # create log folder
     mkdir -p ./storage/logs || {
@@ -23,6 +27,8 @@ function create_storage_folders {
         exit 1
     }
 
+    echo OK::2
+
     # create public folder
     mkdir -p ./storage/app/public ||
         # fail if something went wrong
@@ -30,12 +36,17 @@ function create_storage_folders {
         exit 1
     }
 
+    echo OK::3
+    tree storage
+
     # copy the avatars to the public folder
     cp -r -n resources/images/avatars ./storage/app/public/ ||
         # fail if something went wrong
         php artisan cli:error "Making avatar folders failed!"
         exit 1
     }
+
+    echo OK::4
 
     # link storage folder
     php artisan storage:link || {
