@@ -21,7 +21,7 @@
                         <x-filament::badge size="sm" color="info">private</x-filament::badge>
                     @endif
                 </a>
-                <x-note.permalink :note=$note/>
+                {{-- <x-note.permalink :note=$note/> --}}
 
                 @if (auth()?->user()?->can('updateOnFrontPage', $note))
                     {{-- Edit button --}}
