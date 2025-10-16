@@ -2,16 +2,11 @@
 
 namespace App\Filament\User\Pages;
 
-use App\Enums\NoteVisibility;
 use App\Filament\Traits\ModalNoteEditor;
-use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
