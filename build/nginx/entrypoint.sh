@@ -31,7 +31,7 @@ function create_storage_folders {
     }
 
     # copy the avatars to the public folder
-    cp -r -n resources/images/avatars storage/app/public/||
+    cp -r -n resources/images/avatars ./storage/app/public/ ||
         # fail if something went wrong
         php artisan cli:error "Making avatar folders failed!"
         exit 1
