@@ -1,5 +1,10 @@
 <div>
-    <x-filament::modal id="edit-note" width="5xl">
+    <x-filament::modal
+        id="edit-note"
+        width="5xl"
+        :close-by-clicking-away="false"
+        :close-by-escaping="false"
+    >
         <x-slot name="heading">Edit Note</x-slot>
 
         {{ $this->form }}

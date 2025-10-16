@@ -4,6 +4,9 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+☐ @critical These two are teh "same" jet still different...
+        /mnt/devel/Projects/scriptum/src/resources/views/livewire/edit-note-modal-form.blade.php
+        /mnt/devel/Projects/scriptum/src/resources/views/filament/traits/modal-note-editor.blade.php
 
 ☐ @low The "initalize_environment_file" in the entrypoint needs some work.
         Currently in each run the .env file cannot exists, it is not saved in a docker volume, so it will always be copied,
