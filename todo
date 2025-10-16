@@ -4,8 +4,24 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+☐ @critical On the PROD page the version is "Version: b672" (no tag)
 
-☐ The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes
+☐ @critical The permalinki in the header of the note is in bad position if the note is editable by the user !!!
+
+☐ @critical On ViewNotePage and ViewUserNotesPage pages the modal edit is not present !!!
+        and the footer is on the wrong place
+
+☐ @critical On recreating the container, all uploaded data is lost, even custom profile images!!!
+        and all images in the notes !!!
+
+☐ @low The "initalize_environment_file" in the entrypoint needs some work.
+        Currently in each run the .env file cannot exists, it is not saved in a docker volume, so it will always be copied,
+        and so the app key will always be recreated (this was a chosen decision in proxima, so all of the sessions get invalidated)
+        but in this case, all of the MFA app keys (fields marked as encrypted in the User casts list) cannot be decrypted
+        after a key regen!
+        For now, i added the .env file as a volume to the composer, so it will newer be overwritten (even merked as read only)
+
+☐ @low The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes
 
 ☐ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form...
 
