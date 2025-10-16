@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @method public frontPage(?User $user = null): Builder
+ */
 class Note extends Model implements HasRichContent
 {
     use InteractsWithRichContent;
