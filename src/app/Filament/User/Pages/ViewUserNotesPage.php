@@ -75,6 +75,12 @@ class ViewUserNotesPage extends Page
     {
         return __("Notes of \"{$this->user->name}\"");
     }
+
+    public function getHeader(): ?View
+    {
+        return view('filament.user.pages.view-user-notes.header')
+            ->with('user', $this->user);
+    }
     /*
     public function getSubHeading(): string
     {

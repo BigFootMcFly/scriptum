@@ -8,10 +8,19 @@
     <div class="py-4">
         {{-- Header --}}
         <div class="p-1">
-            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <div class="mt-2 text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                <x-filament::avatar
+                    @class([
+                        "dark:invert-75 opacity-70" => !$user->hasAvatar()
+                    ])
+                    class="mr-2"
+                    src="{{ asset($note->user->avatar_url) }}"
+                    alt="{{ $note->user->name }}"
+                    size="w-6 h-6"
+                />
                 <a href="{{ $note->user->permalink }}"
                     @class([
-                        "hover:underline",
+                        "hover:underline text-md",
                         "text-amber-500" => ($note->user_id === auth()?->user()?->id),
                         "text-teal-500" => ($note->user_id !== auth()?->user()?->id)
                     ])
@@ -33,7 +42,7 @@
                         color="warning"
                         label="Edit"
                         tooltip="Edit Note"
-                        class="grayscale hover:grayscale-0 duration-300 cursor-pointer float-end"
+                        class="grayscale hover:grayscale-0 duration-300 cursor-pointer ml-auto"
                     />
                 @endif
             </div>
