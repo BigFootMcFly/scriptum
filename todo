@@ -5,10 +5,6 @@
 
 # ---- Pending
 
-☐ @critical These two are teh "same" jet still different...
-        /mnt/devel/Projects/scriptum/src/resources/views/livewire/edit-note-modal-form.blade.php
-        /mnt/devel/Projects/scriptum/src/resources/views/filament/traits/modal-note-editor.blade.php
-
 ☐ @low The "initalize_environment_file" in the entrypoint needs some work.
         Currently in each run the .env file cannot exists, it is not saved in a docker volume, so it will always be copied,
         and so the app key will always be recreated (this was a chosen decision in proxima, so all of the sessions get invalidated)
@@ -129,6 +125,11 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @critical These two are teh "same" jet still different... @done(25-10-18 16:49)
+        /mnt/devel/Projects/scriptum/src/resources/views/livewire/edit-note-modal-form.blade.php
+        /mnt/devel/Projects/scriptum/src/resources/views/filament/traits/modal-note-editor.blade.php
+        NOTE: removed old, the trait is in use fron now...
 
 ✔ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form... @done(25-10-18 16:17)
         NOTE: x-filament::modal is way to specialized, to do this reasonably, so for now i just disabled the "closeByClickingAway" and "closeByEscaping" properties
