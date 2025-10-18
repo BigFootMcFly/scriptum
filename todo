@@ -16,8 +16,6 @@
         after a key regen!
         For now, i added the .env file as a volume to the composer, so it will newer be overwritten (even merked as read only)
 
-☐ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form...
-
 ☐ @low Add user avatar pictures to the front page and the /users/xxx page
 
 ☐ @low @maybe If a note changes on the admin panel, the user panel should be noticed over the change so it can re-render the mote...
@@ -131,6 +129,13 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @critical Add confirmation for the New Note Form, if the ESC is pressed and the note is not empty, ask for confirmation to leave the form... @done(25-10-18 16:17)
+        NOTE: x-filament::modal is way to specialized, to do this reasonably, so for now i just disabled the "closeByClickingAway" and "closeByEscaping" properties
+              it is "good enough" for now...
+        @see: filament/support/resources/views/components/modal/index.blade.php
+        NOTE: maybe i will recreate the form in native alpinejs some days...
+
 
 ✔ @high Send a notification on succesfull email verification (currenty only a redirect is made) @done(25-10-18 15:06)
 
