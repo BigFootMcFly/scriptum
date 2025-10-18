@@ -8,8 +8,8 @@ run-name: ${{ github.actor }} is building the docker image
 
 on:
   push:
-    tags:
-      - v**
+#    tags:
+#      - v**
     branches:
       - 'dev'
   workflow_dispatch:
