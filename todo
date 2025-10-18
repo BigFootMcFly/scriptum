@@ -4,6 +4,7 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+
 ☐ @critical These two are teh "same" jet still different...
         /mnt/devel/Projects/scriptum/src/resources/views/livewire/edit-note-modal-form.blade.php
         /mnt/devel/Projects/scriptum/src/resources/views/filament/traits/modal-note-editor.blade.php
@@ -130,6 +131,9 @@
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
 
 # ---- Completed
+
+✔ @high Send a notification on succesfull email verification (currenty only a redirect is made) @done(25-10-18 15:06)
+
 ✔ @low The view "http://localhost:8000/users/benedek-gerzson" is to narrow on desktop, maybe add a min-width for mx+ sizes @done(25-10-16 18:54)
 
 ✔ @critical On ViewNotePage and ViewUserNotesPage pages the modal edit is not present !!! @done(25-10-16 18:49)

@@ -2,8 +2,8 @@
 
 use App\Filament\User\Pages\ViewNotePage;
 use App\Filament\User\Pages\ViewUserNotesPage;
+use App\Http\Controllers\Filament\EmailVerificationController;
 use App\Http\Controllers\LogoutUserController;
-use Filament\Auth\Http\Controllers\EmailVerificationController;
 use Filament\Auth\Pages\Login;
 use Illuminate\Support\Facades\Route;
 
