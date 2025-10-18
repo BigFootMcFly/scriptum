@@ -12,11 +12,22 @@
         after a key regen!
         For now, i added the .env file as a volume to the composer, so it will newer be overwritten (even merked as read only)
 
-☐ @low Add user avatar pictures to the front page and the /users/xxx page
+☐ @low @maybe If a note changes on the admin panel, the user panel should be noticed over the change so it can re-render the note...
+        NOTE: may need ws server...
+        @see: https://laravel.com/docs/12.x/broadcasting
 
-☐ @low @maybe If a note changes on the admin panel, the user panel should be noticed over the change so it can re-render the mote...
+☐ @low Add a global viewingMode helper, what can help determine the current mode, so other components/services can use it.
+        @see: https://scriptum.goliath.hu/notes/bigfoot-mcfly/is-it-worth-to-create-a-magic-method-to-slightly-inprove-readability
+        is it worth?
+        FROM THIS:
+        if ($user->viewing_mode === FrontPageViewingMode::Private) {
+            return $this->viewModePrivateScope($query, $user);
+        }
+        TO THIS:
+        if (FrontPageViewingMode::isPrivate($user->viewing_mode)) {
+            return $this->viewModePrivateScope($query, $user);
+        }
 
-☐ @today Add a global viewingMode helper, what can help determine the current mode, so other components/services can use it.
 
 ☐ @low The TopBar got the @persist tag, now it works, but gets the following error:
         "Uncaught Snapshot missing on Livewire component with id: XY2C7TVcKpYpHt7LdSEb"
@@ -62,7 +73,7 @@
                 with a uniue id, where the user can ask about it...
 
 ☐ @low Currently the front page shows the nodes sorted by the 'updated_at','DESC' order without the search, earlier it was 'created_by','DESC',
-        think out, which one is better, or add a swithc/butoon/etc...
+        think of it, which one is better, or add a switch/buton/etc...
 
 ☐ @low @maybe TipTapJsonContentExtractor::extractContent() maybe should have a tdo as parameter instead of 4 arrays...
         _AND_ the pictograms should be added to that... ex.:
@@ -82,7 +93,7 @@
                         }
                 }
 
-☐ @maybe In teh Nomad/Notes InfoView maybe add links to the user profile and note lists (filtered table view)
+☐ @maybe In the Nomad/Notes InfoView maybe add links to the user profile and note lists (filtered table view)
 
 ☐ @low @maybe In the table view (and even on the infolist) add pictograms (small icons) to show, that the note has image,code, link, etc. in it...
         AND maybe add big sites favicons to the list which should be atomatically detected like the autotags...
@@ -93,9 +104,6 @@
 
 ☐ @low Add a "Copy to clipbord" button on code blacks!
         see: https://github.com/livewire/flux/discussions/835
-
-☐ @low put a checkbox on the header of the main page for a user, and if in private (one user) mode, add a "green marking and full border to the page,
-        and a "Red" for the admin !!!
 
 ☐ @low Maybe in the Note model the 'body' should have a mutator, and that should set the 'body_contet' field
         @see: https://laravel.com/docs/12.x/eloquent-mutators#mutating-multiple-attributes
@@ -123,8 +131,19 @@
 ☐ @low @maybe in the registration form when the 'handle' field changes, check for the availability of the handle
             and show an error inmediatelly if it is not available, instead of just when submitted
             and maybe even add a suggestion for som similar available handle (like: 'john-doe' => 'john-doe-42')
+            ONTE: maybe add .live
 
 # ---- Completed
+
+✔ @low put a checkbox on the header of the main page for a user, and if in private (one user) mode, add a "green marking and full border to the page, @done(25-10-18 21:05)
+        and a "Red" for the admin !!!
+        NOTE: implemented a long time ago, this todo was left here by mistake...
+
+✔ @today Add an "dark:invert" to the guest/default avatars on all views. @done(25-10-18 20:45)
+        NOTE: added "dark:invert-75 opacity-70" - this was already user in the top menu bar
+
+✔ @low Add user avatar pictures to the front page and the /users/xxx page @done(25-10-18 20:45)
+
 
 ✔ @critical These two are teh "same" jet still different... @done(25-10-18 16:49)
         /mnt/devel/Projects/scriptum/src/resources/views/livewire/edit-note-modal-form.blade.php
