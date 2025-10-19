@@ -75,7 +75,7 @@ Feel free to test it, read the source for ideas or solutions, deploy in your own
     ```
 - Use it
 
-> NOTES: <br>
+> NOTE: <br>
 > The main page is accessible by the `DOMAIN` variable. <br>
 > The admin panel is accessible by the `ADMIN_DOMAIN` variable. <br>
 > Use `ADMIN_HASHED_PASSWORD` variable instead of `ADMIN_PASSWORD`. <br>
