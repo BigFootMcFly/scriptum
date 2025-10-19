@@ -6,7 +6,7 @@ To save quick notes for the future.<br>
 
 > *So i don't need to remember them...*
 
-> **NOTE:** this is a for testing/personal use, is is **NOT** production ready!<br>
+> **NOTE** this is a for testing/personal use, is is **NOT** production ready!<br>
 Feel free to test it, read the source for ideas or solutions, deploy in your own lab or even use the publicly available version (*see bellow*).
 
 # Usage
@@ -34,7 +34,7 @@ Feel free to test it, read the source for ideas or solutions, deploy in your own
 - You can see all public notes of a specified user by clicking the users name on top of a note
 
 ### Admin panel
-> NOTE: the admin panel always requires **Multy Factor Authentication**
+> **NOTE** the admin panel always requires **Multy Factor Authentication**
 
 - Manage Users
 - Manage Notes
