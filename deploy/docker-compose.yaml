@@ -1,0 +1,17 @@
+---
+services:
+
+  scriptum:
+    image: proxima.goliath.hu/scriptum/scriptum:testing
+    container_name: scriptum
+    volumes:
+      - "./volumes/env/.env:/app/Scriptum/.env:ro"
+      - "./volumes/database/:/app/Scriptum/database/sqlite/"
+      - "./volumes/storage/:/app/Scriptum/storage/"
+    restart: unless-stopped
+    networks:
+      - cloudflare
+
+networks:
+  cloudflare:
+    external: true
