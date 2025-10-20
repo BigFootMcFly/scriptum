@@ -32,7 +32,9 @@ class NoteForm
                 TextInput::make('slug')
                     ->required()
                     ->unique(Note::class, 'slug'),
-                SpatieTagsInput::make('tags'),
+                SpatieTagsInput::make('form_tags')
+                    ->dehydrated(true)
+                    ->label('Tags'),
                 RichEditor::make('body')
                     ->json()
                     ->fileAttachmentsVisibility('private')

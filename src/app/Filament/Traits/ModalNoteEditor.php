@@ -16,6 +16,7 @@ trait ModalNoteEditor
         'title' => null,
         'visibility'  => null,
         'slug' => null,
+        'form_tags' => null,
         'body' => [
             "type" => "doc",
         ],
@@ -46,18 +47,20 @@ trait ModalNoteEditor
         if (null === $note?->id) { // create new note
             $this->editingNote = null;
             $this->data = [
-                /*'body' => [],*/
                 'body' => [
                     "type" => "doc",
                 ],
-
                 'visibility' => NoteVisibility::Private,
                 'title' => '',
                 'slug' => '',
+                'form_tags' => [],
             ];
         } else { // update an existing note
             $this->editingNote = $note;
-            $this->form->fill($note->toArray());
+            $this->form->fill(
+                $note->toArray() +
+                ['form_tags' => $note->tags->pluck('name')->toArray()]
+            );
         }
 
         $this->dispatch('open-modal', id: 'edit-note');
@@ -69,10 +72,12 @@ trait ModalNoteEditor
     {
         $confirmMessage = 'New note created';
 
+        $state = $this->form->getState();
+
         $this->validate();
 
         if ($this->editingNote) { // update note
-            $this->editingNote->update($this->form->getState());
+            $this->editingNote->update($state);
             $noteUpdates = $this->editingNote;
             $confirmMessage = 'Note updated';
             $this->dispatch('refresh-note', noteId: $noteUpdates->id);
@@ -83,6 +88,7 @@ trait ModalNoteEditor
             );
             $this->dispatch('refresh-note-list');
         }
+        $noteUpdates->syncTagsWithType($state['form_tags']);
 
         $this->editingNote = null;
 

@@ -32,6 +32,8 @@ class Note extends Model implements HasRichContent
 
     use HasTags;
 
+    protected $with = ['tags'];
+
     // Configuration
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -57,7 +59,7 @@ class Note extends Model implements HasRichContent
     protected function casts(): array {
         return [
             'visibility' => NoteVisibility::class,
-            'body' => 'array' // tiptap's JSON format
+            'body' => 'array', // tiptap's JSON format
         ];
     }
 
@@ -451,5 +453,17 @@ class Note extends Model implements HasRichContent
             ->fileAttachmentsVisibility('private')
             ;
     }
+
+    /**
+     * Get the tags as a plain array for the Filament form.
+     */
+    /*public function formTags(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->tags->pluck('name')->toArray(),
+            set: fn (array $value) => $this->setRelation('tags', $this->tags->filter(fn($tag) => in_array($tag->name, $value)))
+        );
+    }*/
+
 
 }
