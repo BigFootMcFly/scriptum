@@ -1,5 +1,7 @@
-#
 ![BADGE](https://proxima.goliath.hu/scriptum/scriptum/actions/workflows/testing.yaml/badge.svg?branch=dev)
+
+<a href="https://proxima.goliath.hu/scriptum/scriptum" target="_blank">main repository</a>
+| <a href="https://github.com/BigFootMcFly/scriptum" target="_blank">mirror repository</a>
 
 # Scriptum
 To save quick notes for the future.<br>
