@@ -1,6 +1,7 @@
 <?php
 
 use App\Filament\User\Pages\ViewNotePage;
+use App\Filament\User\Pages\ViewTagNotesPage;
 use App\Filament\User\Pages\ViewUserNotesPage;
 use App\Http\Controllers\Filament\EmailVerificationController;
 use App\Http\Controllers\LogoutUserController;
@@ -28,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
 Route::post('logout-user', LogoutUserController::class)->name('logout-user');
 
 Route::get('users/{user:handle}', ViewUserNotesPage::class)->name('view-user-notes');
+
+Route::get('tags/{name}', ViewTagNotesPage::class)->name('view-tag-notes');
 
 Route::get('notes/{user}/{slug}', ViewNotePage::class)->name('view-note');
 

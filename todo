@@ -5,6 +5,8 @@
 
 # ---- Pending
 
+☐ @low Add tags to the admin page (view/details of notes "properties" section)
+
 ☐ @low The "initalize_environment_file" in the entrypoint needs some work.
         Currently in each run the .env file cannot exists, it is not saved in a docker volume, so it will always be copied,
         and so the app key will always be recreated (this was a chosen decision in proxima, so all of the sessions get invalidated)

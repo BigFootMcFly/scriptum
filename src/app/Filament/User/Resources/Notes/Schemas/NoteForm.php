@@ -8,6 +8,7 @@ use App\Models\Note;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -19,11 +20,6 @@ class NoteForm
     {
         return $schema
             ->components([
-/*                Hidden::make('user_id')
-                    ->default(auth()->user()->id),*/
-/*                Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),*/
                 Select::make('visibility')
                     ->options(NoteVisibility::userEditable())
                     ->default('private')
@@ -36,6 +32,7 @@ class NoteForm
                 TextInput::make('slug')
                     ->required()
                     ->unique(Note::class, 'slug'),
+                SpatieTagsInput::make('tags'),
                 RichEditor::make('body')
                     ->json()
                     ->fileAttachmentsVisibility('private')
