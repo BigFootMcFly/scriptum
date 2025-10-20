@@ -17,6 +17,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -82,6 +83,7 @@ class NotesTable
                 TextColumn::make('slug')
                     ->sortable()
                     ->limit(50),
+                SpatieTagsColumn::make('tags'),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

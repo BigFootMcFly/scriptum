@@ -20,17 +20,21 @@
                 />
                 <a href="{{ $note->user->permalink }}"
                     @class([
-                        "hover:underline text-md",
+                        "hover:underline text-md mr-2",
                         "text-amber-500" => ($note->user_id === auth()?->user()?->id),
                         "text-teal-500" => ($note->user_id !== auth()?->user()?->id)
                     ])
                 >
                     {{ $note->user->handle }}
-                    @if ($note->visibility == NoteVisibility::Private)
-                        <x-filament::badge size="sm" color="info">private</x-filament::badge>
-                    @endif
                 </a>
-                {{-- <x-note.permalink :note=$note/> --}}
+                @if ($note->visibility == NoteVisibility::Private)
+                    <x-filament::badge size="sm" color="success" class="mr-1">private</x-filament::badge>
+                @endif
+                @foreach ($note->tags as $tag)
+                    <a href="{{ route('view-tag-notes', ['name'=> $tag->name]) }}" class="">
+                        <x-filament::badge size="sm" color="info" class="mr-1 transition opacity-65 hover:opacity-100">#{{ $tag->name }}</x-filament::badge>
+                    </a>
+                @endforeach
 
                 @if (auth()?->user()?->can('updateOnFrontPage', $note))
                     {{-- Edit button --}}

@@ -16,6 +16,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Support\Enums\IconSize;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -49,6 +50,7 @@ class NotesTable
                     ->searchable(isIndividual: true, isGlobal: true),
                 TextColumn::make('slug')
                     ->searchable(isIndividual: true, isGlobal: true),
+                SpatieTagsColumn::make('tags'),
                 TextColumn::make('visibility')
                     ->badge()
                     ->color(NoteVisibilityColorCallback::make())
