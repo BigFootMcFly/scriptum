@@ -4,6 +4,9 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+☐ @low In the ViewTagNotesPage component teh queryNotes() gets called by the livewire page and by the header  renderer separatedly
+        (so 2 queries), that must be cached
+        SAVE it in an internal protected variable or cache it!!!
 
 ☐ @low Add tags to the admin page (view/details of notes "properties" section)
 
