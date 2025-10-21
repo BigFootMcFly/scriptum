@@ -25,7 +25,7 @@
                         "text-teal-500" => ($note->user_id !== auth()?->user()?->id)
                     ])
                 >
-                    {{ $note->user->handle }}
+                    {{ $note->user->name }}
                 </a>
                 @if ($note->visibility == NoteVisibility::Private)
                     <x-filament::badge size="sm" color="success" class="mr-1">private</x-filament::badge>
