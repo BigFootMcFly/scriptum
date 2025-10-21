@@ -8,6 +8,7 @@ use Filament\Forms\Components\CodeEditor\Enums\Language;
 use Filament\Forms\Components\RichEditor\RichContentCustomBlock;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Tempest\Highlight\Highlighter;
@@ -34,7 +35,7 @@ class CodeBlock extends RichContentCustomBlock
 /*            ->modalDescription('Add your code')*/
             ->schema([
                 TextInput::make('title'),
-                //TODO: get the names from teh Language enum
+                //TODO: get the names from the Language enum
                 Select::make('language')
                     ->options([
                         'bash' => 'Bash',
@@ -54,6 +55,8 @@ class CodeBlock extends RichContentCustomBlock
                     ->required()
                     ->reactive()
                 ,
+                Toggle::make('collapsed')
+                    ->label('The code block is collapsed by default'),
                 CodeEditor::make('code')
                         ->reactive()
                         ->language(function(Get $get) {

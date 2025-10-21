@@ -4,6 +4,11 @@
         By default, a panel is behind authorisation, or if tht is removed, it has none, and this was the easier way to extend that behaviour.
 
 # ---- Pending
+
+☐ @low add animation to open/close of a code block
+
+☐ @low Add syntax highlight to the code block for logs
+
 ☐ @low Add a "tag search" to the main search bar functionality (ex. '#blog') -> maybe convert it to a badge like - or like in google
         NOTE: this is one of the reasons i used a custom search bar...
 
@@ -146,6 +151,12 @@
             ONTE: maybe add .live
 
 # ---- Completed
+
+✔ @low Add a "collapsed" tag to the code block @done(25-10-21 23:01)
+        _maybe_ add a "no line wrap" to the block as well - NOPE
+
+✔ @low Add some marking to make visible, that a code block is collapsed @done(25-10-21 23:01)
+        Currently only an arrow on the left indicates it (default html)
 
 ✔ @low put a checkbox on the header of the main page for a user, and if in private (one user) mode, add a "green marking and full border to the page, @done(25-10-18 21:05)
         and a "Red" for the admin !!!
