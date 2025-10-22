@@ -16,7 +16,7 @@ class ListNotes extends ListRecords
 
     public function mount(): void
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             abort(403, 'Please login to manage your notes.');
         }
     }
@@ -27,7 +27,7 @@ class ListNotes extends ListRecords
     public function refreshPosts(): void
     {
         $this->resetPage();
-        //$this->dispatch('$refresh'); // Refreshes the Livewire component
+        // $this->dispatch('$refresh'); // Refreshes the Livewire component
     }
 
     #[On('search-updated')]
@@ -56,12 +56,11 @@ class ListNotes extends ListRecords
         ];
     }
 
-
     protected function getHeaderActions(): array
     {
         return [
-            //NOTE: moved functionality to the main "Ad New Note" button
-            //CreateAction::make(),
+            // NOTE: moved functionality to the main "Ad New Note" button
+            // CreateAction::make(),
         ];
     }
 }

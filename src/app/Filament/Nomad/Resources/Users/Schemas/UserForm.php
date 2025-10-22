@@ -18,8 +18,7 @@ class UserForm
                 TextInput::make('name')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state)))
-                    ,
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state))),
                 TextInput::make('handle')
                     ->required(),
                 TextInput::make('email')

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\FrontPageViewingMode;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
@@ -10,6 +9,7 @@ use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Filament\Panel\Concerns\HasAvatars;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,14 +19,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasEmailAuthentication, HasAppAuthentication, HasAppAuthenticationRecovery
+class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasEmailAuthentication, MustVerifyEmail
 {
+    use HasAvatars;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-    use HasAvatars;
     use Notifiable;
 
     protected const string default_avatar_url = 'avatars/_default.svg';
+
     public const string guest_avatar_url = 'avatars/_guest.svg';
 
     /**
@@ -109,10 +111,9 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         return $this->email_verified_at !== null;
     }
 
-
     public function isGuest(): bool
     {
-        return null === $this->id;
+        return $this->id === null;
     }
 
     public function hasAvatar(): bool
@@ -122,19 +123,17 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         }
 
         return Arr::get($this->attributes, 'avatar_url') !== null;
-        //return $this->getRawOriginal('avatar_url') !== null;
-        //return ($this->attributes['avatar_url'] ?? null) !== null;
+        // return $this->getRawOriginal('avatar_url') !== null;
+        // return ($this->attributes['avatar_url'] ?? null) !== null;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     protected function permalink(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value): string =>
-                route('view-user-notes', ['user' => $this->handle])
+            get: fn (?string $value): string => route('view-user-notes', ['user' => $this->handle])
         );
     }
-
 
     /**
      * Get the user's initials
@@ -150,11 +149,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
 
     /**
      * returns if the user can access the filament panel
-     *
-     * @param Panel $panel
-     *
-     * @return bool
-     *
      */
     public function canAccessPanel(Panel $panel): bool
     {
@@ -170,7 +164,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
 
     public static function guestUser(): self
     {
-        //return new GuestFactory()->make();
+        // return new GuestFactory()->make();
         return self::make([
             'name' => __('Guest User'),
             'is_admin' => false,
@@ -187,6 +181,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
     public function getFilamentAvatarUrl(): ?string
     {
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
+
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 
@@ -241,5 +236,4 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         $this->app_authentication_recovery_codes = $codes;
         $this->save();
     }
-
 }

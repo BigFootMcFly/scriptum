@@ -5,7 +5,7 @@
     />
 
     <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <x-auth-session-status class="text-center" :status="session()->get('status')" />
 
     <form method="POST" wire:submit="confirmPassword" class="flex flex-col gap-6">
         <!-- Password -->

@@ -8,7 +8,8 @@ use App\Helpers\TipTap\Traits\HasContentExtractor;
 class CodeCustomBlockContent implements ContentExtractor
 {
     use HasContentExtractor;
-    public const string contentId  = 'code';
+
+    public const string contentId = 'code';
 
     /**
      * @see ContentExtractor
@@ -16,7 +17,7 @@ class CodeCustomBlockContent implements ContentExtractor
     public static function extractContent(array $block): array
     {
         return [
-            $block['attrs']['config']['code']
+            $block['attrs']['config']['code'],
         ];
     }
 

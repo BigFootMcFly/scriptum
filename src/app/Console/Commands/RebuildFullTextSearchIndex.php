@@ -30,17 +30,18 @@ class RebuildFullTextSearchIndex extends Command
 
         try {
             // 1. Clear the FTS table
-            DB::statement("DELETE FROM notes_fts");
+            DB::statement('DELETE FROM notes_fts');
 
             // 2. Repopulate from the main notes table
-            DB::statement("
+            DB::statement('
                 INSERT INTO notes_fts(rowid, title, body_content)
                 SELECT id, title, body_content FROM notes
-            ");
+            ');
 
             $this->info('FTS5 index rebuilt successfully!');
         } catch (\Throwable $e) {
-            $this->error('Error rebuilding index: ' . $e->getMessage());
+            $this->error('Error rebuilding index: '.$e->getMessage());
+
             return Command::FAILURE;
         }
 

@@ -3,7 +3,6 @@
 namespace App\Filament\Nomad\Resources\Notes\Pages;
 
 use App\Filament\Nomad\Resources\Notes\NoteResource;
-use App\Models\Note;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
@@ -16,9 +15,8 @@ class EditNote extends EditRecord
 
     public function getHeading(): string
     {
-        return "Edit Note";
+        return 'Edit Note';
     }
-
 
     protected function getHeaderActions(): array
     {
@@ -29,5 +27,4 @@ class EditNote extends EditRecord
             RestoreAction::make(),
         ];
     }
-
 }

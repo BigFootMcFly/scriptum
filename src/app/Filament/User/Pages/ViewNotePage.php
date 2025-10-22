@@ -33,7 +33,7 @@ class ViewNotePage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return $this->note->title;
     }

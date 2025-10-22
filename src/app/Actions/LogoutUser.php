@@ -6,7 +6,6 @@ use Filament\Facades\Filament;
 
 final class LogoutUser
 {
-
     public static function execute(?string $redirectTo = null): void
     {
         Filament::auth()->logout();
@@ -18,5 +17,4 @@ final class LogoutUser
             $redirectTo = 'filament.user.resources.notes.index';
         }
     }
-
 }

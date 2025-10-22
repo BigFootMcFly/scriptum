@@ -13,7 +13,6 @@ class TipTapJsonContentExtractor
 {
     /**
      * List of the custom extractors to use ('text','image','bulletList', etc. see TipTap JSON format)
-     * @var array
      */
     public static array $customExtractors = [
         ImageContentExtractor::contentId => ImageContentExtractor::class,
@@ -22,7 +21,6 @@ class TipTapJsonContentExtractor
 
     /**
      * List of the custom block extractors (RicHEditor->customBlocks(...))
-     * @var array
      */
     public static array $customBlocks = [
         CodeCustomBlockContent::contentId => CodeCustomBlockContent::class,
@@ -31,13 +29,11 @@ class TipTapJsonContentExtractor
     /**
      * Recursively extracts the "human readable" text from a TipTap schema block
      *
-     * @param array $block The schema block containing the formatted text
-     * @param array|null $result The raw "human readable" text contents
-     * @param array|null $extras The extra attributes gathere by the custom extractors (@see HasContentExtractor::extractContent)
-     * @param array|null $autoTags The automatically created tags by the custom extractors (@see HasContentExtractor::autoTags)
-     *
+     * @param  array  $block  The schema block containing the formatted text
+     * @param  array|null  $result  The raw "human readable" text contents
+     * @param  array|null  $extras  The extra attributes gathere by the custom extractors (@see HasContentExtractor::extractContent)
+     * @param  array|null  $autoTags  The automatically created tags by the custom extractors (@see HasContentExtractor::autoTags)
      * @return array Returns the $result array for linkability
-     *
      */
     public static function extractContent(array $block, ?array &$result = [], ?array &$extras = [], ?array &$autoTags = []): array
     {
@@ -50,7 +46,7 @@ class TipTapJsonContentExtractor
         }
 
         // if the node has a 'text' field, collect it
-        if(array_key_exists('text', $block)) {
+        if (array_key_exists('text', $block)) {
             $result[] = $block['text'];
         }
 
@@ -83,10 +79,10 @@ class TipTapJsonContentExtractor
                 call_user_func_array("$className::extraData", [$block, &$extras]);
                 call_user_func_array("$className::autoTags", [$block, &$autoTags]);
             }
+
             return $result;
         }
 
         return $result;
     }
 }
-

@@ -4,5 +4,5 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Filament\NomadPanelProvider::class,
     App\Providers\Filament\UserPanelProvider::class,
-    //App\Providers\TelescopeServiceProvider::class,
+    // App\Providers\TelescopeServiceProvider::class,
 ];

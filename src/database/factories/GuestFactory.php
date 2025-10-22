@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class GuestFactory extends Factory
 {
-
     /**
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-     protected $model = User::class;
+    protected $model = User::class;
 
     /**
      * Define the model's default state.

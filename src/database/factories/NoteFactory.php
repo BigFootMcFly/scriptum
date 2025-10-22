@@ -22,8 +22,9 @@ class NoteFactory extends Factory
     {
         $title = fake()->realText(100);
         $body = fake()->realText();
-        //TODO: make a TipTap JSON faker
+        // TODO: make a TipTap JSON faker
         $body = '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","marks":[{"type":"bold"}],"text":"Or"},{"type":"text","text":" is "},{"type":"text","marks":[{"type":"italic"}],"text":"it"},{"type":"text","text":"?"}],"attrs":{"textAlign":"start"}},{"type":"paragraph","attrs":{"textAlign":"start"},"content":[{"type":"text","marks":[{"type":"link","attrs":{"href":"https:\/\/www.google.com\/search?udm=14&q=is+there+a+cow+level%3F","target":"_blank","rel":"noopener noreferrer nofollow","class":null}}],"text":"maybe..."}]},{"type":"paragraph","attrs":{"textAlign":"start"},"content":[{"type":"text","text":"..."}]}]}';
+
         return [
             'user_id' => User::factory(),
             'title' => $title,

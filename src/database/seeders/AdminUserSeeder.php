@@ -14,14 +14,15 @@ class AdminUserSeeder extends Seeder
 
     /**
      * Run the database seeds.
+     *
      * @throws Exception
      */
     public function run(): void
     {
-        //NOTE: In docker the seeding may be re-run on each restart, so we only create the admin user if it isn't already present
+        // NOTE: In docker the seeding may be re-run on each restart, so we only create the admin user if it isn't already present
 
         // skip, if the admin user already exists
-        if (null !== User::where('is_admin', true)->first()) {
+        if (User::where('is_admin', true)->first() !== null) {
             return;
         }
 

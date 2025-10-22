@@ -58,12 +58,11 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
             ->danger();
     }
 
-
     public function resendNotificationAction(): Action
     {
         return Action::make('resendNotification')
             ->link()
-            ->label(__('filament-panels::auth/pages/email-verification/email-verification-prompt.actions.resend_notification.label') . '.')
+            ->label(__('filament-panels::auth/pages/email-verification/email-verification-prompt.actions.resend_notification.label').'.')
             ->size('sm')
             ->action(function (): void {
                 try {

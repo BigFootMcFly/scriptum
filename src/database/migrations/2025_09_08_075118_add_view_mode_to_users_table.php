@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('viewing_mode',array_keys(FrontPageViewingMode::userSelectable()))
+            $table->enum('viewing_mode', array_keys(FrontPageViewingMode::userSelectable()))
                 ->default(FrontPageViewingMode::Private->value);
         });
     }

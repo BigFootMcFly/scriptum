@@ -1,0 +1,6 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "spaces_inside_parentheses": false
+    }
+}

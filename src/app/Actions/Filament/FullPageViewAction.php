@@ -12,12 +12,10 @@ class FullPageViewAction
         return Action::make('View')
             ->label('Details')
             ->icon('heroicon-o-eye')
-            //->iconButton()
             ->iconSize(IconSize::Small)
             ->color('white')
             ->tooltip('Details')
-            ->url($url)
-        ;
+            ->url($url);
 
     }
 }

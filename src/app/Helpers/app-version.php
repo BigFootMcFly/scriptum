@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('app_version')) {
+if (! function_exists('app_version')) {
     function app_version(): string
     {
         $path = base_path('bootstrap/cache/APP_VERSION');

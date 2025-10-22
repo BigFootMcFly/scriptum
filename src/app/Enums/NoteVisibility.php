@@ -33,5 +33,4 @@ enum NoteVisibility: string
         return array_column($list, 'name', 'value');
 
     }
-
 }

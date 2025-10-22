@@ -12,9 +12,8 @@ class ViewNote extends ViewRecord
 
     public function getHeading(): string
     {
-        return "View Note";
+        return 'View Note';
     }
-
 
     protected function getHeaderActions(): array
     {

@@ -16,7 +16,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class NoteResource extends Resource
@@ -48,13 +47,13 @@ class NoteResource extends Resource
         $query = parent::getEloquentQuery();
 
         if (auth()->check()) {
-            $query->with('user'); //NOTE: prevent duplicate queries @see: App/Models/Note.php:106
+            $query->with('user'); // NOTE: prevent duplicate queries @see: App/Models/Note.php:106
             $query->where('user_id', auth()->user()->id);
         }
 
-        //NOTE: add this if the resource table should be filtered by the top search as well...
-        $forntPageSearch = session('front-page-search','');
-        if ('' !== $forntPageSearch) {
+        // NOTE: add this if the resource table should be filtered by the top search as well...
+        $forntPageSearch = session()->get('front-page-search', '');
+        if ($forntPageSearch !== '') {
             $query->search($forntPageSearch, true);
         }
 
@@ -62,7 +61,6 @@ class NoteResource extends Resource
 
         return $query;
     }
-
 
     public static function getRelations(): array
     {
@@ -76,7 +74,7 @@ class NoteResource extends Resource
         return [
             'index' => ListNotes::route('/'),
             'create' => CreateNote::route('/create'),
-            //'view' => ViewNote::route('/{record}'),
+            // 'view' => ViewNote::route('/{record}'),
             'show' => ViewNote::route('/{record}'),
             'edit' => EditNote::route('/{record}/edit'),
         ];

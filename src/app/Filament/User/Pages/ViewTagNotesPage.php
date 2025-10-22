@@ -2,7 +2,6 @@
 
 namespace App\Filament\User\Pages;
 
-use App\Enums\NoteVisibility;
 use App\Filament\Traits\ModalNoteEditor;
 use App\Models\Note;
 use App\Models\User;
@@ -40,7 +39,8 @@ class ViewTagNotesPage extends Page
 
     // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-note-list')]
-    public function refreshNoteList(): void {
+    public function refreshNoteList(): void
+    {
         $this->resetPagination = true;
         $this->refresh();
     }
@@ -60,7 +60,7 @@ class ViewTagNotesPage extends Page
     public function getNotesProperty()
     {
         $query = $this->queryNotes();
-        //dd($query->count());
+        // dd($query->count());
 
         $this->dispatch('user-notes-page-updated');
 
@@ -71,7 +71,7 @@ class ViewTagNotesPage extends Page
         $this->resetPagination = false;
         */
 
-        //dump($query->toRawSql());
+        // dump($query->toRawSql());
 
         return $query->paginate(perPage: 10, page: $page);
     }
@@ -82,6 +82,4 @@ class ViewTagNotesPage extends Page
             ->with('tag', $this->tag)
             ->with('notes', $this->queryNotes());
     }
-
-
 }

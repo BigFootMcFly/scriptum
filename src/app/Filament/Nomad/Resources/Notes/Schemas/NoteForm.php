@@ -21,8 +21,7 @@ class NoteForm
                     ->relationship('user', 'name')
                     ->required()
                     ->searchable()
-                    ->preload()
-                ,
+                    ->preload(),
                 Select::make('visibility')
                     ->options(NoteVisibility::class)
                     ->default('private')
@@ -49,7 +48,7 @@ class NoteForm
                         ['link'],
                         ['table', 'attachFiles', 'mergeTags', 'customBlocks'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
                         ['undo', 'redo'],
-                    ])
+                    ]),
             ]);
     }
 }

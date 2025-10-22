@@ -27,6 +27,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $name = fake()->name();
+
         return [
             'name' => $name,
             'is_admin' => false,
@@ -43,10 +44,7 @@ class UserFactory extends Factory
     /**
      * Adds notes to the user
      *
-     * @param int|null $count if not present, a random number will be chosen between 0 and 10
-     *
-     * @return static
-     *
+     * @param  int|null  $count  if not present, a random number will be chosen between 0 and 10
      */
     public function addNotes(?int $count = null): static
     {

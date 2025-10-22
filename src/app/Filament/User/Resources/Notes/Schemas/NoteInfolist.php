@@ -24,13 +24,12 @@ class NoteInfolist
                             ->extraAttributes([
                                 'x-show' => 'isCollapsed', // visible only when section is collapsed
                                 'x-cloak' => true,         // prevent FOUC before Alpine boots
-                            ])
-                        ,
-                        //TODO: add an icon which shows if the Note is deleted or not
+                            ]),
+                        // TODO: add an icon which shows if the Note is deleted or not
                     ])
-                    //TODO: maybe creat a custom section here, in which it is collapsed, show minimal info with badges,
+                    // TODO: maybe creat a custom section here, in which it is collapsed, show minimal info with badges,
                     //      and a traditional full list if not collapsed...
-                    //->icon('heroicon-o-list-bullet')
+                    // ->icon('heroicon-o-list-bullet')
                     ->icon(Heroicon::ListBullet)
                     ->iconColor(Color::Emerald)
                     ->collapsed(true)
@@ -48,28 +47,25 @@ class NoteInfolist
                         TextEntry::make('updated_at')
                             ->color('info')
                             ->dateTime(),
-                            TextEntry::make('visibility')
+                        TextEntry::make('visibility')
                             ->badge()
-                            ->color(NoteVisibilityColorCallback::make())
-                        ,
+                            ->color(NoteVisibilityColorCallback::make()),
                         TextEntry::make('deleted_at')
                             ->dateTime()
                             ->placeholder('n/a')
-                            ->color(Color::Red)
-                            ,
+                            ->color(Color::Red),
                     ]),
-                    Section::make('Content')
-                        ->icon('heroicon-o-document')
-                        ->iconColor(Color::Emerald)
-                        ->collapsible()
-                        ->columnSpanFull()
-                        ->columns(1)
-                        ->components([
+                Section::make('Content')
+                    ->icon('heroicon-o-document')
+                    ->iconColor(Color::Emerald)
+                    ->collapsible()
+                    ->columnSpanFull()
+                    ->columns(1)
+                    ->components([
                         TextEntry::make('body')
-                            ->extraAttributes(['class'=>'fi-prose'])
-                            ->hiddenLabel()
-                        ,
-                        ]),
+                            ->extraAttributes(['class' => 'fi-prose'])
+                            ->hiddenLabel(),
+                    ]),
             ]);
     }
 }

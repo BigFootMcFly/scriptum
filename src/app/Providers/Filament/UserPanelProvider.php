@@ -28,7 +28,7 @@ class UserPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->brandLogo(fn () => view('livewire.front-page.brand-logo'))
-            ->globalSearch(false) //NOTE: we use our own
+            ->globalSearch(false) // NOTE: we use our own
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
             ->domain(config('scriptum.production.domain'))
@@ -60,9 +60,9 @@ class UserPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\Filament\User\Pages')
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\Filament\User\Widgets')
             ->widgets([
-                //NOTE: this are widgets on the dashboard page
-                //AccountWidget::class,
-                //FilamentInfoWidget::class,
+                // NOTE: this are widgets on the dashboard page
+                // AccountWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -76,7 +76,7 @@ class UserPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                //Authenticate::class,
+                // Authenticate::class,
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
@@ -86,14 +86,14 @@ class UserPanelProvider extends PanelProvider
                     ->shouldShowBrowserSessionsForm()
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowEmailForm(false)
-                    ->shouldShowMultiFactorAuthentication(true)
+                    ->shouldShowMultiFactorAuthentication(true),
             ]);
- /*
-            //NOTE: moved to TopBar->mount()
-            ->userMenuItems([
-                'logout' => fn (Action $action) => $action->label('Log out'),
-                'profile' => fn (Action $action) => $action->url(fn (): string => '/user/edit-profile'),
-            ]);
+        /*
+                   //NOTE: moved to TopBar->mount()
+                   ->userMenuItems([
+                       'logout' => fn (Action $action) => $action->label('Log out'),
+                       'profile' => fn (Action $action) => $action->url(fn (): string => '/user/edit-profile'),
+                   ]);
 */
     }
 }

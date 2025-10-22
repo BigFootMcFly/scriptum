@@ -55,7 +55,7 @@ class NotePolicy
      */
     public function create(User $user): bool
     {
-        return !$user->isGuest() && $user->isVerified();
+        return ! $user->isGuest() && $user->isVerified();
     }
 
     /**
@@ -110,7 +110,6 @@ class NotePolicy
 
         return false;
     }
-
 
     /**
      * Determine whether the user can restore the model.
@@ -175,5 +174,4 @@ class NotePolicy
     {
         return $note->user_id === $user->id && $user->isVerified();
     }
-
 }

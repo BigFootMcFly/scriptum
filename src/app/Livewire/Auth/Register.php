@@ -32,8 +32,7 @@ class Register extends Component
         // only change it if it was not already customized by the user
         $this->handle = match ($this->handle) {
             '',
-            Str::slug($this->name)
-                => Str::slug($value)
+            Str::slug($this->name) => Str::slug($value)
             ,
             default => $this->handle
         };
@@ -46,7 +45,7 @@ class Register extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'handle' => ['required','string','unique:'.User::class],
+            'handle' => ['required', 'string', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);

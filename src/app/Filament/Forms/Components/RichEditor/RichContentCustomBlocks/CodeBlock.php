@@ -27,15 +27,14 @@ class CodeBlock extends RichContentCustomBlock
 
     public static function configureEditorAction(Action $action): Action
     {
-        //NOTE: this is for the hack to set default value (see below)
+        // NOTE: this is for the hack to set default value (see below)
         $code_editor_default_language = 'php';
 
         return $action
             ->modalWidth('5xl')
-/*            ->modalDescription('Add your code')*/
             ->schema([
                 TextInput::make('title'),
-                //TODO: get the names from the Language enum
+                // TODO: get the names from the Language enum
                 Select::make('language')
                     ->options([
                         'bash' => 'Bash',
@@ -45,23 +44,22 @@ class CodeBlock extends RichContentCustomBlock
                         'json' => 'JSON',
                         'php' => 'Php',
                     ])
-                    ->label(function($component, $state, Set $set) use ($code_editor_default_language){
-                        if (null === $state) {
-                            //NOTE: in "customBlock" operation default() does not run, this is a hack to set the default value
+                    ->label(function ($component, $state, Set $set) use ($code_editor_default_language) {
+                        if ($state === null) {
+                            // NOTE: in "customBlock" operation default() does not run, this is a hack to set the default value
                             $set($component, $code_editor_default_language);
                         }
                     })
-                    ->default($code_editor_default_language) //@see note above
+                    ->default($code_editor_default_language) // @see note above
                     ->required()
-                    ->reactive()
-                ,
+                    ->reactive(),
                 Toggle::make('collapsed')
                     ->label('The code block is collapsed by default'),
                 CodeEditor::make('code')
-                        ->reactive()
-                        ->language(function(Get $get) {
-                            return Language::tryFrom($get('language'));
-                        })
+                    ->reactive()
+                    ->language(function (Get $get) {
+                        return Language::tryFrom($get('language'));
+                    }),
             ]);
     }
 
@@ -69,6 +67,7 @@ class CodeBlock extends RichContentCustomBlock
     {
         $highlighter = new Highlighter()->withGutter(startAt: 1);
         $result = $highlighter->parse($config['code'], $config['language']);
+
         return $result;
 
     }

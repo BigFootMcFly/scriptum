@@ -33,5 +33,4 @@ enum FrontPageViewingMode: string
         return array_column($list, 'name', 'value');
 
     }
-
 }

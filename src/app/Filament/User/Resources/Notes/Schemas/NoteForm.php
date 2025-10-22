@@ -5,7 +5,6 @@ namespace App\Filament\User\Resources\Notes\Schemas;
 use App\Enums\NoteVisibility;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Models\Note;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
@@ -54,7 +53,7 @@ class NoteForm
                         ['table', 'attachFiles', 'mergeTags', 'customBlocks'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
                         ['undo', 'redo'],
                     ])
-                    ->customTextColors()
+                    ->customTextColors(),
             ]);
     }
 }

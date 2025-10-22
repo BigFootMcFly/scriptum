@@ -2,7 +2,6 @@
 
 namespace App\Filament\Nomad\Resources\Notes\Pages;
 
-use App\Enums\NoteVisibility;
 use App\Filament\Nomad\Resources\Notes\NoteResource;
 use App\Models\Note;
 use Filament\Actions\CreateAction;
@@ -48,15 +47,4 @@ class ListNotes extends ListRecords
                 ->badgeColor('danger'),
         ];
     }
-
-/*
-    public function getTitle(): string
-    {
-        return 'Admin - Notes';
-    }
-    public function getHeading(): string
-    {
-        return "Notes";
-    }
-*/
 }

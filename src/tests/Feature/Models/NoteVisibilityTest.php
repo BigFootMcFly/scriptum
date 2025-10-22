@@ -55,4 +55,3 @@ it('does not show soft deleted posts', function () {
 
     expect($result)->toBeEmpty();
 });
-

@@ -3,7 +3,6 @@
 namespace App\Livewire\Auth;
 
 use App\Livewire\Actions\Logout;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -14,7 +13,8 @@ class VerifyEmail extends Component
     /**
      * @return array<string>
      */
-    public function via ($notifiable) {
+    public function via($notifiable): array
+    {
         return ['mail'];
     }
 

@@ -6,7 +6,6 @@ use App\Models\User;
 
 class UserPolicy
 {
-
     protected function adminOnly(User $user): bool
     {
         if ($user->isAdmin()) {
@@ -16,6 +15,7 @@ class UserPolicy
         return false;
 
     }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -63,7 +63,6 @@ class UserPolicy
     {
         return $this->adminOnly($user);
     }
-
 
     /**
      * Determine whether the user can restore the model.

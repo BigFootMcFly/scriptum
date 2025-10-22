@@ -24,7 +24,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class NomadPanelProvider extends PanelProvider
 {
-
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -34,7 +33,7 @@ class NomadPanelProvider extends PanelProvider
             ->domain(config('scriptum.production.admin_domain'))
             ->brandName('Nomad - Scriptum')
             ->spa(hasPrefetching: true)
-            ->unsavedChangesAlerts() //NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
+            ->unsavedChangesAlerts() // NOTE: asks on 'composer run dev' reload, even if nothing was changed (even in table view)
             ->databaseTransactions()
             ->strictAuthorization()
             ->login()

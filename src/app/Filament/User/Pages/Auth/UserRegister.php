@@ -12,18 +12,15 @@ use Illuminate\Support\Str;
 
 class UserRegister extends Register
 {
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 $this->getEmailFormComponent()
-                    ->autoFocus()
-                ,
+                    ->autoFocus(),
                 $this->getNameFormComponent()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state)))
-                ,
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state))),
                 $this->getHandleFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
@@ -36,8 +33,6 @@ class UserRegister extends Register
             ->label(__('user name'))
             ->required()
             ->unique(User::class, 'handle')
-            ->maxLength(255)
-            ;
+            ->maxLength(255);
     }
-
 }

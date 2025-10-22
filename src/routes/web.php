@@ -8,15 +8,14 @@ use App\Http\Controllers\LogoutUserController;
 use Filament\Auth\Pages\Login;
 use Illuminate\Support\Facades\Route;
 
-//NOTE: dashboard is in the laravel template, instead of replacing in all places, this will do the trick for now...
-Route::permanentRedirect('dashboard','/');
+// NOTE: dashboard is in the laravel template, instead of replacing in all places, this will do the trick for now...
+Route::permanentRedirect('dashboard', '/');
 
 Route::middleware('guest')->group(function () {
-    Route::get("login", Login::class)->name('filament.user.auth.login');
+    Route::get('login', Login::class)->name('filament.user.auth.login');
 });
 
-
-//NOTE: auth is handled by filament, the starter kit routes are ignored for ow
+// NOTE: auth is handled by filament, the starter kit routes are ignored for ow
 /*
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -41,5 +40,5 @@ Route::get('email-verification/verify/{id}/{hash}', EmailVerificationController:
 Route::get('filament/exports/{export}/download', fn () => abort('404'));
 Route::get('filament/imports/{import}/failed-rows/download', fn () => abort(404) );
 
-//NOTE: auth is handled by filament, the starter kit routes are ignored for ow
-//require __DIR__.'/auth.php';
+// NOTE: auth is handled by filament, the starter kit routes are ignored for ow
+// require __DIR__.'/auth.php';

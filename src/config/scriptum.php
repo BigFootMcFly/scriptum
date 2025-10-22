@@ -1,4 +1,5 @@
 <?php
+
 return [
 
     'setup' => [
@@ -15,7 +16,6 @@ return [
     'production' => [
         'domain' => env('DOMAIN', 'localhost'),
         'admin_domain' => env('ADMIN_DOMAIN', 'admin.localhost'),
-    ]
-
+    ],
 
 ];

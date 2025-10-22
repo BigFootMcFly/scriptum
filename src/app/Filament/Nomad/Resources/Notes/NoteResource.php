@@ -29,7 +29,7 @@ class NoteResource extends Resource
     protected function mutateFormDataBeforeFill(array $data): array
     {
         unset($data['is_admin']);
-        //unset($data['body_content']); /**/
+
         return $data;
     }
 
@@ -60,7 +60,7 @@ class NoteResource extends Resource
         return [
             'index' => ListNotes::route('/'),
             'create' => CreateNote::route('/create'),
-            //'view' => ViewNote::route('/{record}'),
+            // 'view' => ViewNote::route('/{record}'),
             'show' => ViewNote::route('/{record}'),
             'edit' => EditNote::route('/{record}/edit'),
         ];

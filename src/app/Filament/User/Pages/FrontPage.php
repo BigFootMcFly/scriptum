@@ -12,22 +12,22 @@ use Livewire\WithPagination;
 
 class FrontPage extends Page
 {
-    use WithPagination;
     use ModalNoteEditor;
+    use WithPagination;
 
-    //protected static ?string $title = 'Custom Page Title';
+    // protected static ?string $title = 'Custom Page Title';
 
-    //protected static ?string $navigationLabel = 'Main page';
+    // protected static ?string $navigationLabel = 'Main page';
 
-    //protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
+    // protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
     protected static ?string $title = 'My Notes';
 
-    //protected static ?string $slug = 'front-page';
+    // protected static ?string $slug = 'front-page';
     protected static ?string $slug = '/';
 
     protected string $view = 'filament.user.pages.front-page';
 
-    //TODO: this is not currelnty used, maybe it should be removed
+    // TODO: this is not currelnty used, maybe it should be removed
     public bool $partial = true;
 
     public string $search = '';
@@ -35,7 +35,7 @@ class FrontPage extends Page
     protected bool $resetPagination = false;
 
     // ----------------------------------------------------------------------------------------------------------------
-    //TODO: make this dynamic based on search
+    // TODO: make this dynamic based on search
     public static function getNavigationLabel(): string
     {
         return __('Main');
@@ -47,7 +47,7 @@ class FrontPage extends Page
         return view('filament.user.pages.front-page-header');
     }
 
-    //TODO: make this dinamic based on search
+    // TODO: make this dinamic based on search
     // ----------------------------------------------------------------------------------------------------------------
     public function getTitle(): string|Htmlable
     {
@@ -64,34 +64,36 @@ class FrontPage extends Page
         return __('Custom Page Subheading');
     }*/
 
-
     // Internal functions
 
     // ----------------------------------------------------------------------------------------------------------------
     #[On('search-updated')]
-    public function onSearchUpdated(string $search): void {
+    public function onSearchUpdated(string $search): void
+    {
         $this->search = $search;
         $this->refresh();
     }
 
     // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-note-list')]
-    public function refreshNoteList(): void {
+    public function refreshNoteList(): void
+    {
         $this->resetPagination = true;
         $this->refresh();
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function mount() {
-        $this->search = session('front-page-search', '');
+    public function mount()
+    {
+        $this->search = session()->get('front-page-search', '');
     }
 
-/*
-    public function rendered()
-    {
-       $this->dispatch('scroll-to-top');
-    }
-*/
+    /*
+        public function rendered()
+        {
+           $this->dispatch('scroll-to-top');
+        }
+    */
 
     // ----------------------------------------------------------------------------------------------------------------
     // DataBase helpers
@@ -118,8 +120,8 @@ class FrontPage extends Page
     {
         $builder = Note::query()->frontPage(auth()->user());
 
-        if ('' !== $this->search) {
-            //NOTE: search results are ordered by FTS RANK
+        if ($this->search !== '') {
+            // NOTE: search results are ordered by FTS RANK
             $builder->search($this->search, $this->partial)->ranked();
         } else {
             $builder->orderBy('updated_at', 'desc');
@@ -127,28 +129,4 @@ class FrontPage extends Page
 
         return $builder->with('user');
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

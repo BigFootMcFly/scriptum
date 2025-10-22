@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-//TODO: remove this test
+// TODO: remove this test
 beforeEach(fn () => null)->skipIfNoDefaultAuth();
 
 test('guests are redirected to the login page', function () {

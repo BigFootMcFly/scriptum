@@ -8,14 +8,7 @@ use App\Enums\NoteVisibility;
 use App\Filament\Helpers\NoteVisibilityColorCallback;
 use App\Models\Note;
 use Closure;
-use Filament\Actions\Action;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ViewAction;
-use Filament\Support\Enums\IconSize;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -24,7 +17,7 @@ use Filament\Tables\Table;
 
 class NotesTable
 {
-    //protected ?string $maxContentWidth = 'full';
+    // protected ?string $maxContentWidth = 'full';
 
     public static function getViewNoteUrl(Note $note): string
     {
@@ -32,7 +25,6 @@ class NotesTable
             'record' => $note,
         ]);
     }
-
 
     public static function configure(Table $table): Table
     {
@@ -66,12 +58,12 @@ class NotesTable
                 return 'note-row';
             })
 */
-            ->recordClasses(fn (Note $record): string => match(true) {
-                    $record->isAdminRestricted() => 'note-row-restricted',
-                    $record->trashed() => 'note-row-trashed',
-                    default => 'note-row',
+            ->recordClasses(fn (Note $record): string => match (true) {
+                $record->isAdminRestricted() => 'note-row-restricted',
+                $record->trashed() => 'note-row-trashed',
+                default => 'note-row',
             })
-            //->extraAttributes(['class'=>'fi-width-5xl'])
+            // ->extraAttributes(['class'=>'fi-width-5xl'])
             ->columns([
                 TextColumn::make('visibility')
                     ->badge()
@@ -97,7 +89,7 @@ class NotesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->heading(fn () =>view('front-page.notes.table-heading'))
+            ->heading(fn () => view('front-page.notes.table-heading'))
             ->filters([
                 TrashedFilter::make(),
             ])
@@ -116,13 +108,12 @@ class NotesTable
                 EditAction::make()
                     ->visible(static::actionAllowedByVisibility()),
             ])
-            ->toolbarActions([])
-            ;
+            ->toolbarActions([]);
     }
 
     public static function actionAllowedByVisibility(): Closure
     {
-        return fn(Note $note): bool => match ($note->visibility) {
+        return fn (Note $note): bool => match ($note->visibility) {
             NoteVisibility::Hidden,
             NoteVisibility::Restricted => false,
             default => true,

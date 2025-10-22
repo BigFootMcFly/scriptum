@@ -13,7 +13,8 @@ use App\Helpers\TipTap\Traits\HasContentExtractor;
 class TextContentExtractor implements ContentExtractor
 {
     use HasContentExtractor;
-    public const string contentId  = 'text';
+
+    public const string contentId = 'text';
 
     /**
      * @see ContentExtractor
@@ -33,5 +34,4 @@ class TextContentExtractor implements ContentExtractor
             }
         }
     }
-
 }

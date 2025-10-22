@@ -35,7 +35,8 @@ class ViewUserNotesPage extends Page
 
     // ----------------------------------------------------------------------------------------------------------------
     #[On('refresh-user-note-list')]
-    public function refreshNoteList(): void {
+    public function refreshNoteList(): void
+    {
         $this->resetPagination = true;
         $this->refresh();
     }
@@ -57,7 +58,7 @@ class ViewUserNotesPage extends Page
     public function getNotesProperty()
     {
         $query = $this->queryNotes();
-        //dd($query->count());
+        // dd($query->count());
 
         $this->dispatch('user-notes-page-updated');
 

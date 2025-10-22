@@ -13,7 +13,8 @@ use App\Helpers\TipTap\Traits\HasContentExtractor;
 class ImageContentExtractor implements ContentExtractor
 {
     use HasContentExtractor;
-    public const string contentId  = 'image';
+
+    public const string contentId = 'image';
 
     /**
      * @see ContentExtractor
@@ -21,7 +22,7 @@ class ImageContentExtractor implements ContentExtractor
     public static function extractContent(array $block): array
     {
         return [
-            $block['attrs']['alt']
+            $block['attrs']['alt'],
         ];
     }
 }

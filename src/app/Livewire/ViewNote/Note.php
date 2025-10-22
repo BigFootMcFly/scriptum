@@ -8,11 +8,9 @@ use Livewire\Component;
 
 class Note extends Component
 {
-
     public ModelsNote $note;
 
     public bool $pulse = false;
-
 
     #[On('refresh-note')]
     public function refreshNode(int $noteId): void
@@ -23,5 +21,4 @@ class Note extends Component
             $this->js('setTimeout(() => $el.classList.remove("animate-note-updated"), 2500)');
         }
     }
-
 }

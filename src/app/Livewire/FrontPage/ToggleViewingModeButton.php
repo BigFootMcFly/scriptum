@@ -8,8 +8,7 @@ use Livewire\Component;
 
 class ToggleViewingModeButton extends Component
 {
-
-    //public static bool $persist = false;
+    // public static bool $persist = false;
 
     public $viewingMode = FrontPageViewingMode::Guest;
 
@@ -25,28 +24,29 @@ class ToggleViewingModeButton extends Component
     protected function initializeViewingMode(): void
     {
         // guest is always guest
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             $this->viewingMode = FrontPageViewingMode::Guest;
+
             return;
         }
 
-        $sessionViewingMode = session('user.viewing_mode', null);
+        $sessionViewingMode = session()->get('user.viewing_mode', null);
 
         // check for admin mode
         if ($sessionViewingMode === FrontPageViewingMode::Admin && auth()->user()->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
+
             return;
         }
 
         // failsafe
         if ($sessionViewingMode !== null) {
-            //TODO: add logging here, this should not happen
+            // TODO: add logging here, this should not happen
             session()->forget('user.viewing_mode');
         }
 
         // hydrate view mode from the user
         $this->viewingMode = auth()->user()->viewing_mode;
-        return;
 
     }
 
@@ -59,8 +59,8 @@ class ToggleViewingModeButton extends Component
     protected function saveCurrentState(): void
     {
         // failsave
-        if (!auth()->check()) {
-            //TODO: add logging here, this should not happen
+        if (! auth()->check()) {
+            // TODO: add logging here, this should not happen
             return;
         }
 
@@ -80,9 +80,10 @@ class ToggleViewingModeButton extends Component
     public function toggleViewingMode(array $event): void
     {
         // guests cannot change viewing mode
-        if (!auth()->check()) {
-            //TODO: maybe send a notification to the guest, that this is only available to registered users... - or not
+        if (! auth()->check()) {
+            // TODO: maybe send a notification to the guest, that this is only available to registered users... - or not
             $this->viewingMode = FrontPageViewingMode::Guest;
+
             return;
         }
 
@@ -91,33 +92,33 @@ class ToggleViewingModeButton extends Component
         // handle admin mode request
         if ($adminModeRequested && auth()->user()->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
-            session(['user.viewing_mode' => FrontPageViewingMode::Admin]);
-            //session()->put('user.viewing_mode', FrontPageViewingMode::Admin);
+            // session(['user.viewing_mode' => FrontPageViewingMode::Admin]);
+            session()->put('user.viewing_mode', FrontPageViewingMode::Admin);
             $this->dispatchUpdateRequests();
+
             return;
         }
 
-        //forget admin mode
+        // forget admin mode
         session()->forget('user.viewing_mode');
 
         // deny admin mode request for non-admin users
         if ($adminModeRequested) {
-            //TODO: ad logging here
-            //NOTE: if this was aa accidental bad click or  ahacking attempt, we simple treat it as a normal change mode request
+            // TODO: add logging here
+            // NOTE: if this was aa accidental bad click or  ahacking attempt, we simple treat it as a normal change mode request
         }
 
         // failsafe
         if ($this->viewingMode === FrontPageViewingMode::Guest) {
-            $this->viewingMode = auth()->user()->viewing_mode;;
-            //TODO: ad logging here
-            dump('THIS SHOULD REALLY NOT HAPPEN'); //TODO: after made sure, this does not happen, remove this line
+            $this->viewingMode = auth()->user()->viewing_mode;
+            // TODO: add logging here, this should not happen
         }
 
-        $this->viewingMode =  match($this->viewingMode) {
+        $this->viewingMode = match ($this->viewingMode) {
             FrontPageViewingMode::Private => FrontPageViewingMode::Public,
             FrontPageViewingMode::Public => FrontPageViewingMode::Private,
             FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
-            default => FrontPageViewingMode::Private, //TODO: add error handling/logging here, this should not happen
+            default => FrontPageViewingMode::Private, // TODO: add error handling/logging here, this should not happen
         };
         $this->saveCurrentState();
         $this->dispatchUpdateRequests();
@@ -126,10 +127,11 @@ class ToggleViewingModeButton extends Component
     /**
      * Dispathes update requests to other component(s)
      *
-     * @param bool $noteList - requesst for \App\Filament\User\Pages\FrontPage
-     * @param bool $topBar - requesst for \App\Livewire\FrontPage\TopBar
+     * @param  bool  $noteList  - requesst for \App\Filament\User\Pages\FrontPage
+     * @param  bool  $topBar  - requesst for \App\Livewire\FrontPage\TopBar
      */
-    protected function dispatchUpdateRequests(bool $noteList = true, bool $topBar = true): void {
+    protected function dispatchUpdateRequests(bool $noteList = true, bool $topBar = true): void
+    {
         if ($noteList) {
             $this->dispatch('refresh-note-list');
         }

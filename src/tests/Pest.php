@@ -45,7 +45,7 @@ expect()->extend('toBeOne', function () {
 
 function skipIfNoDefaultAuth()
 {
-    if (!Route::has('login')) {
+    if (! Route::has('login')) {
         test()->markTestSkipped('Default Auth Routes are disabled.');
     }
 }

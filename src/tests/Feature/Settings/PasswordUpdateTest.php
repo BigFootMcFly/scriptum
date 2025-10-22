@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 
-//TODO: remove this test
+// TODO: remove this test
 beforeEach(fn () => null)->skipIfNoDefaultAuth();
 
 test('password can be updated', function () {

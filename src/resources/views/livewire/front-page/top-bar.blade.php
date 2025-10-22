@@ -3,7 +3,7 @@
 <div class="top-bar">
     <div @class([
             "transition-all duration-300",
-            "bg-red-200/50 dark:bg-red-950" => session('user.viewing_mode', null) === FrontPageViewingMode::Admin,
+            "bg-red-200/50 dark:bg-red-950" => session()->get('user.viewing_mode', null) === FrontPageViewingMode::Admin,
             "bg-amber-200/30 dark:bg-amber-800/20" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Public,
             "bg-green-200/30 dark:bg-green-800/20" => auth()?->user()?->viewing_mode === FrontPageViewingMode::Private,
         ])

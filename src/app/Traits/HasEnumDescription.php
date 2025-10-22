@@ -12,7 +12,6 @@ trait HasEnumDescription
      * Returns the description of the current enum case
      *
      * @return string The description of the case if defined, the value as headline otherwise
-     *
      */
     public function description(): string
     {
@@ -34,20 +33,18 @@ trait HasEnumDescription
      * Returns all the cases in 'value'=>'description' form
      *
      * @return array The value => description pairs of the cases
-     *
      */
     public static function toDescribedArray(): array
     {
 
-        //NOTE: the one-liner, a marvel of overengineering
+        // NOTE: the one-liner, a marvel of overengineering
         return array_reduce(
             array: self::cases(),
-            callback: fn (array $carry, self $case): array =>
-                $carry + [$case->value => $case->description()],
+            callback: fn (array $carry, self $case): array => $carry + [$case->value => $case->description()],
             initial: []
         );
 
-        //NOTE: the wise way... (yields the same result)
+        // NOTE: the wise way... (yields the same result)
         /*
         $result = [];
         foreach (self::cases() as $case) {
@@ -56,5 +53,4 @@ trait HasEnumDescription
         return $result;
         */
     }
-
 }

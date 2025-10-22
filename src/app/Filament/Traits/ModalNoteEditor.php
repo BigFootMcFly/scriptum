@@ -14,11 +14,11 @@ trait ModalNoteEditor
 {
     public ?array $data = [
         'title' => null,
-        'visibility'  => null,
+        'visibility' => null,
         'slug' => null,
         'form_tags' => null,
         'body' => [
-            "type" => "doc",
+            'type' => 'doc',
         ],
     ];
 
@@ -29,7 +29,6 @@ trait ModalNoteEditor
 
     public ?Note $editingNote = null;
 
-
     // ----------------------------------------------------------------------------------------------------------------
     public function form(Schema $schema): Schema
     {
@@ -37,18 +36,17 @@ trait ModalNoteEditor
             ->statePath('data');
     }
 
-
     // ----------------------------------------------------------------------------------------------------------------
     #[On('create-new-note')]
     #[On('edit-note')]
     public function openEditModal(?Note $note = null): void
     {
-        //NOTE: a new Note object is injected if none is provided by the client
-        if (null === $note?->id) { // create new note
+        // NOTE: a new Note object is injected if none is provided by the client
+        if ($note?->id === null) { // create new note
             $this->editingNote = null;
             $this->data = [
                 'body' => [
-                    "type" => "doc",
+                    'type' => 'doc',
                 ],
                 'visibility' => NoteVisibility::Private,
                 'title' => '',
@@ -65,7 +63,6 @@ trait ModalNoteEditor
 
         $this->dispatch('open-modal', id: 'edit-note');
     }
-
 
     // ----------------------------------------------------------------------------------------------------------------
     public function saveNote(): void
@@ -99,5 +96,4 @@ trait ModalNoteEditor
             ->success()
             ->send();
     }
-
 }
