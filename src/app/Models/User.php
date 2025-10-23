@@ -25,6 +25,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     protected const string default_avatar_url = 'avatars/_default.svg';

@@ -27,7 +27,6 @@ class Note extends Model implements HasRichContent
     use HasFactory;
 
     use HasTags;
-
     use InteractsWithRichContent;
     use SoftDeletes;
 
@@ -124,7 +123,7 @@ class Note extends Model implements HasRichContent
      */
     protected static function booted(): void
     {
-        static::creating(function (Note $note) {
+        static::creating(function (Note $note): void {
 
             // creating searchable body content
             $note->body_content = static::extractBodyContents($note->body);
@@ -134,7 +133,7 @@ class Note extends Model implements HasRichContent
 
         });
 
-        static::updating(function (Note $note) {
+        static::updating(function (Note $note): void {
             $note->body_content = static::extractBodyContents($note->body);
             $user = User::find($note->user_id);
             $note->slug = static::globalizeSlug($user->handle, $note->getAttribute('slug'));
@@ -267,21 +266,21 @@ class Note extends Model implements HasRichContent
 
     protected function viewModeGuestScope(Builder $query, ?User $user): Builder
     {
-        return $query->where(function ($q) {
+        return $query->where(function ($q): void {
             $q->where('visibility', NoteVisibility::Public->value);
         });
     }
 
     protected function viewModePrivateScope(Builder $query, User $user): Builder
     {
-        return $query->where(function ($q) use ($user) {
+        return $query->where(function ($q) use ($user): void {
             $q->where('user_id', $user->id);
         });
     }
 
     protected function viewModePublicScope(Builder $query, User $user): Builder
     {
-        return $query->where(function ($q) use ($user) {
+        return $query->where(function ($q) use ($user): void {
             $q->where('user_id', $user->id)
                 ->orWhere('visibility', NoteVisibility::Public->value);
         });

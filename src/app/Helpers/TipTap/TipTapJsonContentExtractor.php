@@ -40,7 +40,7 @@ class TipTapJsonContentExtractor
 
         // if it has cheld nodes, recursivelly call ourself for each child node
         if (array_key_exists('content', $block)) {
-            foreach ($block['content'] as $key => $value) {
+            foreach ($block['content'] as $value) {
                 static::extractContent($value, $result, $extras, $autoTags);
             }
         }

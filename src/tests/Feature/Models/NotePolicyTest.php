@@ -5,7 +5,7 @@ use App\Models\Note;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
-it('allows viewing public posts for guests', function () {
+it('allows viewing public posts for guests', function (): void {
     $note = Note::factory()->create(['visibility' => NoteVisibility::Public]);
 
     expect(auth()->user())->toBeNull();
@@ -16,7 +16,7 @@ it('allows viewing public posts for guests', function () {
 
 });
 
-it('denies viewing private posts to other users', function () {
+it('denies viewing private posts to other users', function (): void {
     $owner = User::factory()->create();
     $other = User::factory()->create();
 

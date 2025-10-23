@@ -4,7 +4,7 @@ use App\Enums\NoteVisibility;
 use App\Models\Note;
 use App\Models\User;
 
-it('shows public Notes to anyone', function () {
+it('shows public Notes to anyone', function (): void {
     $Note = Note::factory()->create(['visibility' => NoteVisibility::Public]);
 
     $result = Note::query()->frontPage()->get();
@@ -13,7 +13,7 @@ it('shows public Notes to anyone', function () {
     expect($result->first()->id)->toBe($Note->id);
 });
 
-it('does not show private Notes to guests', function () {
+it('does not show private Notes to guests', function (): void {
     Note::factory()->create(['visibility' => NoteVisibility::Private]);
 
     $result = Note::query()->frontPage()->get();
@@ -21,7 +21,7 @@ it('does not show private Notes to guests', function () {
     expect($result)->toBeEmpty();
 });
 
-it('shows private Notes to the owner', function () {
+it('shows private Notes to the owner', function (): void {
     $user = User::factory()->create();
     $Note = Note::factory()->create([
         'visibility' => NoteVisibility::Private,
@@ -34,7 +34,7 @@ it('shows private Notes to the owner', function () {
     expect($result->first()->id)->toBe($Note->id);
 });
 
-it('does not show other users private Notes', function () {
+it('does not show other users private Notes', function (): void {
     $user = User::factory()->create();
     $note = Note::factory()->create(['visibility' => NoteVisibility::Private]);
 
@@ -43,7 +43,7 @@ it('does not show other users private Notes', function () {
     expect($result)->toBeEmpty();
 });
 
-it('does not show soft deleted posts', function () {
+it('does not show soft deleted posts', function (): void {
     $user = User::factory()->create();
     $note = Note::factory()->create([
         'visibility' => 'public',

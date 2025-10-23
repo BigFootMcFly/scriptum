@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 // NOTE: dashboard is in the laravel template, instead of replacing in all places, this will do the trick for now...
 Route::permanentRedirect('dashboard', '/');
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest')->group(function (): void {
     Route::get('login', Login::class)->name('filament.user.auth.login');
 });
 

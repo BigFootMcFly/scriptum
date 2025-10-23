@@ -44,7 +44,7 @@ class CodeBlock extends RichContentCustomBlock
                         'json' => 'JSON',
                         'php' => 'Php',
                     ])
-                    ->label(function ($component, $state, Set $set) use ($code_editor_default_language) {
+                    ->label(function ($component, $state, Set $set) use ($code_editor_default_language): void {
                         if ($state === null) {
                             // NOTE: in "customBlock" operation default() does not run, this is a hack to set the default value
                             $set($component, $code_editor_default_language);
