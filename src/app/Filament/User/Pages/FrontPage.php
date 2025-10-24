@@ -83,7 +83,7 @@ class FrontPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function mount()
+    public function mount(): void
     {
         $this->search = session()->get('front-page-search', '');
     }

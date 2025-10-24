@@ -18,7 +18,7 @@ class TopBar extends Component
     #[On('refresh-topbar')]
     public function refresh(): void {}
 
-    public function mount()
+    public function mount(): void
     {
 
         $this->userMenuItems([

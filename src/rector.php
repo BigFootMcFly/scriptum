@@ -27,7 +27,7 @@ return RectorConfig::configure()
     ])
     // uncomment to reach your current PHP version
     ->withPhpSets()
-    ->withTypeCoverageLevel(10) //max: 58, if met, replace with: ->withPreparedSets(typeDeclarations: true)"
+    ->withTypeCoverageLevel(20) //max: 58, if met, replace with: ->withPreparedSets(typeDeclarations: true)"
     //->withDeadCodeLevel(0) // max: 54, if met, replace with: ->withPreparedSets(deadCode: true)
     ->withPreparedSets(deadCode: true)
     ->withCodeQualityLevel(0); // max 77, if met, replace with: ->withPreparedSets(codeQuality: true)

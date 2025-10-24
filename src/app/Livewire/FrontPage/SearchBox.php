@@ -8,7 +8,7 @@ class SearchBox extends Component
 {
     public string $search = '';
 
-    public function mount()
+    public function mount(): void
     {
         $this->search = session()->get('front-page-search', '');
     }
