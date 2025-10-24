@@ -24,7 +24,7 @@ class RebuildFullTextSearchIndex extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Rebuilding notes_fts index...');
 
