@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 
 // TODO: remove this test
-beforeEach(fn () => null)->skipIfNoDefaultAuth();
+beforeEach()->skipIfNoDefaultAuth();
 
 test('password can be updated', function (): void {
     $user = User::factory()->create([

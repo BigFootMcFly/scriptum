@@ -4,7 +4,7 @@ use App\Livewire\Auth\ConfirmPassword;
 use App\Models\User;
 use Livewire\Livewire;
 
-beforeEach(fn () => null)->skipIfNoDefaultAuth();
+beforeEach()->skipIfNoDefaultAuth();
 
 test('confirm password screen can be rendered', function (): void {
     $user = User::factory()->create();

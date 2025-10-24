@@ -7,7 +7,7 @@ use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 
-beforeEach(fn () => null)->skipIfNoDefaultAuth();
+beforeEach()->skipIfNoDefaultAuth();
 
 test('reset password link screen can be rendered', function (): void {
     $response = $this->get('/forgot-password');

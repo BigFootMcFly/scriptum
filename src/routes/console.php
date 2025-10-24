@@ -8,7 +8,7 @@ Artisan::command('inspire', function (): void {
 })->purpose('Display an inspiring quote');
 
 // -------------------------------------------------------------------------------------------------------------------
-Artisan::command('state:initialized {--q|quiet}', function () {
+Artisan::command('state:initialized {--q|quiet}', function (): int {
 
     $silent = $this->option('quiet');
     $appKey = config('app.key');

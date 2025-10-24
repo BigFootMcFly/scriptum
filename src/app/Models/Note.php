@@ -362,11 +362,9 @@ class Note extends Model implements HasRichContent
             $term = '"'.$term.'"';
         }
 
-        $result = $query->from('notes as notes')
+        return $query->from('notes as notes')
             ->join('notes_fts', 'notes.id', '=', 'notes_fts.rowid')
             ->whereRaw('notes_fts MATCH ?', [$term]);
-
-        return $result;
     }
 
     #[Scope]

@@ -64,9 +64,8 @@ class CodeBlock extends RichContentCustomBlock
     public static function highlightCode(array $config): string
     {
         $highlighter = new Highlighter()->withGutter(startAt: 1);
-        $result = $highlighter->parse($config['code'], $config['language']);
 
-        return $result;
+        return $highlighter->parse($config['code'], $config['language']);
 
     }
 

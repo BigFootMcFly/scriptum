@@ -22,9 +22,7 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
 
     protected function getVerifiable(): User
     {
-        $user = Filament::auth()->user();
-
-        return $user;
+        return Filament::auth()->user();
     }
 
     protected function sendEmailVerificationNotification(User $user): void

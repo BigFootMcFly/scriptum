@@ -4,7 +4,7 @@ use App\Livewire\Settings\Profile;
 use App\Models\User;
 use Livewire\Livewire;
 
-// beforeEach(fn () => null)->skipIfNoDefaultAuth();
+// beforeEach()->skipIfNoDefaultAuth();
 
 test('profile page is displayed', function (): void {
     $this->actingAs($user = User::factory()->create());

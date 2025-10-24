@@ -6,8 +6,6 @@ interface ContentExtractor
 {
     /**
      * Type of the node
-     *
-     * @var string
      */
     public const string contentId = 'nope';
 

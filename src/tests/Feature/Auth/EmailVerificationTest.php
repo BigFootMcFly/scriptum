@@ -5,7 +5,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 
-beforeEach(fn () => null)->skipIfNoDefaultAuth();
+beforeEach()->skipIfNoDefaultAuth();
 
 test('email verification screen can be rendered', function (): void {
     $user = User::factory()->unverified()->create();

@@ -23,9 +23,11 @@ return RectorConfig::configure()
         __DIR__ . '/node_modules/*',
         __DIR__ . '/resources/js/*',
         __DIR__ . '/resources/css/*',
+        __DIR__ . '/app/Providers/TelescopeServiceProvider.php'
     ])
     // uncomment to reach your current PHP version
     ->withPhpSets()
-    ->withTypeCoverageLevel(0)
-    ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0);
+    ->withTypeCoverageLevel(99) //max: 58, if met, replace with: ->withPreparedSets(typeDeclarations: true)"
+    //->withDeadCodeLevel(0) // max: 54, if met, replace with: ->withPreparedSets(deadCode: true)
+    ->withPreparedSets(deadCode: true)
+    ->withCodeQualityLevel(0); // max 77, if met, replace with: ->withPreparedSets(codeQuality: true)
