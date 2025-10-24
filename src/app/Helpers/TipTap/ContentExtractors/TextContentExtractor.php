@@ -21,17 +21,18 @@ class TextContentExtractor implements ContentExtractor
      */
     public static function extraData(array $block, array &$result = []): void
     {
-        // block has extra info
-        if ($block['marks'] ?? null) {
-            foreach ($block['marks'] as $mark) {
-                // extra info is for a link
-                if (($mark['type'] ?? null) === 'link') {
-                    // link has a href attribute
-                    if ($mark['attrs']['href'] ?? null) {
-                        $result['url'][] = $mark['attrs']['href'];
-                    }
-                }
+
+        // search for urls in extra info
+        foreach ($block['marks'] ?? [] as $mark) {
+            // skip if it is not a link
+            if ($mark['type'] ?? '' !== 'link') {
+                continue;
+            }
+            // export url if it has a href attribute
+            if ($href = $mark['attrs']['href'] ?? null) {
+                $result['url'][] = $href;
             }
         }
+
     }
 }
