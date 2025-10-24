@@ -8,6 +8,7 @@ use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 
 class ViewNotePage extends Page
 {
@@ -28,7 +29,7 @@ class ViewNotePage extends Page
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::FOOTER,
-            fn () => view('components.note.page-footer')
+            fn (): View => view('components.note.page-footer')
         );
     }
 

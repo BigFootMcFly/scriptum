@@ -14,6 +14,7 @@ use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 
 class NotesTable
 {
@@ -89,7 +90,7 @@ class NotesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->heading(fn () => view('front-page.notes.table-heading'))
+            ->heading(fn (): View => view('front-page.notes.table-heading'))
             ->filters([
                 TrashedFilter::make(),
             ])

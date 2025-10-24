@@ -356,7 +356,7 @@ class Note extends Model implements HasRichContent
         if ($prefix) {
             // Split into tokens and add * to each token
             $tokens = preg_split('/\s+/', (string) $term);
-            $tokens = array_map(fn ($t) => '"'.$t.'"'.'*', $tokens);
+            $tokens = array_map(fn ($t): string => '"'.$t.'"'.'*', $tokens);
             $term = implode(' ', $tokens);
         } else {
             $term = '"'.$term.'"';

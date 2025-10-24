@@ -29,7 +29,7 @@ class UsersTable
                     ->label('Email address')
                     ->searchable(),
                 IconColumn::make('verified')
-                    ->state( fn (User $record) => $record->isVerified())
+                    ->state( fn (User $record): bool => $record->isVerified())
                     ->label('Verified')
                     ->sortable(['email_verified_at'])
                     ->boolean()

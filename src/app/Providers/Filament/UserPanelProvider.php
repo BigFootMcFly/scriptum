@@ -13,6 +13,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -27,7 +28,7 @@ class UserPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->brandLogo(fn () => view('livewire.front-page.brand-logo'))
+            ->brandLogo(fn (): View => view('livewire.front-page.brand-logo'))
             ->globalSearch(false) // NOTE: we use our own
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
@@ -47,7 +48,7 @@ class UserPanelProvider extends PanelProvider
             ->unsavedChangesAlerts()
             ->renderHook(
                 PanelsRenderHook::FOOTER,
-                fn () => view('components.note.page-footer')
+                fn (): View => view('components.note.page-footer')
             )
             ->colors([
                 'primary' => Color::Amber,

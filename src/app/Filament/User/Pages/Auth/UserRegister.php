@@ -20,7 +20,7 @@ class UserRegister extends Register
                     ->autoFocus(),
                 $this->getNameFormComponent()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('handle', Str::slug($state))),
+                    ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('handle', Str::slug($state))),
                 $this->getHandleFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
