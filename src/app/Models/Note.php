@@ -88,7 +88,8 @@ class Note extends Model implements HasRichContent
     protected function slug(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => static::getScopedSlug($value),
+            //get: fn (?string $value) => static::getScopedSlug($value),
+            get: static::getScopedSlug(...),
             // set: fn (string $value) => static::globalizeSlug($userScope,$value),
         );
     }
@@ -183,7 +184,7 @@ class Note extends Model implements HasRichContent
      */
     public static function getScopedSlug(?string $slug = null): ?string
     {
-        return explode('/', $slug)[1] ?? $slug;
+        return explode('/', (string) $slug)[1] ?? $slug;
     }
 
     // Helper functions
@@ -202,7 +203,7 @@ class Note extends Model implements HasRichContent
         // get the extracted content
         $content = TipTapJsonContentExtractor::extractContent($body);
         // remove empty spaces from the beginning and end of a strings
-        $content = array_map('trim', $content); // NOTE: why is 'trim' the only function that cannot handle an array?
+        $content = array_map(trim(...), $content); // NOTE: why is 'trim' the only function that cannot handle an array?
         // replace multiple white space caracters with on space
         $content = preg_replace('/\s+/', ' ', $content);
         // remove left in new line charackters (this is propably unneccessary)
@@ -354,7 +355,7 @@ class Note extends Model implements HasRichContent
         // if partial tokens are required
         if ($prefix) {
             // Split into tokens and add * to each token
-            $tokens = preg_split('/\s+/', $term);
+            $tokens = preg_split('/\s+/', (string) $term);
             $tokens = array_map(fn ($t) => '"'.$t.'"'.'*', $tokens);
             $term = implode(' ', $tokens);
         } else {

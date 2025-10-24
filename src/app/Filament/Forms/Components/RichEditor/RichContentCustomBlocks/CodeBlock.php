@@ -57,9 +57,7 @@ class CodeBlock extends RichContentCustomBlock
                     ->label('The code block is collapsed by default'),
                 CodeEditor::make('code')
                     ->reactive()
-                    ->language(function (Get $get) {
-                        return Language::tryFrom($get('language'));
-                    }),
+                    ->language(fn(Get $get) => Language::tryFrom($get('language'))),
             ]);
     }
 
