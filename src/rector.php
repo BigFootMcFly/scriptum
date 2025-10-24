@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
@@ -23,10 +24,15 @@ return RectorConfig::configure()
         __DIR__ . '/node_modules/*',
         __DIR__ . '/resources/js/*',
         __DIR__ . '/resources/css/*',
-        __DIR__ . '/app/Providers/TelescopeServiceProvider.php'
+        __DIR__ . '/app/Providers/TelescopeServiceProvider.php',
+        SimplifyIfReturnBoolRector::class => [
+            // NOTE: keep policies more verbose for easier readability
+            __DIR__ . '/app/Policies/NotePolicy.php',
+            __DIR__ . '/app/Policies/UserPolicy.php'
+        ],
     ])
     // uncomment to reach your current PHP version
     ->withPhpSets()
     ->withPreparedSets(typeDeclarations: true)
     ->withPreparedSets(deadCode: true)
-    ->withCodeQualityLevel(0); // max 77, if met, replace with: ->withPreparedSets(codeQuality: true)
+    ->withCodeQualityLevel(30); // max 77, if met, replace with: ->withPreparedSets(codeQuality: true)

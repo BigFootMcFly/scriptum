@@ -105,12 +105,9 @@ class FrontPage extends Page
 
         $this->dispatch('front-page-updated');
 
-        // reste the pagination to the first page
-        $page = $this->resetPagination ? 1 : null and $this->resetPagination = false;
-        /* //NOTE: the above is the same as this: ( i just keep this here for now, it is not a good practice ;) )
+        // reset the pagination to the first page
         $page = $this->resetPagination ? 1 : null;
         $this->resetPagination = false;
-        */
 
         return $query->paginate(perPage: 10, page: $page);
     }
