@@ -2,11 +2,12 @@
 
 namespace App\Livewire\FrontPage;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class BrandLogo extends Component
 {
-    public function render()
+    public function render(): View
     {
         return view('livewire.front-page.brand-logo');
     }

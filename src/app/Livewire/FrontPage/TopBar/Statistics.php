@@ -3,6 +3,7 @@
 namespace App\Livewire\FrontPage\TopBar;
 
 use App\Models\Note;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -64,7 +65,7 @@ class Statistics extends Component
 
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.front-page.top-bar.statistics');
     }

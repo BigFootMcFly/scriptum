@@ -3,6 +3,7 @@
 namespace App\Livewire\FrontPage;
 
 use App\Enums\FrontPageViewingMode;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -149,7 +150,7 @@ class ToggleViewingModeButton extends Component
         return $event['ctrl'] && $event['alt'] && $event['shift'];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.front-page.toggle-viewing-mode-button');
     }

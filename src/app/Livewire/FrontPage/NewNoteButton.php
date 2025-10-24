@@ -2,6 +2,7 @@
 
 namespace App\Livewire\FrontPage;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -13,7 +14,7 @@ class NewNoteButton extends Component
         // add changees here if needed
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.front-page.new-note-button');
     }

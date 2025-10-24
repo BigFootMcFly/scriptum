@@ -2,6 +2,7 @@
 
 namespace App\Livewire\FrontPage;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class SearchBox extends Component
@@ -13,7 +14,7 @@ class SearchBox extends Component
         $this->search = session()->get('front-page-search', '');
     }
 
-    public function render()
+    public function render(): View
     {
         session(['front-page-search' => $this->search]);
         $this->dispatch('search-updated', search: $this->search);
