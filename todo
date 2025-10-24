@@ -5,6 +5,9 @@
 
 # ---- Pending
 
+☐ @low Currently we dont make use od the extra info extracted by the TipTapJsonContentExtractor, Use them!
+        (urls are nit stored in the body_content), i assume other info is simply discarded for now (auto tags are for sure)
+
 ☐ @low add animation to open/close of a code block
 
 ☐ @low Add syntax highlight to the code block for logs
