@@ -31,7 +31,6 @@ return RectorConfig::configure()
             __DIR__ . '/app/Policies/UserPolicy.php'
         ],
     ])
-    // uncomment to reach your current PHP version
     ->withPhpSets()
     ->withPreparedSets(typeDeclarations: true)
     ->withPreparedSets(deadCode: true)
