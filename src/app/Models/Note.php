@@ -229,7 +229,7 @@ class Note extends Model implements HasRichContent
     public function frontPage(Builder $query, ?User $user = null): Builder
     {
         // Guest viewing mode
-        if ($user === null || $user->isGuest()) {
+        if (!$user instanceof \App\Models\User || $user->isGuest()) {
             return $this->viewModeGuestScope($query, $user);
         }
 

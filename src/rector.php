@@ -35,4 +35,4 @@ return RectorConfig::configure()
     ->withPhpSets()
     ->withPreparedSets(typeDeclarations: true)
     ->withPreparedSets(deadCode: true)
-    ->withCodeQualityLevel(30); // max 77, if met, replace with: ->withPreparedSets(codeQuality: true)
+    ->withPreparedSets(codeQuality: true);
