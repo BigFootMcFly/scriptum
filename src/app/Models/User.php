@@ -103,6 +103,9 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     // accessors
 
+    /**
+     * @return Attribute<string, string>
+     */
     protected function avatarUrl(): Attribute
     {
         return Attribute::make(
@@ -144,6 +147,9 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * @return Attribute<string, string>
+     */
     protected function permalink(): Attribute
     {
         return Attribute::make(

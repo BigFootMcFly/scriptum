@@ -18,6 +18,8 @@ class TextContentExtractor implements ContentExtractor
 
     /**
      * @see ContentExtractor
+     * @param array<string, mixed> $block
+     * @param array<string, mixed> $result
      */
     public static function extraData(array $block, array &$result = []): void
     {

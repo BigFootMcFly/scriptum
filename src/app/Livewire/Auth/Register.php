@@ -27,7 +27,7 @@ class Register extends Component
     /**
      * Update the handle if the name is changed
      */
-    public function updatingName($value): void
+    public function updatingName(string $value): void
     {
         // only change it if it was not already customized by the user
         $this->handle = match ($this->handle) {

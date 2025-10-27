@@ -13,6 +13,7 @@ use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class UnVerifiedNotice extends Component implements HasActions, HasSchemas
@@ -74,7 +75,7 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
             });
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.front-page.un-verified-notice')
             ->with('resend_action', $this->resendNotificationAction());

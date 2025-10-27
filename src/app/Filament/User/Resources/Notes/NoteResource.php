@@ -41,6 +41,9 @@ class NoteResource extends Resource
         return NotesTable::configure($table);
     }
 
+    /**
+     * @return Builder<Note>
+     */
     public static function getEloquentQuery(): Builder
     {
 
@@ -81,6 +84,9 @@ class NoteResource extends Resource
         ];
     }
 
+    /**
+     * @return Builder<Note>
+     */
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

@@ -9,6 +9,8 @@ use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Spatie\Tags\Tag;
@@ -46,7 +48,10 @@ class ViewTagNotesPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    protected function queryNotes()
+    /**
+     * @return Builder<Note>
+     */
+    protected function queryNotes(): Builder
     {
         $list = Note::withAnyTags([$this->tag]);
 
@@ -57,7 +62,10 @@ class ViewTagNotesPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function getNotesProperty()
+    /**
+     * @return LengthAwarePaginator<int, Note>
+     */
+    public function getNotesProperty(): LengthAwarePaginator
     {
         $query = $this->queryNotes();
 

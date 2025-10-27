@@ -3,11 +3,15 @@
 namespace App\Filament\User\Pages;
 
 use App\Filament\Traits\ModalNoteEditor;
+use App\Models\Note;
 use App\Models\User;
 use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -42,7 +46,10 @@ class ViewUserNotesPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    protected function queryNotes()
+    /**
+     * @return Builder<Note>|HasMany<Note, User>
+     */
+    protected function queryNotes(): Builder|HasMany
     {
         $list = $this->user->notes();
         $currentUser = auth()->user() ?? User::guestUser();
@@ -55,7 +62,10 @@ class ViewUserNotesPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function getNotesProperty()
+    /**
+     * @return LengthAwarePaginator<int, Note>
+     */
+    public function getNotesProperty(): LengthAwarePaginator
     {
         $query = $this->queryNotes();
 

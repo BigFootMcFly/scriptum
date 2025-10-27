@@ -15,6 +15,9 @@ use Livewire\Attributes\On;
  */
 trait ModalNoteEditor
 {
+    /**
+     * @var array<string, mixed>
+     */
     public ?array $data = [
         'title' => null,
         'visibility' => null,

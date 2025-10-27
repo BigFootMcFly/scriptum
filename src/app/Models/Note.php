@@ -20,18 +20,17 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Tags\HasTags;
 
 /**
- * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed(bool $withTrashed = true)
- * @method Builder frontPage(?User $user = null)
+ * @method Builder<Note> frontPage(?User $user = null)
  * @property int $id
  * @property int $user_id
  * @property string $title
  * @property string $slug
  * @property string $permalink
- * @property array $body
+ * @property array<string, mixed> $body
  * @property string  $body_content
  * @property DateTime|null $deleted_at
  * @property NoteVisibility $visibility
- * @method static Builder<Note> builder(Builder $query)
+ * @method static Builder<Note> builder(Builder<Note> $query)
  */
 class Note extends Model implements HasRichContent
 {
@@ -92,7 +91,7 @@ class Note extends Model implements HasRichContent
     /**
      * Mutator and Accessor for the slug
      *
-     * @return Attribute
+     * @return Attribute<string, string>
      *
      * NOTE: the slug must be uniqe for the User, but multiple Users can have the same slug value,
      *       so in the database we store it in to "$userhandle/$noteslug" format,
@@ -110,6 +109,7 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Generate the body_content from the body property
+     * @return Attribute<string, string>
      */
     protected function bodyContent(): Attribute
     {
@@ -119,6 +119,9 @@ class Note extends Model implements HasRichContent
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+    /**
+     * @return Attribute<string, string>
+     */
     protected function permalink(): Attribute
     {
         return Attribute::make(
@@ -203,7 +206,7 @@ class Note extends Model implements HasRichContent
     /**
      * Extracts the human readable text from a TipTap rich content (Filament RichEditor)
      *
-     * @param  array  $body  The content in TipTap json format, converted to array by the model
+     * @param  string|array<string,mixed>  $body  The content in TipTap json format, converted to array by the model
      */
     public static function extractBodyContents(string|array $body): string
     {
@@ -234,6 +237,9 @@ class Note extends Model implements HasRichContent
      * guest => all "public" notes
      * user => all "public" notes and its own "private" notes (if the user ViewingMode is set to public)
      * user => its own "private" notes (if the user ViewingMode is set to private)
+     * @param Builder<Note> $query
+     * @param User|null $user
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopeFrontPage(Builder $query, ?User $user = null): Builder
@@ -265,11 +271,21 @@ class Note extends Model implements HasRichContent
 
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param User|null $user
+     * @return Builder<Note>
+     */
     protected function viewModeAdminScope(Builder $query, ?User $user): Builder
     {
         return $query;
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param User|null $user
+     * @return Builder<Note>
+     */
     protected function viewModeGuestScope(Builder $query, ?User $user): Builder
     {
         return $query->where(function ($q): void {
@@ -277,6 +293,11 @@ class Note extends Model implements HasRichContent
         });
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param User $user
+     * @return Builder<Note>
+     */
     protected function viewModePrivateScope(Builder $query, User $user): Builder
     {
         return $query->where(function ($q) use ($user): void {
@@ -284,6 +305,11 @@ class Note extends Model implements HasRichContent
         });
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param User $user
+     * @return Builder<Note>
+     */
     protected function viewModePublicScope(Builder $query, User $user): Builder
     {
         return $query->where(function ($q) use ($user): void {
@@ -295,6 +321,9 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Returns the records that belongs to the provided user
+     * @param Builder<Note> $query
+     * @param User $user
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopeOwned(Builder $query, User $user): Builder
@@ -305,6 +334,8 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Returns the records with public visibility
+     * @param Builder<Note> $query
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopePublicOnly(Builder $query): Builder
@@ -315,6 +346,8 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Returns the records with private visibility
+     * @param Builder<Note> $query
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopePrivateOnly(Builder $query): Builder
@@ -325,6 +358,8 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Returns the records with hidden visibility
+     * @param Builder<Note> $query
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopeHiddenOnly(Builder $query): Builder
@@ -335,6 +370,8 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * Returns the records with restricted visibility
+     * @param Builder<Note> $query
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopeRestrictedOnly(Builder $query): Builder
@@ -346,9 +383,10 @@ class Note extends Model implements HasRichContent
     /**
      * Full Text Search in the 'body_content' and 'title' fields
      *
-     * @param  Builder  $query  The Eloquen Builder instance (auto injected)
+     * @param  Builder<Note>  $query  The Eloquen Builder instance (auto injected)
      * @param  string  $term  The search string, can have multiple tokens
      * @param  bool  $prefix  If true, each search token can be partial (a '*' will be added at the end of each one, so 'lara*' will match 'laravel')
+     * @return Builder<Note>
      */
     //#[Scope]
     public function scopeSearch(Builder $query, string $term, bool $prefix = false): Builder
@@ -372,6 +410,11 @@ class Note extends Model implements HasRichContent
             ->whereRaw('notes_fts MATCH ?', [$term]);
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param bool $prefix
+     * @return Builder<Note>
+     */
     //#[Scope]
     public function scopeSessionSearch(Builder $query, bool $prefix = true): Builder
     {
@@ -390,6 +433,8 @@ class Note extends Model implements HasRichContent
      *
      * NOTE: SQLite FTS5 functions like bm25() and highlight() can only be used in the SELECT list of the main FTS query,
      *       not in aggregate queries (with COUNT(*), GROUP BY, etc.).
+     * @param Builder<Note> $query
+     * @return Builder<Note>
      */
     public function scopeRanked(Builder $query): Builder
     {
@@ -402,6 +447,11 @@ class Note extends Model implements HasRichContent
             ->orderBy('rank');
     }
 
+    /**
+     * @param Builder<Note> $query
+     * @param int $userId
+     * @return Builder<Note>
+     */
     //#[Scope]
     public function scopeStatistics(Builder $query, int $userId = 0): Builder
     {
@@ -452,6 +502,7 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
 
     /**
+     * @param Builder<Note> $query
      * @return Builder<Note>
      */
     public static function builder(Builder $query): Builder

@@ -7,8 +7,8 @@ trait HasContentExtractor
     /**
      * Extracts the text contents of the node
      *
-     * @param  array  $block  The node to extract the data from
-     * @return array The list of the extracted contents
+     * @param  array<string, mixed>  $block  The node to extract the data from
+     * @return array<string, mixed> The list of the extracted contents
      *
      * Can be overwritten in the child classes, this is just a placeholder
      */
@@ -20,8 +20,8 @@ trait HasContentExtractor
     /**
      * Extracts extra data from the node
      *
-     * @param  array  $block  The node to extract the data from
-     * @param  array  $result  The list of the extracted data
+     * @param  array<string, mixed>  $block  The node to extract the data from
+     * @param  array<string, mixed> $result  The list of the extracted data
      * @return void
      *
      * Can be overwritten in the child classes, this is just a placeholder
@@ -34,8 +34,8 @@ trait HasContentExtractor
     /**
      * Automatically geerates tags based on the node data
      *
-     * @param  array  $block  The node to extract the data from
-     * @param  array  $result  The list of the extracted data
+     * @param  array<string, mixed>  $block  The node to extract the data from
+     * @param  array<string, mixed>  $result  The list of the extracted data
      * @return void
      *
      * Can be overwritten in the child classes, this is just a placeholder

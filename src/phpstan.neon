@@ -7,7 +7,7 @@ parameters:
         - app/
 
     # Level 10 is the highest level
-    level: 5
+    level: 6
 
     excludePaths:
         - 'app/Providers/TelescopeServiceProvider.php' # may be updated by composer

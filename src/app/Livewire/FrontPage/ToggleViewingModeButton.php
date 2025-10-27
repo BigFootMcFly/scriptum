@@ -11,7 +11,7 @@ class ToggleViewingModeButton extends Component
 {
     // public static bool $persist = false;
 
-    public $viewingMode = FrontPageViewingMode::Guest;
+    public FrontPageViewingMode $viewingMode = FrontPageViewingMode::Guest;
 
     public function booted(): void
     {
@@ -52,7 +52,7 @@ class ToggleViewingModeButton extends Component
     }
 
     #[On('refresh-viewing-mode-button')]
-    public function onRefreshComponent() {}
+    public function onRefreshComponent(): void {}
 
     /**
      * Saves the current ViewingMode into the database
@@ -76,6 +76,7 @@ class ToggleViewingModeButton extends Component
 
     /**
      * The handler for the browser ViewMode show/change button
+     * @param array<string, mixed> $event
      */
     #[On('toggle-viewing-mode')]
     public function toggleViewingMode(array $event): void
@@ -93,7 +94,6 @@ class ToggleViewingModeButton extends Component
         // handle admin mode request
         if ($adminModeRequested && auth()->user()->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
-            // session(['user.viewing_mode' => FrontPageViewingMode::Admin]);
             session()->put('user.viewing_mode', FrontPageViewingMode::Admin);
             $this->dispatchUpdateRequests();
 
@@ -144,6 +144,7 @@ class ToggleViewingModeButton extends Component
     /**
      * Check, if te user did request for admin mode
      * NOTE: admin mode can be requested by admin users by pressing CTRL+ALT+SHIT+LeftClick
+     * @param array<string, mixed> $event
      */
     protected function isRequestingForAdminMode(array $event): bool
     {

@@ -18,6 +18,8 @@ class ImageContentExtractor implements ContentExtractor
 
     /**
      * @see ContentExtractor
+     * @param array<string, mixed> $block
+     * @return array<int, mixed>
      */
     public static function extractContent(array $block): array
     {

@@ -13,7 +13,7 @@ class VerifyEmail extends Component
     /**
      * @return array<string>
      */
-    public function via($notifiable): array
+    public function via(/*$notifiable*/): array
     {
         return ['mail'];
     }

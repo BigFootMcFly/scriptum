@@ -7,6 +7,8 @@ use App\Models\Note;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -99,7 +101,10 @@ class FrontPage extends Page
     // DataBase helpers
 
     // ----------------------------------------------------------------------------------------------------------------
-    public function getNotesProperty()
+    /**
+     * @return LengthAwarePaginator<int, Note>
+     */
+    public function getNotesProperty(): LengthAwarePaginator
     {
         $query = $this->getQuery();
 
@@ -113,7 +118,10 @@ class FrontPage extends Page
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    protected function getQuery()
+    /**
+     * @return Builder<Note>
+     */
+    protected function getQuery(): Builder
     {
         $builder = Note::query()->frontPage(auth()->user());
 

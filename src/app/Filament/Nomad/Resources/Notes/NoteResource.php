@@ -26,6 +26,10 @@ class NoteResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
     protected function mutateFormDataBeforeFill(array $data): array
     {
         unset($data['is_admin']);
@@ -66,6 +70,9 @@ class NoteResource extends Resource
         ];
     }
 
+    /**
+     * @return Builder<Note>
+     */
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

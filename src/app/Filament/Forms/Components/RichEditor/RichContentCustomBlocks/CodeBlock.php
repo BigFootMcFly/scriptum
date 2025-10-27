@@ -61,6 +61,9 @@ class CodeBlock extends RichContentCustomBlock
             ]);
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public static function highlightCode(array $config): string
     {
         $highlighter = new Highlighter()->withGutter(startAt: 1);
