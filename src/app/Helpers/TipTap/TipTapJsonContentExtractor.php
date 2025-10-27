@@ -58,11 +58,11 @@ class TipTapJsonContentExtractor
             // gather text data
             $result = array_merge(
                 $result,
-                call_user_func("$className::extractContent", $block)
+                call_user_func($className::extractContent(...), $block)
             );
             // gather extra data and auto tags
-            call_user_func_array("$className::extraData", [$block, &$extras]);
-            call_user_func_array("$className::autoTags", [$block, &$autoTags]);
+            call_user_func_array($className::extraData(...), [$block, &$extras]);
+            call_user_func_array($className::autoTags(...), [$block, &$autoTags]);
 
             return $result;
         }
@@ -75,11 +75,11 @@ class TipTapJsonContentExtractor
                 // gather text data
                 $result = array_merge(
                     $result,
-                    call_user_func("$className::extractContent", $block)
+                    call_user_func($className::extractContent(...), $block)
                 );
                 // gather extra data and auto tags
-                call_user_func_array("$className::extraData", [$block, &$extras]);
-                call_user_func_array("$className::autoTags", [$block, &$autoTags]);
+                call_user_func_array($className::extraData(...), [$block, &$extras]);
+                call_user_func_array($className::autoTags(...), [$block, &$autoTags]);
             }
 
             return $result;

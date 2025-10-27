@@ -44,6 +44,7 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
             ]))
+            /** @phpstan-ignore-next-line */ // NOTE: direct copy from filament, keep it, is beautiffully caotic :D
             ->body(array_key_exists('body', __('filament-panels::auth/pages/email-verification/email-verification-prompt.notifications.notification_resend_throttled') ?: []) ? __('filament-panels::auth/pages/email-verification/email-verification-prompt.notifications.notification_resend_throttled.body', [
                 'seconds' => $exception->secondsUntilAvailable,
                 'minutes' => $exception->minutesUntilAvailable,
