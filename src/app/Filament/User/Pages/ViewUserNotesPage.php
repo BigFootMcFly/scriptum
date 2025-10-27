@@ -51,7 +51,7 @@ class ViewUserNotesPage extends Page
             return $list;
         }
 
-        return $list->public();
+        return $list->publicOnly();
     }
 
     // ----------------------------------------------------------------------------------------------------------------

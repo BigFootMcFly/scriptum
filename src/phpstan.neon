@@ -7,15 +7,16 @@ parameters:
         - app/
 
     # Level 10 is the highest level
-    level: 1
+    level: 2
 
     excludePaths:
         - 'app/Providers/TelescopeServiceProvider.php' # may be updated by composer
         - vendor/*
 
     ignoreErrors:
-#        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::withoutTrashed#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::withoutTrashed#'
 
+    treatPhpDocTypesAsCertain: true
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'

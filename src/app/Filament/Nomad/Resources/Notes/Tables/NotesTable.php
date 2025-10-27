@@ -86,11 +86,7 @@ class NotesTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()
-                        ->after( function (): void {
-                            /** @var \Livewire\Component $this */
-                            // $this->dispatch('refresh-note-list');
-                        }),
+                    DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),

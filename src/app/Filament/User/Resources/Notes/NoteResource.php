@@ -54,6 +54,7 @@ class NoteResource extends Resource
         // NOTE: add this if the resource table should be filtered by the top search as well...
         $forntPageSearch = session()->get('front-page-search', '');
         if ($forntPageSearch !== '') {
+            /** @var Builder<Note> $query */
             $query->search($forntPageSearch, true);
         }
 

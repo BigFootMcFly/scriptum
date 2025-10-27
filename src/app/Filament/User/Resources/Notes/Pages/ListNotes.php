@@ -4,6 +4,7 @@ namespace App\Filament\User\Resources\Notes\Pages;
 
 use App\Filament\Traits\ModalNoteEditor;
 use App\Filament\User\Resources\Notes\NoteResource;
+use App\Models\Note;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -43,14 +44,14 @@ class ListNotes extends ListRecords
                 ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->count())
                 ->badgeColor('info'),
             'public' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->public())
-                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->public()->count()),
+                ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->publicOnly())
+                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->publicOnly()->count()),
             'private' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->private())
-                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->private()->count())
+                ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->privateOnly())
+                ->badge(auth()->user()->notes()->sessionSearch()->withTrashed()->privateOnly()->count())
                 ->badgeColor('success'),
             'deleted' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->onlyTrashed())
+                ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->onlyTrashed())
                 ->badge(auth()->user()->notes()->sessionSearch()->onlyTrashed()->count())
                 ->badgeColor('danger'),
         ];

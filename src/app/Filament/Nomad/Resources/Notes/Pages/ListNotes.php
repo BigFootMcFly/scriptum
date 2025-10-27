@@ -8,6 +8,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ListNotes extends ListRecords
 {
@@ -23,28 +24,60 @@ class ListNotes extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make()
-                ->badge(Note::withTrashed()->count())
-                ->badgeColor('info'),
-            'deleted' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('deleted_at', '<>', null))
-                ->badge(Note::onlyTrashed()->count())
-                ->badgeColor('danger'),
-            'public' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->public())
-                ->badge(Note::withoutTrashed()->public()->count()),
-            'private' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->private())
-                ->badge(Note::withoutTrashed()->private()->count())
-                ->badgeColor('success'),
-            'hidden' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->hidden())
-                ->badge(Note::withoutTrashed()->hidden()->count())
-                ->badgeColor('danger'),
-            'restricted' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->restricted())
-                ->badge(Note::query()->withoutTrashed()->restricted()->count())
-                ->badgeColor('danger'),
+            'all' => $this->makeAllTab(),
+            'deleted' => $this->makeDeletedTab(),
+            'public' => $this->makePublicTab(),
+            'private' => $this->makePrivateTab(),
+            'hidden' => $this->makeHiddenTab(),
+            'restricted' => $this->makeRestrictedTab(),
         ];
     }
+
+    private function makeAllTab(): Tab
+    {
+        return Tab::make()
+        ->badge(Note::withTrashed()->count())
+        ->badgeColor('info');
+    }
+
+    private function makeDeletedTab(): Tab
+    {
+        return Tab::make()
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('deleted_at', '<>', null))
+            ->badge(Note::onlyTrashed()->count())
+            ->badgeColor('danger');
+    }
+
+    private function makePublicTab(): Tab
+    {
+        return Tab::make()
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->publicOnly())
+            ->badge(Note::query()->publicOnly()->withoutTrashed()->count());
+    }
+
+
+    private function makePrivateTab(): Tab
+    {
+        return Tab::make()
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->privateOnly())
+            ->badge(Note::query()->privateOnly()->withoutTrashed()->count())
+            ->badgeColor('success');
+    }
+
+    private function makeHiddenTab(): Tab
+    {
+        return Tab::make()
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->hiddenOnly())
+            ->badge(Note::withoutTrashed()->hiddenOnly()->count())
+            ->badgeColor('danger');
+    }
+
+    private function makeRestrictedTab(): Tab
+    {
+        return Tab::make()
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->restrictedOnly())
+            ->badge(Note::query()->withoutTrashed()->restrictedOnly()->count())
+            ->badgeColor('danger');
+    }
+
 }

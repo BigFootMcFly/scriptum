@@ -20,10 +20,11 @@ use Spatie\Tags\HasTags;
 
 /**
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed(bool $withTrashed = true)
- * @method public frontPage(?User $user = null): Builder
- * @method public public(?User $user = null): Builder
+ * @method Builder frontPage(?User $user = null)
  * @property string $slug
  * @property string $permalink
+ * @property string  $body_content
+ * @method static Builder<Note> builder(Builder $query)
  */
 class Note extends Model implements HasRichContent
 {
@@ -71,6 +72,7 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * The User the Note belonsg to
+     * @return BelongsTo<User, Note>
      */
     public function user(): BelongsTo
     {
@@ -229,8 +231,8 @@ class Note extends Model implements HasRichContent
      * user => all "public" notes and its own "private" notes (if the user ViewingMode is set to public)
      * user => its own "private" notes (if the user ViewingMode is set to private)
      */
-    #[Scope]
-    public function frontPage(Builder $query, ?User $user = null): Builder
+    //#[Scope]
+    public function scopeFrontPage(Builder $query, ?User $user = null): Builder
     {
         // Guest viewing mode
         if (!$user instanceof \App\Models\User || $user->isGuest()) {
@@ -253,11 +255,6 @@ class Note extends Model implements HasRichContent
         // public viewing mode
         if ($user->viewing_mode === FrontPageViewingMode::Public) {
             return $this->viewModePublicScope($query, $user);
-        }
-
-        // NOTE: fallback, if the viewing mode is not set (possible malicious/buggy code)
-        if ($user->viewing_mode === null) {
-            return $this->owned($query, $user);
         }
 
         return $query;
@@ -295,8 +292,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records that belongs to the provided user
      */
-    #[Scope]
-    public function owned(Builder $query, User $user): Builder
+    //#[Scope]
+    public function scopeOwned(Builder $query, User $user): Builder
     {
         return $query->where('user_id', $user->id);
     }
@@ -305,8 +302,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with public visibility
      */
-    #[Scope]
-    public function public(Builder $query): Builder
+    //#[Scope]
+    public function scopePublicOnly(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Public);
     }
@@ -316,7 +313,7 @@ class Note extends Model implements HasRichContent
      * Returns the records with private visibility
      */
     //#[Scope]
-    public function scopePrivate(Builder $query): Builder
+    public function scopePrivateOnly(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Private);
     }
@@ -326,7 +323,7 @@ class Note extends Model implements HasRichContent
      * Returns the records with hidden visibility
      */
     //#[Scope]
-    public function scopeHidden(Builder $query): Builder
+    public function scopeHiddenOnly(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Hidden);
     }
@@ -335,8 +332,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with restricted visibility
      */
-    #[Scope]
-    public function restricted(Builder $query): Builder
+    //#[Scope]
+    public function scopeRestrictedOnly(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Restricted);
     }
@@ -349,8 +346,8 @@ class Note extends Model implements HasRichContent
      * @param  string  $term  The search string, can have multiple tokens
      * @param  bool  $prefix  If true, each search token can be partial (a '*' will be added at the end of each one, so 'lara*' will match 'laravel')
      */
-    #[Scope]
-    public function search(Builder $query, string $term, bool $prefix = false): Builder
+    //#[Scope]
+    public function scopeSearch(Builder $query, string $term, bool $prefix = false): Builder
     {
         // Clean up term
         $term = trim($term);
@@ -371,26 +368,26 @@ class Note extends Model implements HasRichContent
             ->whereRaw('notes_fts MATCH ?', [$term]);
     }
 
-    #[Scope]
-    public function sessionSearch(Builder $query, bool $prefix = true): Builder
+    //#[Scope]
+    public function scopeSessionSearch(Builder $query, bool $prefix = true): Builder
     {
         $search = session()->get('front-page-search', '');
 
         if ($search === '') {
             return $query;
         }
-
+        /** @var builder<Note> $query */
         return $query->search($search, $prefix);
     }
 
-    #[Scope]
+    //#[Scope]
     /**
      * Adds 'rank','highlight_title','highlight_body_content' colums to the search result, oredered by 'rank'
      *
      * NOTE: SQLite FTS5 functions like bm25() and highlight() can only be used in the SELECT list of the main FTS query,
      *       not in aggregate queries (with COUNT(*), GROUP BY, etc.).
      */
-    public function ranked(Builder $query): Builder
+    public function scopeRanked(Builder $query): Builder
     {
         return $query->select(
             'notes.*',
@@ -401,8 +398,8 @@ class Note extends Model implements HasRichContent
             ->orderBy('rank');
     }
 
-    #[Scope]
-    public function statistics(Builder $query, int $userId = 0): Builder
+    //#[Scope]
+    public function scopeStatistics(Builder $query, int $userId = 0): Builder
     {
         return $query->selectRaw('
             COUNT(*) as total,
@@ -446,4 +443,15 @@ class Note extends Model implements HasRichContent
         );
     }*/
 
+    // builder
+
+    // ----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * @return Builder<Note>
+     */
+    public static function builder(Builder $query): Builder
+    {
+        return $query;
+    }
 }

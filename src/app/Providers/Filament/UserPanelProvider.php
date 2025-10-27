@@ -19,6 +19,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Config;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
@@ -33,7 +34,7 @@ class UserPanelProvider extends PanelProvider
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
             //->domain(config('scriptum.production.domain'))
-            ->domain( config('scriptum.production.domain'))
+            ->domain( Config::string('scriptum.production.domain'))
             ->id('user')
             ->path('')
             ->registration(UserRegister::class) // NOTE: our custom register page

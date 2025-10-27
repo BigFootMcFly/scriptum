@@ -12,12 +12,12 @@ use Illuminate\Support\Str;
 
 class UserRegister extends Register
 {
+
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                $this->getEmailFormComponent()
-                    ->autoFocus(),
+                $this->getEmailFormComponent(),
                 $this->getNameFormComponent()
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('handle', Str::slug($state))),
@@ -25,6 +25,17 @@ class UserRegister extends Register
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
             ]);
+    }
+
+    protected function getEmailFormComponent(): Component
+    {
+        return TextInput::make('email')
+            ->label(__('filament-panels::auth/pages/register.form.email.label'))
+            ->email()
+            ->required()
+            ->maxLength(255)
+            ->unique($this->getUserModel())
+            ->autofocus();
     }
 
     protected function getHandleFormComponent(): Component
