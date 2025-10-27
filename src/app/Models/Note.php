@@ -72,7 +72,7 @@ class Note extends Model implements HasRichContent
     // ----------------------------------------------------------------------------------------------------------------
     /**
      * The User the Note belonsg to
-     * @return BelongsTo<User, Note>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
