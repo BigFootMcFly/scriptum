@@ -51,7 +51,7 @@ class ListNotes extends ListRecords
     private function makePublicTab(): Tab
     {
         return Tab::make()
-            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->publicOnly())
+            ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->publicOnly()->withoutTrashed())
             ->badge(Note::query()->publicOnly()->withoutTrashed()->count());
     }
 
@@ -59,7 +59,7 @@ class ListNotes extends ListRecords
     private function makePrivateTab(): Tab
     {
         return Tab::make()
-            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->privateOnly())
+            ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->privateOnly()->withoutTrashed())
             ->badge(Note::query()->privateOnly()->withoutTrashed()->count())
             ->badgeColor('success');
     }
@@ -67,7 +67,7 @@ class ListNotes extends ListRecords
     private function makeHiddenTab(): Tab
     {
         return Tab::make()
-            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->hiddenOnly())
+            ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->hiddenOnly()->withoutTrashed())
             ->badge(Note::withoutTrashed()->hiddenOnly()->count())
             ->badgeColor('danger');
     }
@@ -75,7 +75,7 @@ class ListNotes extends ListRecords
     private function makeRestrictedTab(): Tab
     {
         return Tab::make()
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->restrictedOnly())
+            ->modifyQueryUsing(fn (Builder $query) => Note::builder($query)->restrictedOnly()->withoutTrashed())
             ->badge(Note::query()->withoutTrashed()->restrictedOnly()->count())
             ->badgeColor('danger');
     }

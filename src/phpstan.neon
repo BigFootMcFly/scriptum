@@ -14,7 +14,7 @@ parameters:
         - vendor/*
 
     ignoreErrors:
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::withoutTrashed#'
+#        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::withoutTrashed#'
 
     treatPhpDocTypesAsCertain: true
 
