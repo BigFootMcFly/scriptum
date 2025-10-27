@@ -40,7 +40,6 @@ class Statistics extends Component
         $userId = $user->id ?? 0;
         $search = session()->get('front-page-search', '');
 
-        // @phpstan-ignore-next-line
         $query = Note::query()->frontPage($user);
 
         if ($search !== '') {

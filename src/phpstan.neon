@@ -1,0 +1,24 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    # Level 10 is the highest level
+    level: 1
+
+    excludePaths:
+        - 'app/Providers/TelescopeServiceProvider.php' # may be updated by composer
+        - vendor/*
+
+    ignoreErrors:
+#        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::withoutTrashed#'
+
+
+#    ignoreErrors:
+#        - '#PHPDoc tag @var#'
+#
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php

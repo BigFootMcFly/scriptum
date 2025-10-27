@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Tags\HasTags;
 
 /**
+ * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed(bool $withTrashed = true)
  * @method public frontPage(?User $user = null): Builder
+ * @method public public(?User $user = null): Builder
+ * @property string $slug
+ * @property string $permalink
  */
 class Note extends Model implements HasRichContent
 {
@@ -311,8 +315,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with private visibility
      */
-    #[Scope]
-    public function private(Builder $query): Builder
+    //#[Scope]
+    public function scopePrivate(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Private);
     }
@@ -321,8 +325,8 @@ class Note extends Model implements HasRichContent
     /**
      * Returns the records with hidden visibility
      */
-    #[Scope]
-    public function hidden(Builder $query): Builder
+    //#[Scope]
+    public function scopeHidden(Builder $query): Builder
     {
         return $query->where('visibility', NoteVisibility::Hidden);
     }

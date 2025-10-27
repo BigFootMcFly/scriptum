@@ -2,12 +2,13 @@
 
 namespace App\Actions\Filament;
 
+use Closure;
 use Filament\Actions\Action;
 use Filament\Support\Enums\IconSize;
 
 class FullPageViewAction
 {
-    public static function make(callable $url): Action
+    public static function make(Closure $url): Action
     {
         return Action::make('View')
             ->label('Details')

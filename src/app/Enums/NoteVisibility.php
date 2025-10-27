@@ -23,6 +23,9 @@ enum NoteVisibility: string
     #[Description('This note is currently restricted from access.')]
     case Restricted = 'restricted';
 
+    /**
+     * @return array<string, string>
+     */
     public static function userEditable(): array
     {
         $list = [

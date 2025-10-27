@@ -23,13 +23,15 @@ enum FrontPageViewingMode: string
     #[Description('As an admin, you can see every notes.')]
     case Admin = 'admin';
 
+    /**
+     * @return array<string, string>
+     */
     public static function userSelectable(): array
     {
         $list = [
             self::Private,
             self::Public,
         ];
-
         return array_column($list, 'name', 'value');
 
     }

@@ -7,7 +7,7 @@ trait BackedEnumHelper
     /**
      * Returns the names of all casee
      *
-     * @return array The names of all cases
+     * @return array<int, string> The names of all cases
      */
     public static function names(): array
     {
@@ -18,7 +18,7 @@ trait BackedEnumHelper
     /**
      * Returnbs the values of all casee
      *
-     * @return array The values of all cases
+     * @return array<int, string> The values of all cases
      */
     public static function values(): array
     {
@@ -28,7 +28,7 @@ trait BackedEnumHelper
     /**
      * Converts the enum to array
      *
-     * @return array The key => value pairs of the cases
+     * @return array<string, string> The key => value pairs of the cases
      */
     public static function toArray(): array
     {
@@ -38,7 +38,7 @@ trait BackedEnumHelper
     /**
      * Converts the enum to array with lower key values
      *
-     * @return array The strtolower(key) => value pairs of the cases
+     * @return array<string, string> The strtolower(key) => value pairs of the cases
      *
      * @todo this was a temporary fix, refactor it!
      */

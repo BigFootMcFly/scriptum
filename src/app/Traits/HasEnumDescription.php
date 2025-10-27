@@ -32,25 +32,25 @@ trait HasEnumDescription
     /**
      * Returns all the cases in 'value'=>'description' form
      *
-     * @return array The value => description pairs of the cases
+     * @return array<string, string> The value => description pairs of the cases
      */
     public static function toDescribedArray(): array
     {
-
+        /*
         // NOTE: the one-liner, a marvel of overengineering
         return array_reduce(
             array: self::cases(),
             callback: fn (array $carry, self $case): array => $carry + [$case->value => $case->description()],
             initial: []
         );
+        */
 
-        // NOTE: the wise way... (yields the same result)
-        /*
+        // NOTE: the wise way... this is used to statisfy phpstan/larastan
         $result = [];
         foreach (self::cases() as $case) {
             $result[$case->value] = $case->description();
         }
         return $result;
-        */
+
     }
 }

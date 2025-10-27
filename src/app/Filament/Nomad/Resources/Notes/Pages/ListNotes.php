@@ -27,23 +27,23 @@ class ListNotes extends ListRecords
                 ->badge(Note::withTrashed()->count())
                 ->badgeColor('info'),
             'deleted' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('deleted_at', '<>', null))
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('deleted_at', '<>', null))
                 ->badge(Note::onlyTrashed()->count())
                 ->badgeColor('danger'),
             'public' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->public())
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->public())
                 ->badge(Note::withoutTrashed()->public()->count()),
             'private' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->private())
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->private())
                 ->badge(Note::withoutTrashed()->private()->count())
                 ->badgeColor('success'),
             'hidden' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->hidden())
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->withoutTrashed()->hidden())
                 ->badge(Note::withoutTrashed()->hidden()->count())
                 ->badgeColor('danger'),
             'restricted' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->withoutTrashed()->restricted())
-                ->badge(Note::withoutTrashed()->restricted()->count())
+                ->badge(Note::query()->withoutTrashed()->restricted()->count())
                 ->badgeColor('danger'),
         ];
     }

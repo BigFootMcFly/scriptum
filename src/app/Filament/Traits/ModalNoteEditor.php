@@ -10,6 +10,9 @@ use Filament\Schemas\Schema;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
 
+/**
+ * @property Schema $form
+ */
 trait ModalNoteEditor
 {
     public ?array $data = [
