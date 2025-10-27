@@ -6,6 +6,7 @@ use App\Enums\FrontPageViewingMode;
 use App\Enums\NoteVisibility;
 use App\Filament\Forms\Components\RichEditor\RichContentCustomBlocks\CodeBlock;
 use App\Helpers\TipTap\TipTapJsonContentExtractor;
+use DateTime;
 use Filament\Forms\Components\RichEditor\Models\Concerns\InteractsWithRichContent;
 use Filament\Forms\Components\RichEditor\Models\Contracts\HasRichContent;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -21,9 +22,15 @@ use Spatie\Tags\HasTags;
 /**
  * @method static \Illuminate\Database\Eloquent\Builder|static withTrashed(bool $withTrashed = true)
  * @method Builder frontPage(?User $user = null)
+ * @property int $id
+ * @property int $user_id
+ * @property string $title
  * @property string $slug
  * @property string $permalink
+ * @property array $body
  * @property string  $body_content
+ * @property DateTime|null $deleted_at
+ * @property NoteVisibility $visibility
  * @method static Builder<Note> builder(Builder $query)
  */
 class Note extends Model implements HasRichContent
@@ -115,10 +122,7 @@ class Note extends Model implements HasRichContent
     protected function permalink(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value): string => match ($this->user) {
-                null => '',
-                default => route('view-note', ['user' => $this->user->handle, 'slug' => $this->slug])
-            }
+            get: fn (): string => route('view-note', ['user' => $this->user?->handle, 'slug' => $this->slug])
         );
     }
 
@@ -243,7 +247,7 @@ class Note extends Model implements HasRichContent
         $sessionViewingMode = session()->get('user.viewing_mode', null);
 
         // admin viewing mode
-        if ($user?->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
+        if ($user->isAdmin() && $sessionViewingMode === FrontPageViewingMode::Admin) {
             return $this->viewModeAdminScope($query, $user);
         }
 

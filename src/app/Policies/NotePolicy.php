@@ -43,7 +43,8 @@ class NotePolicy
             // Hidden: currently reserved for maintanance reasons
             NoteVisibility::Hidden => false,
             // Restricted: needs admin intervention
-            NoteVisibility::Restricted => false,
+            /** @phpstan-ignore-next-line */
+            NoteVisibility::Restricted => false, // NOTE: keep this is for better readability
             default => false,
         };
 

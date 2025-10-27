@@ -25,7 +25,7 @@ class TextContentExtractor implements ContentExtractor
         // search for urls in extra info
         foreach ($block['marks'] ?? [] as $mark) {
             // skip if it is not a link
-            if ($mark['type'] ?? '' !== 'link') {
+            if (($mark['type'] ?? '') !== 'link') {
                 continue;
             }
             // export url if it has a href attribute

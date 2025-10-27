@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\FrontPageViewingMode;
+use DateTime;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
@@ -20,7 +21,16 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
+ * @property int $id
  * @property array<string>|null $app_authentication_recovery_codes
+ * @property string $handle
+ * @property string $name
+ * @property bool $is_admin
+ * @property DateTime|null $email_verified_at
+ * @property bool $has_email_authentication
+ * @property string $app_authentication_secret
+ * @property string $email
+ * @property FrontPageViewingMode $viewing_mode
  */
 class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasEmailAuthentication, MustVerifyEmail
 {
@@ -34,6 +44,8 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     protected const string default_avatar_url = 'avatars/_default.svg';
 
     public const string guest_avatar_url = 'avatars/_guest.svg';
+
+    private const string guest_user_handle = 'guest-user';
 
     /**
      * The attributes that are mass assignable.
@@ -117,7 +129,7 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
 
     public function isGuest(): bool
     {
-        return $this->id === null;
+        return $this->handle === self::guest_user_handle;
     }
 
     public function hasAvatar(): bool
@@ -171,12 +183,12 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         // return new GuestFactory()->make();
         return self::make([
             'name' => __('Guest User'),
-            'is_admin' => false,
-            'handle' => 'guest-user',
+            'is_admin' => false,                                // non fillable
+            'handle' => self::guest_user_handle,
             'email' => 'guest@nowhere.local',
-            'email_verified_at' => null,
+            'email_verified_at' => null,                        // non fillable
             'password' => null,
-            'remember_token' => null,
+            'remember_token' => null,                           // non fillable
             'avatar_url' => User::guest_avatar_url,
             'viewing_mode' => FrontPageViewingMode::Guest,
         ]);

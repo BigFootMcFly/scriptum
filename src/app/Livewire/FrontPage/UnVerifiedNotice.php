@@ -31,12 +31,6 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
             return;
         }
 
-        if (! method_exists($user, 'notify')) {
-            $userClass = $user::class;
-
-            throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
-        }
-
         $notification = new NotificationsVerifyEmail;
         $notification->url = Filament::getVerifyEmailUrl($user);
         $user->notify($notification);
