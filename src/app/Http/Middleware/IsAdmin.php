@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $requestUri = request()->route()->uri;
+        $requestUri = optional(request()->route())->uri;
 
         // guests already trying to login
         if (! auth()->check() && $requestUri === 'login') {
@@ -28,7 +29,7 @@ class IsAdmin
         }
 
         // logged in user is not an admin
-        if (! auth()->user()->isAdmin()) {
+        if (! User::assure()->isAdmin()) {
             return redirect()->back()->with('unauthorised', 'You are unauthorised to access this page');
             // abort(403);
         }

@@ -33,7 +33,7 @@ class UserPanelProvider extends PanelProvider
             ->globalSearch(false) // NOTE: we use our own
             ->topbarLivewireComponent(TopBar::class)
             ->sidebarCollapsibleOnDesktop(false)
-            //->domain(config('scriptum.production.domain'))
+            // ->domain(config('scriptum.production.domain'))
             ->domain( Config::string('scriptum.production.domain'))
             ->id('user')
             ->path('')

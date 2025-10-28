@@ -4,7 +4,6 @@ namespace App\Livewire\FrontPage;
 
 use App\Models\User;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
-use Exception;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -23,7 +22,7 @@ class UnVerifiedNotice extends Component implements HasActions, HasSchemas
 
     protected function getVerifiable(): User
     {
-        return Filament::auth()->user();
+        return User::assure(Filament::auth()->user());
     }
 
     protected function sendEmailVerificationNotification(User $user): void

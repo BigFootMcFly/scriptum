@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Livewire\Actions\Logout;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class VerifyEmail extends Component
     /**
      * @return array<string>
      */
-    public function via(/*$notifiable*/): array
+    public function via(/* $notifiable */): array
     {
         return ['mail'];
     }
@@ -23,13 +24,14 @@ class VerifyEmail extends Component
      */
     public function sendVerification(): void
     {
-        if (auth()->user()->hasVerifiedEmail()) {
+        $user = User::assure();
+        if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
 
             return;
         }
 
-        auth()->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         Session::flash('status', 'verification-link-sent');
     }

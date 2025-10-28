@@ -13,6 +13,7 @@ class TipTapJsonContentExtractor
 {
     /**
      * List of the custom extractors to use ('text','image','bulletList', etc. see TipTap JSON format)
+     *
      * @var array<string, string>
      */
     public static array $customExtractors = [
@@ -22,6 +23,7 @@ class TipTapJsonContentExtractor
 
     /**
      * List of the custom block extractors (RicHEditor->customBlocks(...))
+     *
      * @var array<string, string>
      */
     public static array $customBlocks = [
@@ -32,12 +34,12 @@ class TipTapJsonContentExtractor
      * Recursively extracts the "human readable" text from a TipTap schema block
      *
      * @param  array<string, mixed>  $block  The schema block containing the formatted text
-     * @param  array<mixed, mixed>|null  $result  The raw "human readable" text contents
+     * @param  array<mixed, mixed>  $result  The raw "human readable" text contents
      * @param  array<string, string>|null  $extras  The extra attributes gathere by the custom extractors (@see HasContentExtractor::extractContent)
      * @param  array<int, string>|null  $autoTags  The automatically created tags by the custom extractors (@see HasContentExtractor::autoTags)
      * @return array<mixed, mixed> Returns the $result array for linkability
      */
-    public static function extractContent(array $block, ?array &$result = [], ?array &$extras = [], ?array &$autoTags = []): array
+    public static function extractContent(array $block, array &$result = [], ?array &$extras = [], ?array &$autoTags = []): array
     {
 
         // if it has cheld nodes, recursivelly call ourself for each child node

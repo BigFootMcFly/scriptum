@@ -3,7 +3,7 @@
 namespace App\Livewire\Settings;
 
 use App\Livewire\Actions\Logout;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Livewire\Component;
 
 class DeleteUserForm extends Component
@@ -19,7 +19,7 @@ class DeleteUserForm extends Component
             'password' => ['required', 'string', 'current_password'],
         ]);
 
-        tap(Auth::user(), $logout(...))->delete();
+        tap(User::assure(), $logout(...))->delete();
 
         $this->redirect('/', navigate: true);
     }

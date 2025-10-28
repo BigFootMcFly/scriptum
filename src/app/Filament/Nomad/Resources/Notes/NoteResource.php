@@ -27,7 +27,7 @@ class NoteResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
     protected function mutateFormDataBeforeFill(array $data): array

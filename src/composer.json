@@ -70,6 +70,11 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "lint": [
+            "vendor/bin/rector --dry-run",
+            "vendor/bin/pint --test -v",
+            "vendor/bin/phpstan analyze"
         ]
     },
     "extra": {

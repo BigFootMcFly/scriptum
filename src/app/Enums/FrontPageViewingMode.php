@@ -32,6 +32,7 @@ enum FrontPageViewingMode: string
             self::Private,
             self::Public,
         ];
+
         return array_column($list, 'name', 'value');
 
     }

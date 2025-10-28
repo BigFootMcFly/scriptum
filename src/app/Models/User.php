@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\FrontPageViewingMode;
+use App\Traits\AssureNotNull;
 use DateTime;
+use Exception;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
@@ -28,12 +30,13 @@ use Illuminate\Support\Str;
  * @property bool $is_admin
  * @property DateTime|null $email_verified_at
  * @property bool $has_email_authentication
- * @property string $app_authentication_secret
+ * @property string|null $app_authentication_secret
  * @property string $email
  * @property FrontPageViewingMode $viewing_mode
  */
 class User extends Authenticatable implements FilamentUser, HasAppAuthentication, HasAppAuthenticationRecovery, HasEmailAuthentication, MustVerifyEmail
 {
+    use AssureNotNull;
     use HasAvatars;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -257,5 +260,19 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     {
         $this->app_authentication_recovery_codes = $codes;
         $this->save();
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------
+    public static function assure(?User $user = null): User
+    {
+        if ( ! $user instanceof User ) {
+            $user = auth()->user();
+        }
+
+        if ( ! $user instanceof User ) {
+            throw new Exception('Cannot assure User', 500);
+        }
+
+        return $user;
     }
 }

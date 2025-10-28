@@ -53,7 +53,7 @@ class Statistics extends Component
 
         $query->statistics($userId);
 
-        $stats = $query->first()->toArray();
+        $stats = Note::assure($query->first())->toArray();
 
         // TODO: make a DTO for this
         $this->noteCount = $stats['total'];

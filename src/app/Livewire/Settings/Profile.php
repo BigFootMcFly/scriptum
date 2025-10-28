@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Settings;
 
+// TODO: is this class even used? Or is this part of the original starter kit, which was abandoned in favor of the filament one? Check and remove if not used!
+
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -19,8 +20,9 @@ class Profile extends Component
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $user = User::assure();
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
 
     /**
@@ -28,7 +30,7 @@ class Profile extends Component
      */
     public function updateProfileInformation(): void
     {
-        $user = Auth::user();
+        $user = User::assure();
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -59,7 +61,7 @@ class Profile extends Component
      */
     public function resendVerificationNotification(): void
     {
-        $user = Auth::user();
+        $user = User::assure();
 
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false));

@@ -8,7 +8,6 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ListNotes extends ListRecords
 {
@@ -36,8 +35,8 @@ class ListNotes extends ListRecords
     private function makeAllTab(): Tab
     {
         return Tab::make()
-        ->badge(Note::withTrashed()->count())
-        ->badgeColor('info');
+            ->badge(Note::withTrashed()->count())
+            ->badgeColor('info');
     }
 
     private function makeDeletedTab(): Tab
@@ -54,7 +53,6 @@ class ListNotes extends ListRecords
             ->modifyQueryUsing(fn (Builder $query): Builder => Note::builder($query)->publicOnly()->withoutTrashed())
             ->badge(Note::query()->publicOnly()->withoutTrashed()->count());
     }
-
 
     private function makePrivateTab(): Tab
     {
@@ -79,5 +77,4 @@ class ListNotes extends ListRecords
             ->badge(Note::query()->withoutTrashed()->restrictedOnly()->count())
             ->badgeColor('danger');
     }
-
 }

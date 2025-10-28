@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 
 class UserRegister extends Register
 {
-
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -20,7 +19,7 @@ class UserRegister extends Register
                 $this->getEmailFormComponent(),
                 $this->getNameFormComponent()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('handle', Str::slug($state))),
+                    ->afterStateUpdated(fn (Set $set, ?string $state): mixed => $set('handle', Str::slug( (string) $state))),
                 $this->getHandleFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),

@@ -5,6 +5,7 @@ namespace App\Filament\Traits;
 use App\Enums\NoteVisibility;
 use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Models\Note;
+use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Illuminate\View\View;
@@ -73,6 +74,7 @@ trait ModalNoteEditor
     // ----------------------------------------------------------------------------------------------------------------
     public function saveNote(): void
     {
+
         $confirmMessage = 'New note created';
 
         $state = $this->form->getState();
@@ -87,7 +89,7 @@ trait ModalNoteEditor
         } else { // create note
             $noteUpdates = Note::create(
                 $this->data
-                + ['user_id' => auth()->user()->id]
+                + ['user_id' => User::assure()->id]
             );
             $this->dispatch('refresh-note-list');
         }

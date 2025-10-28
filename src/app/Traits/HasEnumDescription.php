@@ -50,6 +50,7 @@ trait HasEnumDescription
         foreach (self::cases() as $case) {
             $result[$case->value] = $case->description();
         }
+
         return $result;
 
     }

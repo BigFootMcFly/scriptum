@@ -21,7 +21,7 @@ trait HasContentExtractor
      * Extracts extra data from the node
      *
      * @param  array<string, mixed>  $block  The node to extract the data from
-     * @param  array<string, mixed> $result  The list of the extracted data
+     * @param  array<string, mixed>  $result  The list of the extracted data
      * @return void
      *
      * Can be overwritten in the child classes, this is just a placeholder

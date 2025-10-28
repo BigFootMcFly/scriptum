@@ -3,6 +3,7 @@
 namespace App\Livewire\FrontPage;
 
 use App\Enums\FrontPageViewingMode;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -31,10 +32,12 @@ class ToggleViewingModeButton extends Component
             return;
         }
 
+        $user = User::assure();
+
         $sessionViewingMode = session()->get('user.viewing_mode', null);
 
         // check for admin mode
-        if ($sessionViewingMode === FrontPageViewingMode::Admin && auth()->user()->isAdmin()) {
+        if ($sessionViewingMode === FrontPageViewingMode::Admin && $user->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
 
             return;
@@ -47,7 +50,7 @@ class ToggleViewingModeButton extends Component
         }
 
         // hydrate view mode from the user
-        $this->viewingMode = auth()->user()->viewing_mode;
+        $this->viewingMode = $user->viewing_mode;
 
     }
 
@@ -65,18 +68,20 @@ class ToggleViewingModeButton extends Component
             return;
         }
 
+        $user = User::assure();
         // skip if not changed
-        if (auth()->user()->viewing_mode === $this->viewingMode) {
+        if ($user->viewing_mode === $this->viewingMode) {
             return;
         }
 
         // save the new value
-        auth()->user()->update(['viewing_mode' => $this->viewingMode]);
+        $user->update(['viewing_mode' => $this->viewingMode]);
     }
 
     /**
      * The handler for the browser ViewMode show/change button
-     * @param array<string, mixed> $event
+     *
+     * @param  array<string, mixed>  $event
      */
     #[On('toggle-viewing-mode')]
     public function toggleViewingMode(array $event): void
@@ -89,10 +94,12 @@ class ToggleViewingModeButton extends Component
             return;
         }
 
+        $user = User::assure();
+
         $adminModeRequested = $this->isRequestingForAdminMode($event);
 
         // handle admin mode request
-        if ($adminModeRequested && auth()->user()->isAdmin()) {
+        if ($adminModeRequested && $user->isAdmin()) {
             $this->viewingMode = FrontPageViewingMode::Admin;
             session()->put('user.viewing_mode', FrontPageViewingMode::Admin);
             $this->dispatchUpdateRequests();
@@ -111,14 +118,14 @@ class ToggleViewingModeButton extends Component
 
         // failsafe
         if ($this->viewingMode === FrontPageViewingMode::Guest) {
-            $this->viewingMode = auth()->user()->viewing_mode;
+            $this->viewingMode = $user->viewing_mode;
             // TODO: add logging here, this should not happen
         }
 
         $this->viewingMode = match ($this->viewingMode) {
             FrontPageViewingMode::Private => FrontPageViewingMode::Public,
             FrontPageViewingMode::Public => FrontPageViewingMode::Private,
-            FrontPageViewingMode::Admin => auth()->user()->viewing_mode,
+            FrontPageViewingMode::Admin => $user->viewing_mode,
             default => FrontPageViewingMode::Private, // TODO: add error handling/logging here, this should not happen
         };
         $this->saveCurrentState();
@@ -144,7 +151,8 @@ class ToggleViewingModeButton extends Component
     /**
      * Check, if te user did request for admin mode
      * NOTE: admin mode can be requested by admin users by pressing CTRL+ALT+SHIT+LeftClick
-     * @param array<string, mixed> $event
+     *
+     * @param  array<string, mixed>  $event
      */
     protected function isRequestingForAdminMode(array $event): bool
     {

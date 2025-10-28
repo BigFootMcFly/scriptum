@@ -13,7 +13,8 @@ class CodeCustomBlockContent implements ContentExtractor
 
     /**
      * @see ContentExtractor
-     * @param array<string, mixed> $block
+     *
+     * @param  array<string, mixed>  $block
      * @return array<int, mixed>
      */
     public static function extractContent(array $block): array
@@ -25,8 +26,9 @@ class CodeCustomBlockContent implements ContentExtractor
 
     /**
      * @see ContentExtractor
-     * @param array<string, mixed> $block
-     * @param array<int, string> $result
+     *
+     * @param  array<string, mixed>  $block
+     * @param  array<int, string>  $result
      */
     public static function autoTags(array $block, array &$result = []): void
     {

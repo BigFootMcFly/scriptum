@@ -10,6 +10,7 @@ use App\Filament\User\Resources\Notes\Schemas\NoteForm;
 use App\Filament\User\Resources\Notes\Schemas\NoteInfolist;
 use App\Filament\User\Resources\Notes\Tables\NotesTable;
 use App\Models\Note;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -51,7 +52,7 @@ class NoteResource extends Resource
 
         if (auth()->check()) {
             $query->with('user'); // NOTE: prevent duplicate queries @see: App/Models/Note.php:106
-            $query->where('user_id', auth()->user()->id);
+            $query->where('user_id', User::assure()->id);
         }
 
         // NOTE: add this if the resource table should be filtered by the top search as well...
